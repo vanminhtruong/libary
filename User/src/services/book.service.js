@@ -134,6 +134,14 @@ const createBookService = () => {
         }
     };
 
+    const returnBook = async (borrowId) => {
+        try {
+            return await baseService.post(`/borrowing/return/${borrowId}`)
+        } catch (error) {
+            throw error
+        }
+    };
+
     return {
         getAllBooks,
         getBookById,
@@ -148,7 +156,8 @@ const createBookService = () => {
         checkFines,
         getFineDetails,
         getCategories,
-        searchCategories
+        searchCategories,
+        returnBook
     }
 }
 

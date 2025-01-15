@@ -45,32 +45,9 @@ Route::middleware(['auth:api', 'admin'])->prefix('admin')->group(function () {
         Route::put('/{id}', [CategoryController::class, 'update']);
         Route::delete('/{id}', [CategoryController::class, 'destroy']);
     });
-    
-    // Borrowing Management
-    /**
-     * Lấy danh sách các yêu cầu mượn sách
-     * Method: GET
-     * URL: /api/borrowings
-     * @return array Danh sách các yêu cầu mượn sách
-     */
+
     Route::get('/borrowings', [BorrowingController::class, 'index']);
-
-    /**
-     * Phê duyệt yêu cầu mượn sách
-     * Method: POST
-     * URL: /api/borrowings/approve/{id}
-     * @param int $id ID của yêu cầu mượn sách
-     * @return JsonResponse Thông báo kết quả phê duyệt
-     */
     Route::post('/borrowings/approve/{id}', [BorrowingController::class, 'approve']);
-
-    /**
-     * Từ chối yêu cầu mượn sách
-     * Method: POST
-     * URL: /api/borrowings/reject/{id}
-     * @param int $id ID của yêu cầu mượn sách
-     * @return JsonResponse Thông báo kết quả từ chối
-     */
     Route::post('/borrowings/reject/{id}', [BorrowingController::class, 'reject']);
     
     // User Management
@@ -91,7 +68,6 @@ Route::middleware(['auth:api', 'admin'])->prefix('admin')->group(function () {
     });
 });
 
-// User routes - Yêu cầu đăng nhập
 Route::middleware('auth:api')->group(function () {
     Route::prefix('user')->group(function () {
         Route::post('/logout', [AuthController::class, 'logout']);
@@ -99,7 +75,6 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/profile/update', [AuthController::class, 'updateProfile']);
     });
     
-    // Borrowing routes cho user đã đăng nhập
     Route::prefix('books')->group(function () {
         Route::post('/{id}/borrow', [BorrowingController::class, 'borrow']);
         Route::post('/{id}/return', [BorrowingController::class, 'return']);
@@ -107,31 +82,20 @@ Route::middleware('auth:api')->group(function () {
     });
 
     Route::prefix('borrowing')->group(function () {
-        // API mượn sách mới 
         Route::post('/borrow', [BorrowingController::class, 'borrowBook']);
-        // API trả sách đã mượn
         Route::post('/return/{borrowId}', [BorrowingController::class, 'returnBook']);
-        // API gia hạn thời gian mượn sách
         Route::post('/extend/{borrowId}', [BorrowingController::class, 'extend']);
-        // API xem danh sách sách đang mượn
         Route::get('/current', [BorrowingController::class, 'currentBorrowings']);
-        // API xem lịch sử mượn sách
         Route::get('/history', [BorrowingController::class, 'borrowingHistory']);
     });
 
-    // Categories routes cho user đã đăng nhập
     Route::prefix('categories')->group(function () {
-        // API lấy danh sách categories
         Route::get('/', [CategoryController::class, 'index']);
-        // API lấy danh sách categories cho dropdown
         Route::get('/dropdown', [CategoryController::class, 'getForDropdown']);
-        // API lọc categories theo tên
         Route::get('/search', [CategoryController::class, 'search']);
-        // API lấy danh sách sách theo category
         Route::get('/{id}/books', [CategoryController::class, 'getBooks']);
     });
 
-    // Fine routes cho user đã đăng nhập
     Route::prefix('fines')->group(function () {
         Route::get('/', [FineController::class, 'getUserFines']);
         Route::get('/{id}', [FineController::class, 'getUserFineDetail']);

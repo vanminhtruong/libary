@@ -20,6 +20,7 @@ const CurrentBorrowings = () => {
     const [selectedBorrowing, setSelectedBorrowing] = useState(null);
     const [finesData, setFinesData] = useState(null);
     const [loadingFines, setLoadingFines] = useState(false);
+    const [showReturnDialog, setShowReturnDialog] = useState(false);
 
     useEffect(() => {
         loadBorrowings();
@@ -99,6 +100,32 @@ const CurrentBorrowings = () => {
         }
     };
 
+    const handleReturn = async () => {
+        try {
+            await bookService.returnBook(selectedBorrowing.id);
+            toast.current.show({
+                severity: 'success',
+                summary: t('common.success'),
+                detail: t('borrowings.return_success'),
+                life: 3000
+            });
+            setShowReturnDialog(false);
+            loadBorrowings(); // Reload the list
+        } catch (error) {
+            toast.current.show({
+                severity: 'error',
+                summary: t('common.error'),
+                detail: error.message || t('borrowings.return_error'),
+                life: 3000
+            });
+        }
+    };
+
+    const confirmReturn = (borrowing) => {
+        setSelectedBorrowing(borrowing);
+        setShowReturnDialog(true);
+    };
+
     const getImageUrl = (imagePath) => {
         if (!imagePath) return '/default-book-cover.jpg'
         if (imagePath.startsWith('http')) return imagePath
@@ -170,7 +197,14 @@ const CurrentBorrowings = () => {
                         </div>
                     </div>
 
-                    <div className="mt-4 flex justify-end">
+                    <div className="mt-4 flex justify-end gap-2">
+                        <Button
+                            label={t('borrowings.return')}
+                            icon="pi pi-reply"
+                            severity="danger"
+                            className="p-button-outlined"
+                            onClick={() => confirmReturn(borrowing)}
+                        />
                         <Button
                             label={t('borrowings.extend')}
                             icon="pi pi-calendar-plus"
@@ -313,6 +347,42 @@ const CurrentBorrowings = () => {
                             <p className="font-semibold">{selectedBorrowing.book.title}</p>
                             <p className="text-sm text-gray-600">
                                 {t('borrowings.current_due_date')}: {new Date(selectedBorrowing.due_date).toLocaleDateString()}
+                            </p>
+                        </div>
+                    )}
+                </div>
+            </Dialog>
+
+            {/* Return Confirmation Dialog */}
+            <Dialog
+                visible={showReturnDialog}
+                onHide={() => setShowReturnDialog(false)}
+                header={t('borrowings.return_confirmation_title')}
+                footer={(
+                    <div className="flex justify-end gap-2">
+                        <Button
+                            label={t('common.cancel')}
+                            icon="pi pi-times"
+                            className="p-button-text"
+                            onClick={() => setShowReturnDialog(false)}
+                        />
+                        <Button
+                            label={t('common.confirm')}
+                            icon="pi pi-check"
+                            severity="danger"
+                            onClick={handleReturn}
+                            autoFocus
+                        />
+                    </div>
+                )}
+            >
+                <div className="p-4">
+                    <p>{t('borrowings.return_confirmation_message')}</p>
+                    {selectedBorrowing && (
+                        <div className="mt-3">
+                            <p className="font-semibold">{selectedBorrowing.book.title}</p>
+                            <p className="text-sm text-gray-600">
+                                {t('borrowings.borrow_date')}: {new Date(selectedBorrowing.borrow_date).toLocaleDateString()}
                             </p>
                         </div>
                     )}

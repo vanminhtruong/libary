@@ -210,7 +210,7 @@ const BookList = () => {
     }
 
     return (
-        <div className="p-6 bg-gray-50 min-h-screen">
+        <div className="p-6 bg-gray-50 min-h-screen dark:bg-gray-800">
             <Toast ref={toast} />
             
             {/* Header Section */}
