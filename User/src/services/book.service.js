@@ -102,14 +102,7 @@ const createBookService = () => {
         }
     };
 
-    const getCurrentBorrowings = async () => {
-        try {
-            return await baseService.get('/borrowing/current')
-        } catch (error) {
-            throw error
-        }
-    };
-
+            
     const extendBorrowing = async (borrowId) => {
         try {
             return await baseService.post(`/borrowing/extend/${borrowId}`)
@@ -143,7 +136,6 @@ const createBookService = () => {
         searchBooks,
         getBooksByCategory,
         borrowBook,
-        getCurrentBorrowings,
         extendBorrowing,
         checkFines,
         getFineDetails,
