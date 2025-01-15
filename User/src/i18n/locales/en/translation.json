@@ -1,0 +1,208 @@
+{
+  "common": {
+    "welcome": "Welcome",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "search": "Search",
+    "home": "Home",
+    "browse": "Browse Books",
+    "all_books": "All Books",
+    "categories": "Categories",
+    "new_releases": "New Releases",
+    "about": "About",
+    "profile": "Profile",
+    "my_books": "My Books",
+    "settings": "Settings",
+    "email": "Email",
+    "password": "Password",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "error": "Error",
+    "success": "Success",
+    "books": "Books",
+    "borrow": "Borrow",
+    "submit": "Submit",
+    "status": "Status",
+    "loginWelcome": "Welcome back! Please login to continue.",
+    "registerWelcome": "Create an account to get started.",
+    "library_collection": "Library Collection",
+    "discover_books": "Discover our extensive collection of books",
+    "search": "Search for books by title, author, or ISBN...",
+    "select_category": "Select Category",
+    "select_status": "Select Status",
+    "grid_view": "Grid View",
+    "list_view": "List View",
+    "all_categories": "All Categories",
+    "all_statuses": "All Statuses",
+    "edit": "Edit",
+    "save": "Save"
+  },
+  "status": {
+    "available": "Available",
+    "borrowed": "Borrowed",
+    "reserved": "Reserved",
+    "maintenance": "Under Maintenance",
+    "unknown": "Unknown"
+  },
+  "auth": {
+    "email": "Email",
+    "password": "Password",
+    "remember_me": "Remember me",
+    "forgot_password": "Forgot password?",
+    "noAccount": "Don't have an account?",
+    "registerHere": "Register here",
+    "haveAccount": "Already have an account?",
+    "loginHere": "Login here",
+    "fullName": "Full Name",
+    "confirmPassword": "Confirm Password",
+    "fullNamePlaceholder": "Enter your full name",
+    "emailPlaceholder": "Enter your email address",
+    "passwordPlaceholder": "Enter your password",
+    "confirmPasswordPlaceholder": "Re-enter your password",
+    "registrationSuccessful": "Registration successful. Please login.",
+    "registrationFailed": "Registration failed",
+    "phone": "Phone Number",
+    "phonePlaceholder": "Enter your phone number"
+  },
+  "validation": {
+    "required": "This field is required",
+    "email_invalid": "Invalid email address",
+    "password_min": "Password must be at least 6 characters",
+    "passwordsDoNotMatch": "Passwords do not match",
+    "image_size": "Image size must not exceed 2MB",
+    "image_format": "Image must be in JPG, PNG, GIF, SVG, WEBP or BMP format"
+  },
+  "books": {
+    "title": "Title",
+    "author": "Author",
+    "category": "Category",
+    "status": "Status",
+    "isbn": "ISBN",
+    "description": "Description",
+    "details": "Book Details",
+    "add_new": "Add New Book",
+    "edit_book": "Edit Book",
+    "delete_success": "Book deleted successfully",
+    "save_success": "Book saved successfully",
+    "no_books_found": "No books found",
+    "not_found": "Book not found",
+    "form": {
+      "title_placeholder": "Enter book title",
+      "author_placeholder": "Enter author name",
+      "isbn_placeholder": "Enter ISBN",
+      "description_placeholder": "Enter book description",
+      "select_category": "Select category",
+      "select_status": "Select status",
+      "borrow_date": "Borrow Date",
+      "return_date": "Return Date",
+      "note": "Note",
+      "borrow_note_placeholder": "Enter note (optional)",
+      "due_date": "Due Date"
+    },
+    "status_options": {
+      "available": "Available",
+      "borrowed": "Borrowed",
+      "reserved": "Reserved",
+      "maintenance": "Under Maintenance"
+    },
+    "borrow_success": "Book borrowed successfully",
+    "borrow_failed": "Failed to borrow book",
+    "borrow_confirmation": "Are you sure you want to borrow this book?",
+    "borrowing_details": "Borrowing Details",
+    "available_copies": "Available Copies",
+    "due_date_info": "Please select a return date (maximum 14 days)",
+    "borrowing_terms": "Borrowing Terms",
+    "terms": {
+      "return_on_time": "Please return the book on time",
+      "take_care": "Take good care of the book, avoid any damage",
+      "fees_apply": "Late fees will apply if returned late ($1/day)"
+    }
+  },
+  "borrowings": {
+    "current_borrowings": "Current Borrowings",
+    "current_borrowings_description": "List of books you are currently borrowing",
+    "no_current_borrowings": "You haven't borrowed any books yet",
+    "browse_books": "Browse Books",
+    "borrow_date": "Borrow Date",
+    "due_date": "Due Date",
+    "status": "Status",
+    "status_active": "Active",
+    "status_overdue": "Overdue",
+    "load_error": "Could not load borrowings list",
+    "fine_amount": "Fine Amount",
+    "extend": "Extend",
+    "extend_confirmation_title": "Confirm Extension",
+    "extend_confirmation_message": "Are you sure you want to extend this book's borrowing period?",
+    "current_due_date": "Current Due Date",
+    "extend_success": "Successfully extended borrowing period",
+    "extend_error": "Could not extend borrowing period. Please try again later",
+    "view_fines": "View Fines",
+    "fines_title": "Fine Information",
+    "total_fines": "Total Fines",
+    "fine_reason": "Fine Reason",
+    "fine_date": "Fine Date",
+    "no_fines": "You have no fines",
+    "fines_load_error": "Could not load fine information"
+  },
+  "home": {
+    "welcome_title": "Welcome to Smart Library Management System",
+    "welcome_subtitle": "Where Knowledge Converges, Your Ideal Reading Space",
+    "intro": "Explore our rich collection of books and experience modern library services",
+    "features": {
+      "title": "Featured Services",
+      "digital_catalog": {
+        "title": "Digital Catalog",
+        "description": "Easily search and discover thousands of books with our intelligent classification system"
+      },
+      "easy_borrowing": {
+        "title": "Convenient Borrowing",
+        "description": "Simple borrowing process, track due dates and extend loans online effortlessly"
+      },
+      "personalized": {
+        "title": "Personalized Experience",
+        "description": "Receive book recommendations based on your interests, save favorites, and manage your account flexibly"
+      }
+    },
+    "collection": {
+      "title": "Diverse Collection",
+      "description": "Our library proudly houses a rich collection of books, from textbooks to literature, science, and arts"
+    },
+    "benefits": {
+      "title": "Member Benefits",
+      "list": [
+        "Unlimited access to knowledge resources",
+        "Quick and convenient book lending service",
+        "Quiet and comfortable reading spaces",
+        "Smart notifications and reminders",
+        "Dedicated support from professional librarians"
+      ]
+    },
+    "cta": {
+      "title": "Start Your Discovery Journey",
+      "description": "Register as a member today to experience modern library services",
+      "register": "Register Membership",
+      "browse": "Explore Collection"
+    }
+  },
+  "categories": {
+    "fiction": "Fiction",
+    "non_fiction": "Non-Fiction",
+    "science": "Science",
+    "history": "History"
+  },
+  "profile": {
+    "manage_info": "Manage your personal information",
+    "personal_info": "Personal Information",
+    "edit_info": "Edit Information",
+    "change_password": "Change Password",
+    "current_password": "Current Password",
+    "new_password": "New Password",
+    "confirm_password": "Confirm New Password",
+    "new_password_helper": "Leave blank if you don't want to change password",
+    "load_error": "Could not load profile information",
+    "update_success": "Profile updated successfully",
+    "update_error": "Could not update profile",
+    "edit_mode_active": "You are in edit mode"
+  }
+} 

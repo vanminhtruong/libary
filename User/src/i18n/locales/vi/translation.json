@@ -1,0 +1,213 @@
+{
+  "common": {
+    "welcome": "Xin chào",
+    "login": "Đăng nhập",
+    "register": "Đăng ký",
+    "logout": "Đăng xuất",
+    "search": "Tìm kiếm",
+    "home": "Trang chủ",
+    "browse": "Duyệt sách",
+    "all_books": "Tất cả sách",
+    "categories": "Thể loại",
+    "new_releases": "Sách mới",
+    "about": "Giới thiệu",
+    "profile": "Hồ sơ",
+    "my_books": "Sách của tôi",
+    "settings": "Cài đặt",
+    "email": "Email",
+    "password": "Mật khẩu",
+    "loginWelcome": "Chào mừng bạn trở lại! Vui lòng đăng nhập để tiếp tục.",
+    "registerWelcome": "Tạo tài khoản để bắt đầu.",
+    "books": "Sách",
+    "edit": "Sửa",
+    "delete": "Xóa",
+    "save": "Lưu",
+    "cancel": "Hủy",
+    "back": "Quay lại",
+    "library_collection": "Bộ Sưu Tập Thư Viện",
+    "discover_books": "Khám phá bộ sưu tập sách phong phú của chúng tôi",
+    "search": "Tìm kiếm sách theo tên, tác giả hoặc ISBN...",
+    "select_category": "Chọn Thể Loại",
+    "select_status": "Chọn Trạng Thái",
+    "grid_view": "Xem Dạng Lưới",
+    "list_view": "Xem Dạng Danh Sách",
+    "all_categories": "Tất Cả Thể Loại",
+    "all_statuses": "Tất Cả Trạng Thái",
+    "borrow": "Mượn sách",
+    "submit": "Xác nhận",
+    "success": "Thành công",
+    "view_details": "Xem chi tiết",
+    "error": "Lỗi",
+    "confirm": "Xác nhận",
+    "status": "Trạng thái",
+    "unknown_book": "Sách không xác định",
+    "no_reason": "Không có lý do"
+  },
+  "books": {
+    "title": "Tiêu đề",
+    "author": "Tác giả",
+    "category": "Thể loại",
+    "status": "Trạng thái",
+    "isbn": "ISBN",
+    "description": "Mô tả",
+    "details": "Chi tiết sách",
+    "add_new": "Thêm sách mới",
+    "edit_book": "Sửa sách",
+    "delete_success": "Xóa sách thành công",
+    "save_success": "Lưu sách thành công",
+    "no_books_found": "Không tìm thấy sách",
+    "not_found": "Không tìm thấy sách",
+    "form": {
+      "title_placeholder": "Nhập tiêu đề sách",
+      "author_placeholder": "Nhập tên tác giả",
+      "isbn_placeholder": "Nhập ISBN",
+      "description_placeholder": "Nhập mô tả sách",
+      "select_category": "Chọn thể loại",
+      "select_status": "Chọn trạng thái",
+      "borrow_date": "Ngày mượn",
+      "return_date": "Ngày trả",
+      "note": "Ghi chú",
+      "borrow_note_placeholder": "Nhập ghi chú (nếu có)",
+      "due_date": "Ngày đến hạn"
+    },
+    "status_options": {
+      "available": "Có sẵn",
+      "borrowed": "Đã mượn",
+      "reserved": "Đã đặt trước",
+      "maintenance": "Đang bảo trì"
+    },
+    "borrow_success": "Mượn sách thành công",
+    "borrow_failed": "Mượn sách thất bại",
+    "borrow_confirmation": "Bạn có chắc chắn muốn mượn sách này?",
+    "borrowing_details": "Thông tin mượn sách",
+    "available_copies": "Số lượng có sẵn",
+    "due_date_info": "Vui lòng chọn ngày trả sách (tối đa 14 ngày)",
+    "borrowing_terms": "Điều khoản mượn sách",
+    "terms": {
+      "return_on_time": "Vui lòng trả sách đúng hạn",
+      "take_care": "Giữ gìn sách cẩn thận, không làm hư hỏng",
+      "fees_apply": "Phí phạt sẽ được áp dụng nếu trả trễ (1.000đ/ngày)"
+    }
+  },
+  "categories": {
+    "fiction": "Tiểu Thuyết",
+    "non_fiction": "Phi Tiểu Thuyết",
+    "science": "Khoa Học",
+    "history": "Lịch Sử"
+  },
+  "auth": {
+    "email": "Email",
+    "password": "Mật khẩu",
+    "remember_me": "Ghi nhớ đăng nhập",
+    "forgot_password": "Quên mật khẩu?",
+    "noAccount": "Bạn chưa có tài khoản?",
+    "registerHere": "Đăng ký ngay",
+    "haveAccount": "Bạn đã có tài khoản?",
+    "loginHere": "Đăng nhập ngay",
+    "fullName": "Họ và tên",
+    "confirmPassword": "Xác nhận mật khẩu",
+    "fullNamePlaceholder": "Nhập họ và tên của bạn",
+    "emailPlaceholder": "Nhập địa chỉ email của bạn",
+    "passwordPlaceholder": "Nhập mật khẩu của bạn",
+    "confirmPasswordPlaceholder": "Nhập lại mật khẩu của bạn",
+    "registrationSuccessful": "Đăng ký thành công. Vui lòng đăng nhập.",
+    "registrationFailed": "Đăng ký thất bại",
+    "phone": "Số điện thoại",
+    "phonePlaceholder": "Nhập số điện thoại của bạn"
+  },
+  "validation": {
+    "required": "Trường này là bắt buộc",
+    "email_invalid": "Địa chỉ email không hợp lệ",
+    "password_min": "Mật khẩu phải có ít nhất 6 ký tự",
+    "passwordsDoNotMatch": "Mật khẩu không khớp",
+    "image_size": "Kích thước ảnh không được vượt quá 2MB",
+    "image_format": "Ảnh phải có định dạng: JPG, PNG, GIF, SVG, WEBP hoặc BMP"
+  },
+  "status": {
+    "available": "Có Sẵn",
+    "borrowed": "Đã Mượn",
+    "reserved": "Đã đặt trước",
+    "maintenance": "Đang bảo trì"
+  },
+  "borrowings": {
+    "current_borrowings": "Sách đang mượn",
+    "current_borrowings_description": "Danh sách những cuốn sách bạn đang mượn",
+    "no_current_borrowings": "Bạn chưa mượn cuốn sách nào",
+    "browse_books": "Tìm sách để mượn",
+    "borrow_date": "Ngày mượn",
+    "due_date": "Ngày đến hạn",
+    "status": "Trạng thái",
+    "status_active": "Đang mượn",
+    "status_overdue": "Quá hạn",
+    "load_error": "Không thể tải danh sách sách đang mượn",
+    "fine_amount": "Tiền phạt",
+    "extend": "Gia hạn",
+    "extend_confirmation_title": "Xác nhận gia hạn",
+    "extend_confirmation_message": "Bạn có chắc chắn muốn gia hạn thời gian mượn sách này?",
+    "current_due_date": "Ngày hết hạn hiện tại",
+    "extend_success": "Gia hạn sách thành công",
+    "extend_error": "Không thể gia hạn sách. Vui lòng thử lại sau",
+    "view_fines": "Xem tiền phạt",
+    "fines_title": "Thông tin tiền phạt",
+    "total_fines": "Tổng tiền phạt",
+    "fine_reason": "Lý do phạt",
+    "fine_date": "Ngày phạt",
+    "no_fines": "Bạn không có khoản phạt nào",
+    "fines_load_error": "Không thể tải thông tin tiền phạt",
+    "no_fines_data": "Không có dữ liệu tiền phạt"
+  },
+  "home": {
+    "welcome_title": "Chào mừng đến với Hệ thống Quản lý Thư viện Thông minh",
+    "welcome_subtitle": "Nơi tri thức hội tụ, không gian đọc sách lý tưởng",
+    "intro": "Khám phá kho tàng sách phong phú và trải nghiệm dịch vụ thư viện hiện đại",
+    "features": {
+      "title": "Dịch vụ Nổi bật",
+      "digital_catalog": {
+        "title": "Danh mục Số hóa",
+        "description": "Dễ dàng tìm kiếm và khám phá hàng nghìn đầu sách với hệ thống phân loại thông minh"
+      },
+      "easy_borrowing": {
+        "title": "Mượn Sách Thuận tiện",
+        "description": "Quy trình mượn-trả sách đơn giản, theo dõi thời hạn và gia hạn trực tuyến dễ dàng"
+      },
+      "personalized": {
+        "title": "Cá nhân hóa Trải nghiệm",
+        "description": "Nhận đề xuất sách phù hợp sở thích, lưu danh sách yêu thích và quản lý tài khoản linh hoạt"
+      }
+    },
+    "collection": {
+      "title": "Bộ sưu tập Đa dạng",
+      "description": "Thư viện tự hào sở hữu bộ sưu tập sách phong phú, từ sách giáo khoa đến văn học, khoa học và nghệ thuật"
+    },
+    "benefits": {
+      "title": "Lợi ích Thành viên",
+      "list": [
+        "Truy cập không giới hạn vào kho tàng tri thức",
+        "Dịch vụ mượn sách nhanh chóng, thuận tiện",
+        "Không gian đọc sách yên tĩnh, thoải mái",
+        "Thông báo và nhắc nhở thông minh",
+        "Hỗ trợ tận tình từ đội ngũ thủ thư chuyên nghiệp"
+      ]
+    },
+    "cta": {
+      "title": "Bắt đầu Hành trình Khám phá",
+      "description": "Đăng ký thành viên ngay hôm nay để trải nghiệm dịch vụ thư viện hiện đại",
+      "register": "Đăng ký Thành viên",
+      "browse": "Khám phá Bộ sưu tập"
+    }
+  },
+  "profile": {
+    "manage_info": "Quản lý thông tin cá nhân của bạn",
+    "personal_info": "Thông tin cá nhân",
+    "edit_info": "Chỉnh sửa thông tin",
+    "change_password": "Đổi mật khẩu",
+    "current_password": "Mật khẩu hiện tại",
+    "new_password": "Mật khẩu mới",
+    "confirm_password": "Xác nhận mật khẩu mới",
+    "new_password_helper": "Để trống nếu không muốn đổi mật khẩu",
+    "load_error": "Không thể tải thông tin cá nhân",
+    "update_success": "Cập nhật thông tin thành công",
+    "update_error": "Không thể cập nhật thông tin",
+    "edit_mode_active": "Bạn đang ở chế độ chỉnh sửa"
+  }
+} 

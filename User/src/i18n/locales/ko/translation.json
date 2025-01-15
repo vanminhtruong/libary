@@ -1,0 +1,207 @@
+{
+  "common": {
+    "welcome": "환영합니다",
+    "login": "로그인",
+    "register": "회원가입",
+    "logout": "로그아웃",
+    "search": "검색",
+    "home": "홈",
+    "browse": "도서 찾기",
+    "all_books": "전체 도서",
+    "categories": "카테고리",
+    "new_releases": "신간 도서",
+    "about": "소개",
+    "profile": "프로필",
+    "my_books": "내 도서",
+    "settings": "설정",
+    "email": "이메일",
+    "password": "비밀번호",
+    "loginWelcome": "돌아오신 것을 환영합니다! 계속하려면 로그인하세요.",
+    "registerWelcome": "계정을 만들어 시작하세요.",
+    "cancel": "취소",
+    "confirm": "확인",
+    "error": "오류",
+    "success": "성공",
+    "books": "도서",
+    "borrow": "대출",
+    "submit": "제출",
+    "status": "상태",
+    "library_collection": "도서관 컬렉션",
+    "discover_books": "우리의 방대한 도서 컬렉션을 탐색해보세요",
+    "search": "제목, 저자 또는 ISBN으로 검색...",
+    "select_category": "카테고리 선택",
+    "select_status": "상태 선택",
+    "grid_view": "그리드 보기",
+    "list_view": "목록 보기",
+    "all_categories": "모든 카테고리",
+    "all_statuses": "모든 상태",
+    "edit": "수정",
+    "save": "저장"
+  },
+  "status": {
+    "available": "대출 가능",
+    "borrowed": "대출 중",
+    "reserved": "예약됨",
+    "maintenance": "점검 중"
+  },
+  "categories": {
+    "fiction": "소설",
+    "non_fiction": "논픽션",
+    "science": "과학",
+    "history": "역사"
+  },
+  "auth": {
+    "email": "이메일",
+    "password": "비밀번호",
+    "remember_me": "로그인 유지",
+    "forgot_password": "비밀번호를 잊으셨나요?",
+    "noAccount": "계정이 없으신가요?",
+    "registerHere": "회원가입하기",
+    "haveAccount": "이미 계정이 있으신가요?",
+    "loginHere": "로그인하기",
+    "fullName": "이름",
+    "confirmPassword": "비밀번호 확인",
+    "fullNamePlaceholder": "이름을 입력하세요",
+    "emailPlaceholder": "이메일 주소를 입력하세요",
+    "passwordPlaceholder": "비밀번호를 입력하세요",
+    "confirmPasswordPlaceholder": "비밀번호를 다시 입력하세요",
+    "registrationSuccessful": "회원가입이 완료되었습니다. 로그인해주세요.",
+    "registrationFailed": "회원가입에 실패했습니다",
+    "phone": "전화번호",
+    "phonePlaceholder": "전화번호를 입력하세요"
+  },
+  "validation": {
+    "required": "필수 입력 항목입니다",
+    "email_invalid": "유효하지 않은 이메일 주소입니다",
+    "password_min": "비밀번호는 최소 6자 이상이어야 합니다",
+    "passwordsDoNotMatch": "비밀번호가 일치하지 않습니다",
+    "image_size": "이미지 크기는 2MB를 초과할 수 없습니다",
+    "image_format": "이미지는 JPG, PNG, GIF, SVG, WEBP 또는 BMP 형식이어야 합니다"
+  },
+  "books": {
+    "title": "제목",
+    "author": "저자",
+    "category": "카테고리",
+    "status": "상태",
+    "isbn": "ISBN",
+    "description": "설명",
+    "details": "도서 상세",
+    "add_new": "새 도서 추가",
+    "edit_book": "도서 수정",
+    "delete_success": "도서가 삭제되었습니다",
+    "save_success": "도서가 저장되었습니다",
+    "no_books_found": "도서를 찾을 수 없습니다",
+    "not_found": "도서를 찾을 수 없습니다",
+    "form": {
+      "title_placeholder": "도서 제목 입력",
+      "author_placeholder": "저자 이름 입력",
+      "isbn_placeholder": "ISBN 입력",
+      "description_placeholder": "도서 설명 입력",
+      "select_category": "카테고리 선택",
+      "select_status": "상태 선택",
+      "borrow_date": "대출일",
+      "return_date": "반납일",
+      "note": "메모",
+      "borrow_note_placeholder": "메모 입력 (선택사항)",
+      "due_date": "반납 예정일"
+    },
+    "status_options": {
+      "available": "대출 가능",
+      "borrowed": "대출 중",
+      "reserved": "예약됨",
+      "maintenance": "점검 중"
+    },
+    "borrow_success": "도서 대출이 완료되었습니다",
+    "borrow_failed": "도서 대출에 실패했습니다",
+    "borrow_confirmation": "이 도서를 대출하시겠습니까?",
+    "borrowing_details": "대출 상세",
+    "available_copies": "대출 가능 권수",
+    "due_date_info": "반납일을 선택해주세요 (최대 14일)",
+    "borrowing_terms": "대출 약관",
+    "terms": {
+      "return_on_time": "기한 내에 반납해주세요",
+      "take_care": "도서를 소중히 다루어 주시고 훼손하지 말아주세요",
+      "fees_apply": "연체 시 연체료가 부과됩니다 (1,000원/일)"
+    }
+  },
+  "borrowings": {
+    "current_borrowings": "현재 대출 도서",
+    "current_borrowings_description": "현재 대출 중인 도서 목록",
+    "no_current_borrowings": "현재 대출 중인 도서가 없습니다",
+    "browse_books": "도서 찾아보기",
+    "borrow_date": "대출일",
+    "due_date": "반납 예정일",
+    "status": "상태",
+    "status_active": "대출 중",
+    "status_overdue": "연체",
+    "load_error": "대출 목록을 불러올 수 없습니다",
+    "fine_amount": "연체료",
+    "extend": "연장하기",
+    "extend_confirmation_title": "대출 연장 확인",
+    "extend_confirmation_message": "이 도서의 대출 기간을 연장하시겠습니까?",
+    "current_due_date": "현재 반납 예정일",
+    "extend_success": "대출 기간이 성공적으로 연장되었습니다",
+    "extend_error": "대출 기간을 연장할 수 없습니다. 나중에 다시 시도해주세요",
+    "view_fines": "연체료 확인",
+    "fines_title": "연체료 정보",
+    "total_fines": "총 연체료",
+    "fine_reason": "연체 사유",
+    "fine_date": "연체 날짜",
+    "no_fines": "연체료가 없습니다",
+    "fines_load_error": "연체료 정보를 불러올 수 없습니다"
+  },
+  "home": {
+    "welcome_title": "스마트 도서관 관리 시스템에 오신 것을 환영합니다",
+    "welcome_subtitle": "지식이 모이는 곳, 당신의 이상적인 독서 공간",
+    "intro": "풍부한 도서 컬렉션을 탐색하고 현대적인 도서관 서비스를 경험하세요",
+    "features": {
+      "title": "주요 서비스",
+      "digital_catalog": {
+        "title": "디지털 카탈로그",
+        "description": "지능형 분류 시스템으로 수천 권의 도서를 쉽게 검색하고 발견하세요"
+      },
+      "easy_borrowing": {
+        "title": "편리한 대출",
+        "description": "간단한 대출 절차, 반납일 확인 및 온라인 연장을 손쉽게 이용하세요"
+      },
+      "personalized": {
+        "title": "개인 맞춤 경험",
+        "description": "관심사에 맞는 도서 추천, 즐겨찾기 저장, 유연한 계정 관리를 제공합니다"
+      }
+    },
+    "collection": {
+      "title": "다양한 컬렉션",
+      "description": "교과서부터 문학, 과학, 예술에 이르기까지 풍부한 도서 컬렉션을 자랑스럽게 소장하고 있습니다"
+    },
+    "benefits": {
+      "title": "회원 혜택",
+      "list": [
+        "지식 자원에 대한 무제한 접근",
+        "신속하고 편리한 도서 대출 서비스",
+        "조용하고 편안한 독서 공간",
+        "스마트한 알림 및 리마인더",
+        "전문 사서의 헌신적인 지원"
+      ]
+    },
+    "cta": {
+      "title": "발견의 여정을 시작하세요",
+      "description": "현대적인 도서관 서비스를 경험하기 위해 오늘 회원으로 가입하세요",
+      "register": "회원 가입",
+      "browse": "컬렉션 둘러보기"
+    }
+  },
+  "profile": {
+    "manage_info": "개인 정보 관리",
+    "personal_info": "개인 정보",
+    "edit_info": "정보 수정",
+    "change_password": "비밀번호 변경",
+    "current_password": "현재 비밀번호",
+    "new_password": "새 비밀번호",
+    "confirm_password": "새 비밀번호 확인",
+    "new_password_helper": "비밀번호를 변경하지 않으려면 비워두세요",
+    "load_error": "프로필을 불러올 수 없습니다",
+    "update_success": "프로필이 성공적으로 업데이트되었습니다",
+    "update_error": "프로필을 업데이트할 수 없습니다",
+    "edit_mode_active": "편집 모드가 활성화되었습니다"
+  }
+} 
