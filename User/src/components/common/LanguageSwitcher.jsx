@@ -40,10 +40,17 @@ const LanguageSwitcher = () => {
       optionLabel="name"
       valueTemplate={selectedLanguageTemplate}
       itemTemplate={languageOptionTemplate}
-      className="w-[150px] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-gray-600 [&_.p-dropdown-panel]:dark:bg-gray-800 [&_.p-dropdown-item]:dark:text-white [&_.p-dropdown-item.p-highlight]:dark:bg-gray-700 [&_.p-dropdown-item:hover]:!dark:bg-gray-700 [&_.p-dropdown-item:hover]:!dark:text-white [&_.p-dropdown-trigger]:dark:text-white [&_.p-dropdown-label]:dark:text-white"
+      className="w-[170px] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-gray-600 
+        [&_.p-dropdown-panel]:dark:bg-gray-800 
+        [&_.p-dropdown-item]:dark:text-white 
+        [&_.p-dropdown-item.p-highlight]:dark:bg-gray-700 
+        [&_.p-dropdown-item:hover]:dark:bg-gray-700
+        [&_.p-dropdown-item:not(.p-highlight):hover]:dark:bg-gray-700
+        [&_.p-dropdown-trigger]:dark:text-white 
+        [&_.p-dropdown-label]:dark:text-white"
       panelClassName="dark:bg-gray-800 dark:border-gray-700"
     />
   );
 };
 
-export default LanguageSwitcher; 
+export default LanguageSwitcher;

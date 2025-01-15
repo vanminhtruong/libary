@@ -72,10 +72,13 @@
             :header="selectedBorrowing?.book?.title"
             :modal="true"
             :style="{ width: '500px' }"
+            class="dark:bg-gray-800"
+            headerClassName="dark:bg-gray-800 dark:text-white"
+            contentClassName="dark:bg-gray-800"
         >
             <div v-if="selectedBorrowing" class="space-y-4">
-                <div class="p-4 flex items-center gap-6 surface-card border-round">
-                    <div class="relative w-[180px] h-[240px] surface-ground border-round overflow-hidden">
+                <div class="p-4 flex items-center gap-6 surface-card border-round dark:bg-gray-700/50 dark:border-gray-700">
+                    <div class="relative w-[180px] h-[240px] surface-ground border-round overflow-hidden dark:bg-gray-800">
                         <img 
                             :src="getImageUrl(selectedBorrowing.book?.image)" 
                             class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
@@ -83,44 +86,71 @@
                             @error="handleImageError"
                             ref="bookImage"
                         />
-                        <div v-if="imageError" class="absolute inset-0 flex items-center justify-center surface-ground">
+                        <div v-if="imageError" class="absolute inset-0 flex items-center justify-center surface-ground dark:bg-gray-800">
                             <i class="pi pi-image text-500 text-4xl"></i>
                         </div>
                     </div>
                     <div class="flex-1 space-y-3">
-                        <h3 class="text-2xl font-bold text-900 leading-tight">{{ selectedBorrowing.book?.title }}</h3>
-                        <p class="text-lg text-700">{{ selectedBorrowing.book?.author }}</p>
-                        <div class="flex items-center gap-2 text-sm text-500">
+                        <h3 class="text-2xl font-bold text-900 leading-tight dark:text-white">{{ selectedBorrowing.book?.title }}</h3>
+                        <p class="text-lg text-700 dark:text-gray-300">{{ selectedBorrowing.book?.author }}</p>
+                        <div class="flex items-center gap-2 text-sm text-500 dark:text-gray-400">
                             <i class="pi pi-book"></i>
                             <span>{{ selectedBorrowing.book?.category || 'Chưa phân loại' }}</span>
                         </div>
-                        <div class="flex items-center gap-2 text-sm text-500">
+                        <div class="flex items-center gap-2 text-sm text-500 dark:text-gray-400">
                             <i class="pi pi-calendar"></i>
                             <span>{{ selectedBorrowing.book?.published_year || 'N/A' }}</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="p-4 surface-card border-round">
+                <div class="p-4 surface-card border-round dark:bg-gray-700/50 dark:border-gray-700">
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <p class="text-500 mb-2">{{ t('borrowing.fields.borrower') }}</p>
-                            <p class="text-900 font-medium">{{ selectedBorrowing.user?.name }}</p>
-                            <p class="text-600 text-sm">{{ selectedBorrowing.user?.email }}</p>
+                            <p class="text-500 mb-2 dark:text-gray-400">{{ t('borrowing.fields.borrower') }}</p>
+                            <p class="text-900 font-medium dark:text-white">{{ selectedBorrowing.user?.name }}</p>
+                            <p class="text-600 text-sm dark:text-gray-300">{{ selectedBorrowing.user?.email }}</p>
                         </div>
                         <div>
-                            <p class="text-500 mb-2">{{ t('borrowing.fields.borrowDate') }}</p>
-                            <p class="text-900 font-medium">{{ formatDate(selectedBorrowing.borrow_date) }}</p>
+                            <p class="text-500 mb-2 dark:text-gray-400">{{ t('borrowing.fields.borrowDate') }}</p>
+                            <p class="text-900 font-medium dark:text-white">{{ formatDate(selectedBorrowing.borrow_date) }}</p>
                         </div>
                         <div>
-                            <p class="text-500 mb-2">{{ t('borrowing.fields.dueDate') }}</p>
-                            <p class="text-900 font-medium">{{ formatDate(selectedBorrowing.due_date) }}</p>
+                            <p class="text-500 mb-2 dark:text-gray-400">{{ t('borrowing.fields.dueDate') }}</p>
+                            <p class="text-900 font-medium dark:text-white">{{ formatDate(selectedBorrowing.due_date) }}</p>
                         </div>
                         <div>
-                            <p class="text-500 mb-2">{{ t('borrowing.fields.status') }}</p>
+                            <p class="text-500 mb-2 dark:text-gray-400">{{ t('borrowing.fields.status') }}</p>
                             <Tag :severity="getStatusSeverity(selectedBorrowing.status)" :value="getStatusLabel(selectedBorrowing.status)" />
                         </div>
                     </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div v-if="selectedBorrowing.status === 'pending'" class="flex justify-end gap-3 pt-4">
+                    <Button
+                        :label="t('borrowing.actions.reject')"
+                        icon="pi pi-times"
+                        severity="danger"
+                        @click="handleReject(selectedBorrowing.id)"
+                        class="p-button-outlined"
+                    />
+                    <Button
+                        :label="t('borrowing.actions.approve')"
+                        icon="pi pi-check"
+                        severity="success"
+                        @click="handleApprove(selectedBorrowing.id)"
+                    />
+                </div>
+
+                <!-- Fine Button -->
+                <div v-if="selectedBorrowing.status === 'overdue'" class="flex justify-end gap-3 pt-4">
+                    <Button
+                        :label="t('borrowing.actions.createFine')"
+                        icon="pi pi-exclamation-triangle"
+                        severity="warning"
+                        @click="openFineDialog"
+                    />
                 </div>
             </div>
         </Dialog>
@@ -132,10 +162,13 @@
             :header="t('borrowing.dialog.fine.title')"
             :modal="true"
             :style="{ width: '400px' }"
+            class="dark:bg-gray-800"
+            headerClassName="dark:bg-gray-800 dark:text-white"
+            contentClassName="dark:bg-gray-800"
         >
             <div class="flex flex-col gap-4 p-4">
                 <div class="field">
-                    <label for="amount" class="block text-sm font-medium text-gray-700 mb-1">{{ t('borrowing.dialog.fine.amount') }}</label>
+                    <label for="amount" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ t('borrowing.dialog.fine.amount') }}</label>
                     <InputNumber
                         id="amount"
                         v-model="newFine.amount"
@@ -143,27 +176,27 @@
                         mode="currency"
                         currency="VND"
                         locale="vi-VN"
-                        class="w-full"
+                        class="w-full dark:bg-gray-700 dark:text-white dark:border-gray-600"
                     />
                 </div>
 
                 <div class="field">
-                    <label for="fine_date" class="block text-sm font-medium text-gray-700 mb-1">{{ t('borrowing.dialog.fine.fineDate') }}</label>
+                    <label for="fine_date" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ t('borrowing.dialog.fine.fineDate') }}</label>
                     <Calendar
                         id="fine_date"
                         v-model="newFine.fine_date"
                         dateFormat="dd/mm/yy"
-                        class="w-full"
+                        class="w-full dark:bg-gray-700 dark:text-white dark:border-gray-600"
                     />
                 </div>
 
                 <div class="field">
-                    <label for="payment_method" class="block text-sm font-medium text-gray-700 mb-1">{{ t('borrowing.dialog.fine.paymentMethod') }}</label>
+                    <label for="payment_method" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ t('borrowing.dialog.fine.paymentMethod') }}</label>
                     <InputText
                         id="payment_method"
                         v-model="newFine.payment_method"
                         placeholder="Nhập phương thức thanh toán"
-                        class="w-full"
+                        class="w-full dark:bg-gray-700 dark:text-white dark:border-gray-600"
                     />
                 </div>
             </div>

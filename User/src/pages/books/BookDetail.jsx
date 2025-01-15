@@ -9,6 +9,7 @@ import bookService from '../../services/book.service'
 import LoadingSpinner from '../../components/common/LoadingSpinner'
 import FormInput from '../../components/common/FormInput'
 import { API_CONFIG } from '../../config/api.config'
+
 const BookDetail = () => {
     const { id } = useParams()
     const navigate = useNavigate()
@@ -33,31 +34,19 @@ const BookDetail = () => {
             if (!id) {
                 throw new Error(t('books.id_required'))
             }
-            console.log('Fetching book with ID:', id)
             const response = await bookService.getBookById(id)
-            console.log('Raw API Response:', response)
             
-            // Kiểm tra response
             if (!response || !response.book) {
-                console.error('No book data received from API')
                 throw new Error(t('books.not_found'))
             }
 
-            // Kết hợp dữ liệu book và available_copies
             const bookData = {
                 ...response.book,
                 available_copies: response.available_copies
             }
 
-            console.log('Processed book data:', JSON.stringify(bookData.image, null, 2))
             setBook(bookData)
         } catch (error) {
-            console.error('Error details:', {
-                message: error.message,
-                response: error.response?.data,
-                status: error.response?.status,
-                stack: error.stack
-            })
             toast.current.show({
                 severity: 'error',
                 summary: t('common.error'),
@@ -68,10 +57,6 @@ const BookDetail = () => {
             setLoading(false)
         }
     }
-
-    useEffect(() => {
-        console.log('Current book state:', book)
-    }, [book])
 
     const handleBorrow = async () => {
         try {
@@ -117,7 +102,6 @@ const BookDetail = () => {
         return `${API_CONFIG.BASE_URL}/books/image/${cleanPath}`
     }
 
-
     const renderBorrowDialog = () => (
         <Dialog
             visible={showBorrowDialog}
@@ -136,14 +120,14 @@ const BookDetail = () => {
                         className="flex items-center gap-2 text-gray-400 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-300 transition-colors"
                     >
                         <i className="pi pi-times text-lg"></i>
-                        <span>Cancel</span>
+                        <span>{t('common.cancel')}</span>
                     </Button>
                     <Button
                         onClick={handleBorrow}
                         className="flex items-center gap-2 text-white px-6 py-2 rounded-lg transition-colors"
                     >
                         <i className="pi pi-check text-lg"></i>
-                        <span>Submit</span>
+                        <span>{t('common.submit')}</span>
                     </Button>
                 </div>
             }
@@ -172,25 +156,24 @@ const BookDetail = () => {
                     <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 p-4 rounded-lg">
                         <div className="flex items-center gap-2 text-blue-800 dark:text-[#23C552] mb-2">
                             <i className="pi pi-info-circle"></i>
-                            <span className="font-medium">Borrowing Details</span>
+                            <span className="font-medium">{t('books.borrowing_details')}</span>
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                                <p className="text-sm text-gray-600 dark:text-gray-300 mb-1">Borrow Date</p>
+                                <p className="text-sm text-gray-600 dark:text-gray-300 mb-1">{t('books.form.borrow_date')}</p>
                                 <p className="font-medium dark:text-[#23C552]">{new Date().toLocaleDateString()}</p>
                             </div>
                             <div>
-                                <p className="text-sm text-gray-600 dark:text-gray-300 mb-1">Available Copies</p>
+                                <p className="text-sm text-gray-600 dark:text-gray-300 mb-1">{t('books.available_copies')}</p>
                                 <p className="font-medium dark:text-[#23C552]">{book.available_copies}</p>
                             </div>
                         </div>
                     </div>
 
                     <div>
-                        {/* handle dark mode bg dark */}
                         <FormInput
                             type="date"
-                            label="Due Date *"
+                            label={`${t('books.form.due_date')} *`}
                             value={borrowForm.due_date}
                             onChange={(value) => setBorrowForm(prev => ({ ...prev, due_date: value }))}
                             error={formErrors.due_date}
@@ -201,19 +184,19 @@ const BookDetail = () => {
                         />
                         <small className="text-gray-500 dark:text-gray-400 mt-1 block">
                             <i className="pi pi-info-circle mr-1"></i>
-                            Please select a return date (maximum 14 days)
+                            {t('books.due_date_info')}
                         </small>
                     </div>
 
                     <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg text-sm">
                         <div className="flex items-center gap-2 mb-2">
                             <i className="pi pi-exclamation-circle text-yellow-600 dark:text-yellow-400"></i>
-                            <span className="font-medium text-gray-700 dark:text-[#23C552]">Borrowing Terms</span>
+                            <span className="font-medium text-gray-700 dark:text-[#23C552]">{t('books.borrowing_terms')}</span>
                         </div>
                         <ul className="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-300">
-                            <li>Please return the book on time</li>
-                            <li>Take good care of the book, avoid any damage</li>
-                            <li>Late fees will apply if returned late ($1/day)</li>
+                            <li>{t('books.terms.return_on_time')}</li>
+                            <li>{t('books.terms.take_care')}</li>
+                            <li>{t('books.terms.fees_apply')}</li>
                         </ul>
                     </div>
                 </div>
@@ -235,16 +218,10 @@ const BookDetail = () => {
         )
     }
 
-    // const header = (
-    //     <div className="flex justify-between items-center">
-    //         <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100">{book.title}</h2>
-    //     </div>
-    // )
-
     return (
         <div className="p-4 bg-gray-50 dark:bg-gray-900 min-h-screen">
             <Toast ref={toast} />
-            <Card  className="shadow-lg bg-white dark:bg-gray-800 dark:border-gray-700">
+            <Card className="shadow-lg bg-white dark:bg-gray-800 dark:border-gray-700">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="col-span-1">
                         <img
@@ -266,15 +243,15 @@ const BookDetail = () => {
                             </div>
                             <div className="text-sm text-gray-600 dark:text-gray-400">
                                 <p className="flex items-center gap-2 mb-1">
-                                    <span>Total Copies:</span>
+                                    <span>{t('books.total_copies')}:</span>
                                     <span className="font-medium text-green-500 dark:text-white">{book.total_copies}</span>
                                 </p>
                                 <p className="flex items-center gap-2 mb-1">
-                                    <span>Available Copies:</span>
+                                    <span>{t('books.available_copies')}:</span>
                                     <span className="font-medium text-green-500 dark:text-white">{book.available_copies}</span>
                                 </p>
                                 <p className="flex items-center gap-2">
-                                    <span>Location:</span>
+                                    <span>{t('books.location')}:</span>
                                     <span className="font-medium text-green-500 dark:text-white">{book.location_shelf}</span>
                                 </p>
                             </div>
@@ -302,38 +279,38 @@ const BookDetail = () => {
 
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg">
-                                    <p className="text-sm text-gray-500 dark:text-gray-400">Publisher</p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">{t('books.publisher')}</p>
                                     <p className="font-medium dark:text-gray-200">{book.publisher}</p>
                                 </div>
                                 <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg">
-                                    <p className="text-sm text-gray-500 dark:text-gray-400">Publication Year</p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">{t('books.publication_year')}</p>
                                     <p className="font-medium dark:text-gray-200">{book.publication_year}</p>
                                 </div>
                                 <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg">
-                                    <p className="text-sm text-gray-500 dark:text-gray-400">Category</p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">{t('books.category')}</p>
                                     <p className="font-medium dark:text-gray-200">{book.category}</p>
                                 </div>
                                 <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg">
-                                    <p className="text-sm text-gray-500 dark:text-gray-400">ISBN</p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">{t('books.isbn')}</p>
                                     <p className="font-medium dark:text-gray-200">{book.isbn}</p>
                                 </div>
                             </div>
 
                             <div>
-                                <h4 className="text-lg font-semibold mb-2 dark:text-gray-100">Description</h4>
+                                <h4 className="text-lg font-semibold mb-2 dark:text-gray-100">{t('books.description')}</h4>
                                 <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{book.description}</p>
                             </div>
 
                             <div className="border-t border-gray-200 dark:border-gray-700 pt-4 mt-6">
-                                <h4 className="text-lg font-semibold mb-3 dark:text-gray-100">Additional Information</h4>
+                                <h4 className="text-lg font-semibold mb-3 dark:text-gray-100">{t('books.additional_info')}</h4>
                                 <div className="text-sm text-gray-600 dark:text-gray-300">
                                     <p className="mb-1">
-                                        <span className="font-medium dark:text-gray-200">Created:</span>{' '}
+                                        <span className="font-medium dark:text-gray-200">{t('books.created_at')}:</span>{' '}
                                         {new Date(book.created_at).toLocaleDateString()}
                                     </p>
                                     {book.updated_at && (
                                         <p>
-                                            <span className="font-medium dark:text-gray-200">Last Updated:</span>{' '}
+                                            <span className="font-medium dark:text-gray-200">{t('books.updated_at')}:</span>{' '}
                                             {new Date(book.updated_at).toLocaleDateString()}
                                         </p>
                                     )}
