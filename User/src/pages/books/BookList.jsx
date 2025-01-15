@@ -155,7 +155,8 @@ const BookList = () => {
     const getImageUrl = (imagePath) => {
         if (!imagePath) return '/default-book-cover.jpg'
         if (imagePath.startsWith('http')) return imagePath
-        return `${API_CONFIG.BASE_URL.replace('/api', '')}/storage/${imagePath}`
+        const cleanPath = imagePath.replace('profile_image/', '')
+        return `${API_CONFIG.BASE_URL}/books/image/${cleanPath}`
     }
 
     const handleImageError = (e) => {
@@ -171,11 +172,11 @@ const BookList = () => {
                     className="absolute top-0 left-0 w-full h-full object-cover"
                     onError={handleImageError}
                 />
-                <div className={`absolute top-2 right-2 px-2 py-1 rounded-full text-sm ${
+                {/* <div className={`absolute top-2 right-2 px-2 py-1 rounded-full text-sm ${
                     book.status?.toLowerCase() === 'available' ? 'bg-green-500 text-white' : 'bg-yellow-500 text-white'
                 }`}>
                     {book.status ? t(`status.${book.status.toLowerCase()}`) : t('status.unknown')}
-                </div>
+                </div> */}
             </div>
             <div className="p-4">
                 <h3 className="text-lg font-semibold mb-2 line-clamp-2">{book.title}</h3>
@@ -264,14 +265,14 @@ const BookList = () => {
                         onFilter={(e) => setCategorySearchQuery(e.filter)}
                         emptyFilterMessage={t('common.no_results')}
                     />
-                    <Dropdown
+                    {/* <Dropdown
                         value={selectedStatus}
                         options={statuses}
                         onChange={(e) => setSelectedStatus(e.value)}
                         placeholder={t('common.select_status')}
                         className="w-full md:w-48 !bg-white border border-gray-200 rounded-full hover:border-gray-300 focus:!border-primary transition-colors"
                         panelClassName="rounded-lg shadow-lg"
-                    />
+                    /> */}
                 </div>
             </div>
 

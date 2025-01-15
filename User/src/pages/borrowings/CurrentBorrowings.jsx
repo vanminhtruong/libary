@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import bookService from '../../services/book.service';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 import { API_CONFIG } from '../../config/api.config';
+
 const CurrentBorrowings = () => {
     const navigate = useNavigate();
     const toast = useRef(null);
@@ -29,8 +30,20 @@ const CurrentBorrowings = () => {
             setLoading(true);
             const response = await bookService.getCurrentBorrowings();
             console.log('Borrowings response:', response);
-            setBorrowings(response || []);
+            if (response && Array.isArray(response)) {
+                setBorrowings(response);
+            } else {
+                setBorrowings([]);
+                toast.current.show({
+                    severity: 'info',
+                    summary: t('common.info'),
+                    detail: t('borrowings.no_borrowings'),
+                    life: 3000
+                });
+            }
         } catch (error) {
+            console.error('Error loading borrowings:', error);
+            setBorrowings([]);
             toast.current.show({
                 severity: 'error',
                 summary: t('common.error'),
@@ -86,10 +99,11 @@ const CurrentBorrowings = () => {
         }
     };
 
-    const getImageUrl = (filename) => {
-        if (!filename) return '/images/book-placeholder.png'
-        if (filename.startsWith('http')) return filename
-        return `${API_CONFIG.BASE_URL.replace('/api', '')}/storage/${filename}`
+    const getImageUrl = (imagePath) => {
+        if (!imagePath) return '/default-book-cover.jpg'
+        if (imagePath.startsWith('http')) return imagePath
+        const cleanPath = imagePath.replace('profile_image/', '')
+        return `${API_CONFIG.BASE_URL}/books/image/${cleanPath}`
     }
 
     const renderBorrowingCard = (borrowing) => (
@@ -306,22 +320,13 @@ const CurrentBorrowings = () => {
             </Dialog>
 
             {/* Borrowings List */}
-            <div className="space-y-4">
-                {borrowings.length > 0 ? (
-                    borrowings.map(renderBorrowingCard)
-                ) : (
-                    <div className="text-center py-8 bg-gray-50 rounded-lg">
-                        <i className="pi pi-book text-4xl text-gray-400 mb-4"></i>
-                        <p className="text-gray-500">{t('borrowings.no_current_borrowings')}</p>
-                        <Button
-                            label={t('borrowings.browse_books')}
-                            icon="pi pi-search"
-                            onClick={() => navigate('/books')}
-                            className="mt-4"
-                        />
-                    </div>
-                )}
-            </div>
+            {borrowings.length > 0 ? (
+                borrowings.map(borrowing => renderBorrowingCard(borrowing))
+            ) : (
+                <div className="text-center py-8">
+                    <p className="text-gray-500">{t('borrowings.no_active_borrowings')}</p>
+                </div>
+            )}
         </div>
     );
 };

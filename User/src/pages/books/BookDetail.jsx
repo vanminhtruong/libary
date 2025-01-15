@@ -110,10 +110,11 @@ const BookDetail = () => {
         return Object.keys(errors).length === 0;
     }
 
-    const getImageUrl = (filename) => {
-        if (!filename) return '/images/book-placeholder.png'
-        if (filename.startsWith('http')) return filename
-        return `${API_CONFIG.BASE_URL.replace('/api', '')}/storage/${filename}`
+    const getImageUrl = (imagePath) => {
+        if (!imagePath) return '/default-book-cover.jpg'
+        if (imagePath.startsWith('http')) return imagePath
+        const cleanPath = imagePath.replace('profile_image/', '')
+        return `${API_CONFIG.BASE_URL}/books/image/${cleanPath}`
     }
 
 
