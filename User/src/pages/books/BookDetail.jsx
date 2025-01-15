@@ -124,104 +124,96 @@ const BookDetail = () => {
             onHide={() => setShowBorrowDialog(false)}
             header={t('common.borrow')}
             modal
-            className="p-fluid"
+            className="!p-0 dark:bg-gray-800/95"
             style={{ width: '450px' }}
+            headerClassName="dark:bg-gray-800/95 dark:text-gray-100 !p-4"
+            contentClassName="dark:bg-gray-800/95 !p-0"
+            footerClassName="dark:bg-gray-800/95 !p-0"
             footer={
-                <div className="flex justify-end gap-3 pt-4 border-t border-gray-200">
+                <div className="flex justify-end items-center gap-6 p-4 dark:bg-gray-800/95 border-t border-gray-200 dark:border-gray-700">
                     <Button
-                        label={t('common.cancel')}
-                        icon="pi pi-times"
                         onClick={() => setShowBorrowDialog(false)}
-                        className="p-button-outlined p-button-secondary hover:bg-gray-100 transition-colors duration-200"
-                        style={{
-                            padding: '0.75rem 1.25rem',
-                            borderRadius: '8px'
-                        }}
-                    />
+                        className="flex items-center gap-2 text-gray-400 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-300 transition-colors"
+                    >
+                        <i className="pi pi-times text-lg"></i>
+                        <span>Cancel</span>
+                    </Button>
                     <Button
-                        label={t('common.submit')}
-                        icon="pi pi-check"
                         onClick={handleBorrow}
-                        severity="success"
-                        className="hover:bg-green-600 transition-colors duration-200"
-                        style={{
-                            padding: '0.75rem 1.25rem',
-                            borderRadius: '8px'
-                        }}
-                        autoFocus
-                    />
+                        className="flex items-center gap-2 text-white px-6 py-2 rounded-lg transition-colors"
+                    >
+                        <i className="pi pi-check text-lg"></i>
+                        <span>Submit</span>
+                    </Button>
                 </div>
             }
         >
             <div className="p-4">
-                {/* Book Info Section */}
-                <div className="flex items-center gap-4 mb-6 p-4 bg-gray-50 rounded-xl">
+                <div className="flex items-center gap-4 mb-6 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
                     <img
                         src={getImageUrl(book.image)}
                         alt={book.title}
                         className="w-20 h-28 object-cover rounded-lg shadow-sm"
                     />
                     <div>
-                        <h3 className="text-lg font-semibold text-gray-800 mb-1">{book.title}</h3>
-                        <div className="flex items-center gap-2 text-gray-600 text-sm mb-1">
+                        <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-1">{book.title}</h3>
+                        <div className="flex items-center gap-2 text-gray-600 dark:text-gray-300 text-sm mb-1">
                             <i className="pi pi-user text-sm"></i>
                             <span>{book.author}</span>
                         </div>
-                        <div className="flex items-center gap-2 text-gray-600 text-sm">
+                        <div className="flex items-center gap-2 text-gray-600 dark:text-gray-300 text-sm">
                             <i className="pi pi-bookmark text-sm"></i>
                             <span>{book.category}</span>
                         </div>
                     </div>
                 </div>
 
-                {/* Borrowing Details Section */}
                 <div className="space-y-4">
-                    <div className="bg-blue-50 border border-blue-100 p-4 rounded-lg">
-                        <div className="flex items-center gap-2 text-blue-800 mb-2">
+                    <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 p-4 rounded-lg">
+                        <div className="flex items-center gap-2 text-blue-800 dark:text-[#23C552] mb-2">
                             <i className="pi pi-info-circle"></i>
-                            <span className="font-medium">{t('books.borrowing_details')}</span>
+                            <span className="font-medium">Borrowing Details</span>
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                                <p className="text-sm text-gray-600 mb-1">{t('books.form.borrow_date')}</p>
-                                <p className="font-medium">{new Date().toLocaleDateString()}</p>
+                                <p className="text-sm text-gray-600 dark:text-gray-300 mb-1">Borrow Date</p>
+                                <p className="font-medium dark:text-[#23C552]">{new Date().toLocaleDateString()}</p>
                             </div>
                             <div>
-                                <p className="text-sm text-gray-600 mb-1">{t('books.available_copies')}</p>
-                                <p className="font-medium">{book.available_copies}</p>
+                                <p className="text-sm text-gray-600 dark:text-gray-300 mb-1">Available Copies</p>
+                                <p className="font-medium dark:text-[#23C552]">{book.available_copies}</p>
                             </div>
                         </div>
                     </div>
 
-                    {/* Due Date Input */}
                     <div>
+                        {/* handle dark mode bg dark */}
                         <FormInput
                             type="date"
-                            label="books.form.due_date"
+                            label="Due Date *"
                             value={borrowForm.due_date}
                             onChange={(value) => setBorrowForm(prev => ({ ...prev, due_date: value }))}
                             error={formErrors.due_date}
                             required
                             minDate={new Date()}
                             icon="pi pi-calendar"
-                            className="w-full"
+                            className="w-full p-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-black dark:text-white"
                         />
-                        <small className="text-gray-500 mt-1 block">
+                        <small className="text-gray-500 dark:text-gray-400 mt-1 block">
                             <i className="pi pi-info-circle mr-1"></i>
-                            {t('books.due_date_info')}
+                            Please select a return date (maximum 14 days)
                         </small>
                     </div>
 
-                    {/* Terms Section */}
-                    <div className="bg-gray-50 p-3 rounded-lg text-sm text-gray-600">
+                    <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg text-sm">
                         <div className="flex items-center gap-2 mb-2">
-                            <i className="pi pi-exclamation-circle text-yellow-600"></i>
-                            <span className="font-medium text-gray-700">{t('books.borrowing_terms')}</span>
+                            <i className="pi pi-exclamation-circle text-yellow-600 dark:text-yellow-400"></i>
+                            <span className="font-medium text-gray-700 dark:text-[#23C552]">Borrowing Terms</span>
                         </div>
-                        <ul className="list-disc list-inside space-y-1 text-gray-600">
-                            <li>{t('books.terms.return_on_time')}</li>
-                            <li>{t('books.terms.take_care')}</li>
-                            <li>{t('books.terms.fees_apply')}</li>
+                        <ul className="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-300">
+                            <li>Please return the book on time</li>
+                            <li>Take good care of the book, avoid any damage</li>
+                            <li>Late fees will apply if returned late ($1/day)</li>
                         </ul>
                     </div>
                 </div>
@@ -243,37 +235,48 @@ const BookDetail = () => {
         )
     }
 
-    const header = (
-        <div className="flex justify-between items-center">
-            <h2 className="text-xl font-bold">{book.title}</h2>
-        </div>
-    )
+    // const header = (
+    //     <div className="flex justify-between items-center">
+    //         <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100">{book.title}</h2>
+    //     </div>
+    // )
 
     return (
-        <div className="p-4">
+        <div className="p-4 bg-gray-50 dark:bg-gray-900 min-h-screen">
             <Toast ref={toast} />
-            <Card header={header} className="shadow-lg">
+            <Card  className="shadow-lg bg-white dark:bg-gray-800 dark:border-gray-700">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="col-span-1">
                         <img
                             src={getImageUrl(book.image)}
                             alt={book.title}
-                            className="w-full h-auto rounded-lg shadow-md object-cover"
+                            className="w-full h-auto rounded-lg shadow-md object-cover dark:border-gray-700"
                             style={{ maxHeight: '400px' }}
                         />
-                        <div className="mt-4 bg-gray-50 p-4 rounded-lg">
+                        <div className="mt-4 bg-gray-50 dark:bg-gray-800/80 p-4 rounded-lg border dark:border-gray-700">
                             <div className="flex justify-between items-center mb-2">
-                                <span className="text-lg font-semibold text-green-600">${book.price}</span>
+                                <span className="text-2xl font-semibold text-green-500 dark:text-white">${book.price}</span>
                                 <span className={`px-3 py-1 rounded-full text-sm ${
-                                    book.available_copies > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                                    book.available_copies > 0 
+                                    ? 'bg-green-500/10 text-green-500 dark:bg-[#23C552]/20 dark:text-white' 
+                                    : 'bg-red-500/10 text-red-500 dark:bg-red-500/20 dark:text-red-400'
                                 }`}>
                                     {book.available_copies > 0 ? t('status.available') : t('status.borrowed')}
                                 </span>
                             </div>
-                            <div className="text-sm text-gray-600">
-                                <p>Total Copies: {book.total_copies}</p>
-                                <p>Available Copies: {book.available_copies}</p>
-                                <p>Location: {book.location_shelf}</p>
+                            <div className="text-sm text-gray-600 dark:text-gray-400">
+                                <p className="flex items-center gap-2 mb-1">
+                                    <span>Total Copies:</span>
+                                    <span className="font-medium text-green-500 dark:text-white">{book.total_copies}</span>
+                                </p>
+                                <p className="flex items-center gap-2 mb-1">
+                                    <span>Available Copies:</span>
+                                    <span className="font-medium text-green-500 dark:text-white">{book.available_copies}</span>
+                                </p>
+                                <p className="flex items-center gap-2">
+                                    <span>Location:</span>
+                                    <span className="font-medium text-green-500 dark:text-white">{book.location_shelf}</span>
+                                </p>
                             </div>
                             {book.available_copies > 0 && (
                                 <Button
@@ -281,7 +284,7 @@ const BookDetail = () => {
                                     label={t('common.borrow')}
                                     onClick={() => setShowBorrowDialog(true)}
                                     severity="success"
-                                    className="w-full mt-4"
+                                    className="w-full mt-4 dark:text-white hover:brightness-90 dark:hover:brightness-75 transition-colors duration-200"
                                 />
                             )}
                         </div>
@@ -290,47 +293,47 @@ const BookDetail = () => {
                     <div className="col-span-1 md:col-span-2">
                         <div className="space-y-6">
                             <div>
-                                <h3 className="text-2xl font-bold text-gray-800 mb-2">{book.title}</h3>
-                                <div className="flex items-center gap-2 text-gray-600">
+                                <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">{book.title}</h3>
+                                <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
                                     <i className="pi pi-user"></i>
                                     <span className="font-medium">{book.author}</span>
                                 </div>
                             </div>
 
                             <div className="grid grid-cols-2 gap-4">
-                                <div className="bg-gray-50 p-3 rounded-lg">
-                                    <p className="text-sm text-gray-500">Publisher</p>
-                                    <p className="font-medium">{book.publisher}</p>
+                                <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg">
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">Publisher</p>
+                                    <p className="font-medium dark:text-gray-200">{book.publisher}</p>
                                 </div>
-                                <div className="bg-gray-50 p-3 rounded-lg">
-                                    <p className="text-sm text-gray-500">Publication Year</p>
-                                    <p className="font-medium">{book.publication_year}</p>
+                                <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg">
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">Publication Year</p>
+                                    <p className="font-medium dark:text-gray-200">{book.publication_year}</p>
                                 </div>
-                                <div className="bg-gray-50 p-3 rounded-lg">
-                                    <p className="text-sm text-gray-500">Category</p>
-                                    <p className="font-medium">{book.category}</p>
+                                <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg">
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">Category</p>
+                                    <p className="font-medium dark:text-gray-200">{book.category}</p>
                                 </div>
-                                <div className="bg-gray-50 p-3 rounded-lg">
-                                    <p className="text-sm text-gray-500">ISBN</p>
-                                    <p className="font-medium">{book.isbn}</p>
+                                <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg">
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">ISBN</p>
+                                    <p className="font-medium dark:text-gray-200">{book.isbn}</p>
                                 </div>
                             </div>
 
                             <div>
-                                <h4 className="text-lg font-semibold mb-2">Description</h4>
-                                <p className="text-gray-600 leading-relaxed">{book.description}</p>
+                                <h4 className="text-lg font-semibold mb-2 dark:text-gray-100">Description</h4>
+                                <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{book.description}</p>
                             </div>
 
-                            <div className="border-t pt-4 mt-6">
-                                <h4 className="text-lg font-semibold mb-3">Additional Information</h4>
-                                <div className="text-sm text-gray-600">
+                            <div className="border-t border-gray-200 dark:border-gray-700 pt-4 mt-6">
+                                <h4 className="text-lg font-semibold mb-3 dark:text-gray-100">Additional Information</h4>
+                                <div className="text-sm text-gray-600 dark:text-gray-300">
                                     <p className="mb-1">
-                                        <span className="font-medium">Created:</span>{' '}
+                                        <span className="font-medium dark:text-gray-200">Created:</span>{' '}
                                         {new Date(book.created_at).toLocaleDateString()}
                                     </p>
                                     {book.updated_at && (
                                         <p>
-                                            <span className="font-medium">Last Updated:</span>{' '}
+                                            <span className="font-medium dark:text-gray-200">Last Updated:</span>{' '}
                                             {new Date(book.updated_at).toLocaleDateString()}
                                         </p>
                                     )}

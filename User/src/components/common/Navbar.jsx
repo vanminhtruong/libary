@@ -54,27 +54,30 @@ const Navbar = () => {
         {
             label: t('common.home'),
             icon: 'pi pi-home',
-            className: 'dark:text-gray-200',
+            className: 'dark:text-white dark:hover:bg-gray-700',
             command: () => navigate(ROUTES.HOME)
         },
         {
             label: t('common.books'),
             icon: 'pi pi-book',
-            className: 'dark:text-gray-200',
+            className: 'dark:text-white dark:hover:bg-gray-700',
             items: [
                 {
                     label: t('common.all_books'),
                     icon: 'pi pi-list',
+                    className: 'dark:text-white dark:hover:bg-gray-700',
                     command: () => navigate(ROUTES.BOOKS)
                 },
                 {
                     label: t('common.categories'),
                     icon: 'pi pi-tags',
+                    className: 'dark:text-white dark:hover:bg-gray-700',
                     command: () => navigate(ROUTES.CATEGORIES)
                 },
                 {
                     label: t('common.new_releases'),
                     icon: 'pi pi-star',
+                    className: 'dark:text-white dark:hover:bg-gray-700',
                     command: () => navigate(ROUTES.NEW_RELEASES)
                 }
             ]
@@ -82,7 +85,7 @@ const Navbar = () => {
         {
             label: t('borrowings.current_borrowings'),
             icon: 'pi pi-bookmark',
-            className: 'dark:text-gray-200',
+            className: 'dark:text-white dark:hover:bg-gray-700',
             command: () => navigate(ROUTES.CURRENT_BORROWINGS)
         }
     ]
@@ -204,7 +207,7 @@ const Navbar = () => {
                     model={items}
                     start={start}
                     end={end}
-                    className="border-none !p-0 dark:bg-gray-800"
+                    className="border-none !p-0 dark:bg-gray-800 [&_.p-menuitem-link:hover]:dark:bg-gray-700 [&_.p-submenu-list]:dark:bg-gray-800 [&_.p-submenu-list]:dark:border-gray-700 [&_.p-menuitem-text]:dark:text-white [&_.p-menuitem-icon]:dark:text-white [&_.p-menuitem-link.p-menuitem-link-active]:dark:bg-gray-700 [&_.p-menuitem-link.p-menuitem-link-active]:dark:text-white [&_.p-overlay]:dark:bg-gray-800 [&_.p-dropdown-panel]:dark:bg-gray-800 [&_.p-dropdown-item]:dark:text-white [&_.p-dropdown-item:hover]:dark:bg-gray-700 [&_.p-dropdown-item.p-highlight]:dark:bg-gray-700"
                     style={{ background: 'transparent' }}
                 />
             </div>
