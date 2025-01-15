@@ -29,7 +29,6 @@ Route::get('/categories/dropdown', [CategoryController::class, 'getForDropdown']
 
 // Admin routes
 Route::middleware(['auth:api', 'admin'])->prefix('admin')->group(function () {
-    // Book Management
     Route::prefix('books')->group(function () {
         Route::get('/{id}', [BookController::class, 'show']);
         Route::post('/', [BookController::class, 'store']);
@@ -37,7 +36,6 @@ Route::middleware(['auth:api', 'admin'])->prefix('admin')->group(function () {
         Route::delete('/{id}', [BookController::class, 'destroy']);
     });
     
-    // Category Management
     Route::prefix('categories')->group(function () {
         Route::get('/', [CategoryController::class, 'index']);
         Route::get('/{id}', [CategoryController::class, 'show']);
@@ -46,41 +44,21 @@ Route::middleware(['auth:api', 'admin'])->prefix('admin')->group(function () {
         Route::delete('/{id}', [CategoryController::class, 'destroy']);
     });
     
-    // Borrowing Management
-    /**
-     * Lấy danh sách các yêu cầu mượn sách
-     * Method: GET
-     * URL: /api/borrowings
-     * @return array Danh sách các yêu cầu mượn sách
-     */
+    // Lấy danh sách các yêu cầu mượn sách
     Route::get('/borrowings', [BorrowingController::class, 'index']);
 
-    /**
-     * Phê duyệt yêu cầu mượn sách
-     * Method: POST
-     * URL: /api/borrowings/approve/{id}
-     * @param int $id ID của yêu cầu mượn sách
-     * @return JsonResponse Thông báo kết quả phê duyệt
-     */
+    // Phê duyệt yêu cầu mượn sách
     Route::post('/borrowings/approve/{id}', [BorrowingController::class, 'approve']);
 
-    /**
-     * Từ chối yêu cầu mượn sách
-     * Method: POST
-     * URL: /api/borrowings/reject/{id}
-     * @param int $id ID của yêu cầu mượn sách
-     * @return JsonResponse Thông báo kết quả từ chối
-     */
+    // Từ chối yêu cầu mượn sách
     Route::post('/borrowings/reject/{id}', [BorrowingController::class, 'reject']);
     
-    // User Management
     Route::get('/users', [AdminAuthController::class, 'users']);
     Route::post('/users', [AdminAuthController::class, 'createUser']);
     Route::get('/users/{id}', [AdminAuthController::class, 'user']);
     Route::post('/users/{id}/update', [AdminAuthController::class, 'updateUser']);
     Route::delete('/users/{id}', [AdminAuthController::class, 'deleteUser']);
 
-    // Fine Management
     Route::prefix('fines')->group(function () {
         Route::get('/', [FineController::class, 'index']);
         Route::post('/', [FineController::class, 'store']);
