@@ -9,7 +9,8 @@
         </div>
 
         <DataTable :value="categories" :paginator="true" :rows="10" 
-                  :rowsPerPageOptions="[5,10,20]" responsiveLayout="scroll">
+                  :rowsPerPageOptions="[5,10,20]" responsiveLayout="scroll"
+                  :loading="loading">
             <Column :header="$t('category.table.stt')">
                 <template #body="slotProps">
                     {{ categories.indexOf(slotProps.data) + 1 }}
@@ -87,6 +88,7 @@ const errors = ref({})
 const isEditing = ref(false)
 const currentCategoryId = ref(null)
 const isHandlingError = ref(false)
+const loading = ref(false)
 
 const categoryForm = ref({
     name: '',
@@ -95,6 +97,7 @@ const categoryForm = ref({
 
 const loadCategories = async () => {
     try {
+        loading.value = true
         const response = await CategoriesService.getCategories()
         categories.value = response.data
     } catch (error) {
@@ -105,6 +108,8 @@ const loadCategories = async () => {
             detail: t('category.message.error.load'),
             life: 3000
         })
+    } finally {
+        loading.value = false
     }
 }
 

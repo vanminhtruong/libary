@@ -68,7 +68,9 @@ export default {
     },
     button: {
         save: 'Lưu',
-        cancel: 'Hủy'
+        cancel: 'Hủy',
+        edit: 'Sửa',
+        delete: 'Xóa'
     },
     message: {
         confirmDelete: 'Bạn có chắc chắn muốn xóa sách này?',

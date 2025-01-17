@@ -11,7 +11,8 @@
         <DataTable :value="users" :paginator="true" :rows="10" 
                   :rowsPerPageOptions="[5,10,20]" responsiveLayout="scroll"
                   class="user-table" @rowClick="showUserDetail($event.data)"
-                  selectionMode="single">
+                  selectionMode="single"
+                  :loading="loading">
             <Column :header="t('user.table.stt')">
                 <template #body="slotProps">
                     {{ users.indexOf(slotProps.data) + 1 }}
@@ -223,6 +224,7 @@ const currentUserId = ref(null)
 const selectedImage = ref(null)
 const detailDialog = ref(false)
 const selectedUser = ref(null)
+const loading = ref(false)
 
 const userForm = ref({
     name: '',
@@ -237,6 +239,7 @@ const getImageUrl = (filename) => {
 
 const fetchUsers = async () => {
     try {
+        loading.value = true
         const response = await UserService.getUsers()
         users.value = response
     } catch (error) {
@@ -247,6 +250,8 @@ const fetchUsers = async () => {
             detail: t('user.message.error.load'),
             life: 3000
         })
+    } finally {
+        loading.value = false
     }
 }
 

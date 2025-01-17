@@ -68,7 +68,9 @@ export default {
     },
     button: {
         save: 'Save',
-        cancel: 'Cancel'
+        cancel: 'Cancel',
+        edit: 'Edit',
+        delete: 'Delete'
     },
     message: {
         confirmDelete: 'Are you sure you want to delete this book?',

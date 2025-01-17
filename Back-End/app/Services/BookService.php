@@ -99,4 +99,9 @@ class BookService
         \Log::info('BookService update result:', ['result' => $result]);
         return $result;
     }
+
+    public function getBookById($id)
+    {
+        return $this->bookRepository->findById($id);
+    }
 } 

@@ -10,6 +10,7 @@
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
             responsiveLayout="scroll"
             class="p-datatable-sm"
+            :loading="loading"
         >
             <Column field="id" :header="t('borrowing.fields.no')" style="width: 80px">
                 <template #body="{ index }">
@@ -253,10 +254,12 @@ const newFine = ref({
 })
 const imageError = ref(false)
 const bookImage = ref(null)
+const loading = ref(false)
 
 // Load borrowings
 const loadBorrowings = async () => {
     try {
+        loading.value = true
         const response = await BorrowingsService.getBorrowings()
         if (response.success) {
             borrowings.value = response.data
@@ -275,6 +278,8 @@ const loadBorrowings = async () => {
             detail: error.message || 'Không thể tải danh sách mượn sách',
             life: 3000
         })
+    } finally {
+        loading.value = false
     }
 }
 

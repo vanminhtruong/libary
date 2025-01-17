@@ -77,7 +77,7 @@ class BookRepository implements BookRepositoryInterface
 
     public function findById($id)
     {
-        return $this->model->findOrFail($id);
+        return Book::with('category')->findOrFail($id);
     }
 
     public function checkAvailability($id)

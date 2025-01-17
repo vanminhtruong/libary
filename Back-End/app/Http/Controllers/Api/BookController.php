@@ -75,8 +75,29 @@ class BookController extends Controller
 
     public function show($id)
     {
-        $result = $this->bookService->getBookDetails($id);
-        return response()->json($result);
+        try {
+            $book = $this->bookService->getBookById($id);
+            if (!$book) {
+                return response()->json([
+                    'message' => 'Book not found'
+                ], 404);
+            }
+
+            // Load the category relationship and get category name
+            $book->load('category');
+            $bookData = $book->toArray();
+            $bookData['category_name'] = $book->category ? $book->category->name : null;
+
+            return response()->json([
+                'book' => $bookData,
+                'available_copies' => $book->available_copies
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error retrieving book details',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     public function checkAvailability($id)

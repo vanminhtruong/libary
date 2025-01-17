@@ -159,18 +159,21 @@ const BookList = () => {
         return `${API_CONFIG.BASE_URL}/books/image/${cleanPath}`
     }
 
+    console.log
+
     const handleImageError = (e) => {
         e.target.src = '/default-book-cover.jpg'
     }
 
     const renderBookCard = (book) => (
         <div key={book.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-lg hover:scale-102">
-            <div className="relative pb-[60%] overflow-hidden bg-gray-100 dark:bg-gray-700">
+            <div className="relative pb-[110%] overflow-hidden bg-gray-100 dark:bg-gray-700">
                 <img 
                     src={getImageUrl(book.image)} 
                     alt={book.title}
-                    className="absolute top-0 left-0 w-full h-full object-cover"
+                    className="absolute top-0 left-0 w-full h-full object-cover hover:scale-110 transition-transform duration-300"
                     onError={handleImageError}
+                    loading="lazy"
                 />
                 {/* <div className={`absolute top-2 right-2 px-2 py-1 rounded-full text-sm ${
                     book.status?.toLowerCase() === 'available' ? 'bg-green-500 text-white' : 'bg-yellow-500 text-white'
@@ -179,11 +182,11 @@ const BookList = () => {
                 </div> */}
             </div>
             <div className="p-4">
-                <h3 className="text-lg font-semibold mb-2 line-clamp-2 text-gray-800 dark:text-gray-100">{book.title}</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-2">{book.author}</p>
+                <h3 className="text-lg font-semibold mb-2 line-clamp-2 text-gray-800 dark:text-gray-100 hover:text-primary transition-colors">{book.title}</h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-2 line-clamp-1">{book.author}</p>
                 <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-3">
                     <i className="pi pi-tag mr-2"></i>
-                    <span>{book.category?.name || t('common.unknown_category')}</span>
+                    <span className="line-clamp-1">{book.category?.name || t('common.unknown_category')}</span>
                 </div>
                 <div className="flex gap-2 mt-auto">
                     <Button

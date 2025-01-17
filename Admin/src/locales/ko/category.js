@@ -20,7 +20,9 @@ export default {
     },
     button: {
         save: '저장',
-        cancel: '취소'
+        cancel: '취소',
+        edit: '수정',
+        delete: '삭제'
     },
     message: {
         confirmDelete: '이 카테고리를 삭제하시겠습니까?',
