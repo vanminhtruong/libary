@@ -18,9 +18,9 @@ const LanguageSwitcher = () => {
 
   const languageOptionTemplate = (option) => {
     return (
-      <div className="flex items-center gap-2">
-        <span className="text-lg">{option.flag}</span>
-        <span>{option.name}</span>
+      <div className="flex items-center gap-2 hover:dark:bg-transparent">
+        <span className="text-lg dark:text-white dark:group-hover:text-white hover:dark:bg-transparent">{option.flag}</span>
+        <span className="dark:text-white dark:group-hover:text-white hover:dark:bg-transparent">{option.name}</span>
       </div>
     );
   };
@@ -47,8 +47,9 @@ const LanguageSwitcher = () => {
         [&_.p-dropdown-item:hover]:dark:bg-gray-700
         [&_.p-dropdown-item:not(.p-highlight):hover]:dark:bg-gray-700
         [&_.p-dropdown-trigger]:dark:text-white 
-        [&_.p-dropdown-label]:dark:text-white"
-      panelClassName="dark:bg-gray-800 dark:border-gray-700"
+        [&_.p-dropdown-label]:dark:text-white
+        [&_.p-dropdown-item]:!group"
+      panelClassName="dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-transparent"
     />
   );
 };
