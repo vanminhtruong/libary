@@ -323,7 +323,7 @@ const Profile = () => {
                                                     value={profile.password}
                                                     onChange={(value) => handleChange('password', value)}
                                                     type="password"
-                                                    required
+                                                    placeholder={t('profile.current_password_placeholder')}
                                                 />
 
                                                 <FormInput
@@ -331,7 +331,7 @@ const Profile = () => {
                                                     value={profile.newPassword}
                                                     onChange={(value) => handleChange('newPassword', value)}
                                                     type="password"
-                                                    helperText={t('profile.new_password_helper')}
+                                                    placeholder={t('profile.new_password_placeholder')}
                                                 />
 
                                                 <FormInput
@@ -339,6 +339,7 @@ const Profile = () => {
                                                     value={profile.confirmPassword}
                                                     onChange={(value) => handleChange('confirmPassword', value)}
                                                     type="password"
+                                                    placeholder={t('profile.confirm_password_placeholder')}
                                                 />
                                             </>
                                         )}

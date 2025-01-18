@@ -4,10 +4,9 @@ const createAuthService = () => {
     const baseService = createBaseService('')
 
     // Login
-    const login = async (credentials) => {
+    const login = async (credentials, toast) => {
         try {
             const response = await baseService.post('/login', credentials)
-            // Kiểm tra response format mới
             if (!response?.status || !response?.data?.access_token) {
                 throw new Error('Invalid response format')
             }
@@ -18,8 +17,7 @@ const createAuthService = () => {
             
             return response.data
         } catch (error) {
-            // Không cần xóa token vì chưa lưu
-            throw error
+            throw error;
         }
     }
 

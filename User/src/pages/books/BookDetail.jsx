@@ -109,7 +109,8 @@ const BookDetail = () => {
             header={t('common.borrow')}
             modal
             className="!p-0 dark:bg-gray-800/95"
-            style={{ width: '450px' }}
+            style={{ width: '450px', height: 'auto', position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
+            blockScroll={true}
             headerClassName="dark:bg-gray-800/95 dark:text-gray-100 !p-4"
             contentClassName="dark:bg-gray-800/95 !p-0"
             footerClassName="dark:bg-gray-800/95 !p-0"
@@ -117,14 +118,14 @@ const BookDetail = () => {
                 <div className="flex justify-end items-center gap-6 p-4 dark:bg-gray-800/95 border-t border-gray-200 dark:border-gray-700">
                     <Button
                         onClick={() => setShowBorrowDialog(false)}
-                        className="flex items-center gap-2 text-gray-400 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-300 transition-colors"
+                        className="flex items-center gap-2 text-black-400 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-300 transition-colors"
                     >
                         <i className="pi pi-times text-lg"></i>
                         <span>{t('common.cancel')}</span>
                     </Button>
                     <Button
                         onClick={handleBorrow}
-                        className="flex items-center gap-2 text-white px-6 py-2 rounded-lg transition-colors"
+                        className="flex items-center gap-2 text-black-400 px-6 py-2 rounded-lg transition-colors"
                     >
                         <i className="pi pi-check text-lg"></i>
                         <span>{t('common.submit')}</span>
@@ -132,7 +133,7 @@ const BookDetail = () => {
                 </div>
             }
         >
-            <div className="p-4">
+            <div className="p-4 pb-[400px]">
                 <div className="flex items-center gap-4 mb-6 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
                     <img
                         src={getImageUrl(book.image)}
@@ -180,7 +181,7 @@ const BookDetail = () => {
                             required
                             minDate={new Date()}
                             icon="pi pi-calendar"
-                            className="w-full p-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-black dark:text-white"
+                            className="w-full p-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-black dark:text-white relative z-50"
                         />
                         <small className="text-gray-500 dark:text-gray-400 mt-1 block">
                             <i className="pi pi-info-circle mr-1"></i>

@@ -9,12 +9,10 @@ export default function auth(to, from, next) {
     }
 
     try {
-        // Kiểm tra token hết hạn
         if (isTokenExpired(token)) {
             throw new Error('Token expired');
         }
-
-        // Giải mã token và kiểm tra role
+        
         const decoded = decodeToken(token);
         if (!decoded || !decoded.role || decoded.role !== 3) {
             throw new Error('Unauthorized. Admin access required.');

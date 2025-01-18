@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { InputNumber } from 'primereact/inputnumber';
 import { Calendar } from 'primereact/calendar';
@@ -27,6 +27,7 @@ const FormInput = ({
 }) => {
     const toast = useRef(null);
     const { t } = useTranslation();
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleChange = (e) => {
         if (typeof onChange !== 'function') {
@@ -59,6 +60,10 @@ const FormInput = ({
         'focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20',
         'dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500',
         'hover:border-blue-500/30 dark:hover:border-blue-400/30',
+        '[&_input]:bg-transparent [&_input]:dark:bg-transparent',
+        '[&_input:focus]:bg-transparent [&_input:focus]:dark:bg-transparent',
+        '[&_input:active]:bg-transparent [&_input:active]:dark:bg-transparent',
+        '[&_.p-inputtext]:bg-transparent [&_.p-inputtext]:dark:bg-transparent',
         { 'p-invalid ring-2 ring-red-500/20 border-red-500/50': error || (touched && required && !value && value !== 0) },
         { 'opacity-60 cursor-not-allowed': disabled },
         className
@@ -121,7 +126,7 @@ const FormInput = ({
                                 <i className="pi pi-lock"></i>
                             </span>
                             <InputText
-                                type={type}
+                                type={showPassword ? 'text' : 'password'}
                                 value={value}
                                 onChange={handleChange}
                                 className={classNames(baseClassName, 'pl-11', 'pr-10')}
@@ -130,14 +135,9 @@ const FormInput = ({
                             <button
                                 type="button"
                                 className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 focus:outline-none"
-                                onClick={() => {
-                                    const input = document.getElementById(name);
-                                    if (input) {
-                                        input.type = input.type === 'password' ? 'text' : 'password';
-                                    }
-                                }}
+                                onClick={() => setShowPassword(!showPassword)}
                             >
-                                <i className="pi pi-eye text-lg"></i>
+                                <i className={`pi ${showPassword ? 'pi-eye-slash' : 'pi-eye'} text-lg`}></i>
                             </button>
                         </div>
                     </div>
@@ -152,6 +152,7 @@ const FormInput = ({
                             className={baseClassName}
                             inputClassName="border-0 focus:ring-0 w-full p-0"
                             showIcon
+                            panelStyle={{ position: 'fixed' }}
                             {...commonProps}
                         />
                     </div>

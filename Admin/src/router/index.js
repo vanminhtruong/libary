@@ -47,18 +47,15 @@ const router = createRouter({
     ]
 });
 
-// Global navigation guard
 router.beforeEach((to, from, next) => {
     const token = localStorage.getItem('admin_token');
     
     if (to.path === '/login' && token) {
-        // Nếu đã đăng nhập và cố truy cập trang login, chuyển về trang chủ
         next('/');
         return;
     }
     
     if (to.matched.some(record => record.meta.requiresAuth !== false) && !token) {
-        // Nếu route yêu cầu xác thực và chưa đăng nhập, chuyển đến trang login
         next('/login');
         return;
     }

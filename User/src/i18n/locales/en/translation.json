@@ -36,7 +36,9 @@
     "all_categories": "All Categories",
     "all_statuses": "All Statuses",
     "edit": "Edit",
-    "save": "Save"
+    "save": "Save",
+    "info": "Not result book",
+    "no_results": "Book not found"
   },
   "status": {
     "available": "Available",
@@ -57,13 +59,20 @@
     "fullName": "Full Name",
     "confirmPassword": "Confirm Password",
     "fullNamePlaceholder": "Enter your full name",
-    "emailPlaceholder": "Enter your email address",
+    "emailPlaceholder": "Enter your email",
     "passwordPlaceholder": "Enter your password",
     "confirmPasswordPlaceholder": "Re-enter your password",
     "registrationSuccessful": "Registration successful. Please login.",
     "registrationFailed": "Registration failed",
     "phone": "Phone Number",
-    "phonePlaceholder": "Enter your phone number"
+    "phonePlaceholder": "Enter your phone number",
+    "emailRequired": "Email is required",
+    "emailInvalid": "Invalid email format",
+    "passwordRequired": "Password is required",
+    "passwordMinLength": "Password must be at least 6 characters",
+    "loginSuccess": "Login successful",
+    "loginError": "Login failed",
+    "invalidCredentials": "Invalid email or password"
   },
   "validation": {
     "required": "This field is required",
@@ -218,6 +227,9 @@
     "load_error": "Could not load profile information",
     "update_success": "Profile updated successfully",
     "update_error": "Could not update profile",
-    "edit_mode_active": "You are in edit mode"
+    "edit_mode_active": "You are in edit mode",
+    "current_password_placeholder": "Enter your current password",
+    "new_password_placeholder": "Enter your new password",
+    "confirm_password_placeholder": "Enter your new password again"
   }
-} 
+}

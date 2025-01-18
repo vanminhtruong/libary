@@ -6,7 +6,6 @@ import { Toast } from 'primereact/toast'
 
 const createBaseService = (resourcePath) => {
     const { showLoading, hideLoading } = useLoading.getState()
-
     // Create axios instance
     const axiosInstance = axios.create({
         baseURL: API_CONFIG.BASE_URL,
@@ -55,9 +54,8 @@ const createBaseService = (resourcePath) => {
     const handleError = (error) => {
         // Chỉ xử lý lỗi 401 khi không phải đang trong quá trình login
         if (error.response?.status === 401 && !error.config?.url?.includes('/login')) {
-            // localStorage.removeItem('token')
-            if (error.response?.data?.message === 'Invalid login credentials') {
-                throw new Error('Tài khoản hoặc mật khẩu không đúng')
+            if (error.response?.data?.message === 'Email hoặc mật khẩu không đúng') {
+                throw new Error('Tài khoản hoặc mật khẩu không đúng');
             }
         }
         throw error

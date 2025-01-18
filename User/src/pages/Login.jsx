@@ -24,8 +24,46 @@ const Login = () => {
         e.preventDefault()
         setTouched(true)
         
-        if (!formData.email || !formData.password) {
-            return
+        // Validate form
+        let hasError = false;
+        if (!formData.email) {
+            toast.current.show({
+                severity: 'error',
+                summary: t('common.error'),
+                detail: t('auth.emailRequired'),
+                life: 3000
+            });
+            hasError = true;
+        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) {
+            toast.current.show({
+                severity: 'error',
+                summary: t('common.error'),
+                detail: t('auth.emailInvalid'),
+                life: 3000
+            });
+            hasError = true;
+        }
+
+        if (!formData.password) {
+            toast.current.show({
+                severity: 'error',
+                summary: t('common.error'),
+                detail: t('auth.passwordRequired'),
+                life: 3000
+            });
+            hasError = true;
+        } else if (formData.password.length < 6) {
+            toast.current.show({
+                severity: 'error',
+                summary: t('common.error'),
+                detail: t('auth.passwordMinLength'),
+                life: 3000
+            });
+            hasError = true;
+        }
+
+        if (hasError) {
+            return;
         }
         
         setLoading(true)
@@ -34,27 +72,21 @@ const Login = () => {
             
             toast.current.show({
                 severity: 'success',
-                summary: 'Thông báo',
-                detail: response.message || 'Đăng nhập thành công',
+                summary: t('common.success'),
+                detail: response.message || t('auth.loginSuccess'),
                 life: 3000
             })
 
             navigate(ROUTES.HOME)
         } catch (error) {
-            let errorMessage = 'Đăng nhập thất bại'
-            
-            if (error.response?.data?.message) {
-                errorMessage = error.response.data.message
-            } else if (error.message === 'Invalid response format') {
-                errorMessage = 'Lỗi kết nối với máy chủ'
+            if (error.response?.status === 401) {
+                toast.current.show({
+                    severity: 'error',
+                    summary: t('common.error'),
+                    detail: error.response.data.message,
+                    life: 3000
+                })
             }
-            
-            toast.current.show({
-                severity: 'error',
-                summary: 'Thông báo',
-                detail: errorMessage,
-                life: 3000
-            })
         } finally {
             setLoading(false)
         }
@@ -63,12 +95,12 @@ const Login = () => {
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-50 dark:bg-gray-900">
             <Toast ref={toast} />
-            <Card className="w-full max-w-md shadow-lg border-0">
+            <Card className="w-full max-w-md shadow-lg border-0 bg-white dark:bg-gray-800 dark:text-white">
                 <div className="text-center mb-6">
                     <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
                         {t('common.login')}
                     </h1>
-                    <p className="text-gray-600 dark:text-gray-400">
+                    <p className="text-gray-600 dark:text-white">
                         {t('common.loginWelcome')}
                     </p>
                 </div>
@@ -85,6 +117,7 @@ const Login = () => {
                         icon="pi pi-envelope"
                         placeholder={t('auth.emailPlaceholder')}
                         touched={touched}
+                        className="dark:text-white [&_.p-inputtext]:dark:text-white [&_label]:dark:text-white [&_i]:dark:text-white"
                     />
 
                     <FormInput
@@ -98,6 +131,7 @@ const Login = () => {
                         icon="pi pi-lock"
                         placeholder={t('auth.passwordPlaceholder')}
                         touched={touched}
+                        className="dark:text-white [&_.p-inputtext]:dark:text-white [&_label]:dark:text-white [&_i]:dark:text-white"
                     />
 
                     <Button 
@@ -106,16 +140,16 @@ const Login = () => {
                         icon="pi pi-sign-in"
                         loading={loading}
                         severity="primary"
-                        className="mt-4 py-3 px-4 w-full"
+                        className="mt-4 py-3 px-4 w-full dark:text-white"
                     />
 
                     <div className="text-center mt-6">
-                        <span className="text-gray-600 dark:text-gray-400">
+                        <span className="text-gray-600 dark:text-white">
                             {t('auth.noAccount')}{' '}
                         </span>
                         <Link 
                             to={ROUTES.REGISTER} 
-                            className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium hover:underline"
+                            className="text-blue-600 hover:text-blue-700 dark:text-white hover:underline"
                         >
                             {t('auth.registerHere')}
                         </Link>
@@ -126,4 +160,4 @@ const Login = () => {
     )
 }
 
-export default Login 
+export default Login

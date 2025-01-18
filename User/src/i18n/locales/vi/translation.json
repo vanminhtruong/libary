@@ -41,7 +41,9 @@
     "confirm": "Xác nhận",
     "status": "Trạng thái",
     "unknown_book": "Sách không xác định",
-    "no_reason": "Không có lý do"
+    "no_reason": "Không có lý do",
+    "info": "Thông tin",
+    "no_results": "Không tìm thấy kết quả"
   },
   "books": {
     "title": "Tiêu đề",
@@ -116,9 +118,16 @@
     "fullName": "Họ và tên",
     "confirmPassword": "Xác nhận mật khẩu",
     "fullNamePlaceholder": "Nhập họ và tên của bạn",
-    "emailPlaceholder": "Nhập địa chỉ email của bạn",
-    "passwordPlaceholder": "Nhập mật khẩu của bạn",
-    "confirmPasswordPlaceholder": "Nhập lại mật khẩu của bạn",
+    "emailPlaceholder": "Nhập địa chỉ email",
+    "passwordPlaceholder": "Nhập mật khẩu",
+    "confirmPasswordPlaceholder": "Nhập lại mật khẩu",
+    "emailRequired": "Email không được để trống",
+    "emailInvalid": "Email không hợp lệ",
+    "passwordRequired": "Mật khẩu không được để trống",
+    "passwordMinLength": "Mật khẩu phải có ít nhất 6 ký tự",
+    "loginSuccess": "Đăng nhập thành công",
+    "loginError": "Đăng nhập thất bại",
+    "invalidCredentials": "Email hoặc mật khẩu không đúng",
     "registrationSuccessful": "Đăng ký thành công. Vui lòng đăng nhập.",
     "registrationFailed": "Đăng ký thất bại",
     "phone": "Số điện thoại",
@@ -222,6 +231,9 @@
     "load_error": "Không thể tải thông tin cá nhân",
     "update_success": "Cập nhật thông tin thành công",
     "update_error": "Không thể cập nhật thông tin",
-    "edit_mode_active": "Bạn đang ở chế độ chỉnh sửa"
+    "edit_mode_active": "Bạn đang ở chế độ chỉnh sửa",
+    "current_password_placeholder": "Nhập mật khẩu hiện tại",
+    "new_password_placeholder": "Nhập mật khẩu mới",
+    "confirm_password_placeholder": "Nhập lại mật khẩu mới"
   }
-} 
+}
