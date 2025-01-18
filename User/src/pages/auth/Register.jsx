@@ -4,10 +4,12 @@ import { Card } from 'primereact/card'
 import { Button } from 'primereact/button'
 import { Toast } from 'primereact/toast'
 import { useRef } from 'react'
-import authService from '../services/auth.service'
-import { ROUTES } from '../constants/routes'
-import FormInput from '../components/common/FormInput'
+import authService from '../../services/auth.service'
+import { ROUTES } from '../../constants/routes'
+import FormInput from '../../components/common/FormInput'
 import { useTranslation } from 'react-i18next'
+import ThemeSwitcher from '../../components/common/ThemeSwitcher'
+import LanguageSwitcher from '../../components/common/LanguageSwitcher'
 
 const Register = () => {
     const navigate = useNavigate()
@@ -56,7 +58,10 @@ const Register = () => {
                 life: 3000
             })
 
-            navigate(ROUTES.LOGIN)
+            setTimeout(() => {
+                navigate(ROUTES.LOGIN)
+            }, 2000)
+
         } catch (error) {
             toast.current.show({
                 severity: 'error',
@@ -72,7 +77,13 @@ const Register = () => {
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-50 dark:bg-gray-900">
             <Toast ref={toast} />
-            <Card className="w-full max-w-md shadow-lg border-0">
+            
+            <div className="fixed top-4 right-4 flex items-center gap-2">
+                <ThemeSwitcher />
+                <LanguageSwitcher />
+            </div>
+
+            <Card className="w-full max-w-md shadow-lg border-0 bg-white dark:bg-gray-800">
                 <div className="text-center mb-6">
                     <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
                         {t('common.register')}
@@ -94,6 +105,7 @@ const Register = () => {
                         icon="pi pi-user"
                         placeholder={t('auth.fullNamePlaceholder')}
                         touched={touched}
+                        className="dark:text-white [&_.p-inputtext]:dark:text-white [&_label]:dark:text-white [&_i]:dark:text-white"
                     />
 
                     <FormInput
@@ -107,6 +119,7 @@ const Register = () => {
                         icon="pi pi-envelope"
                         placeholder={t('auth.emailPlaceholder')}
                         touched={touched}
+                        className="dark:text-white [&_.p-inputtext]:dark:text-white [&_label]:dark:text-white [&_i]:dark:text-white"
                     />
 
                     <FormInput
@@ -120,6 +133,7 @@ const Register = () => {
                         icon="pi pi-lock"
                         placeholder={t('auth.passwordPlaceholder')}
                         touched={touched}
+                        className="dark:text-white [&_.p-inputtext]:dark:text-white [&_label]:dark:text-white [&_i]:dark:text-white"
                     />
 
                     <FormInput
@@ -133,6 +147,7 @@ const Register = () => {
                         icon="pi pi-lock"
                         placeholder={t('auth.confirmPasswordPlaceholder')}
                         touched={touched}
+                        className="dark:text-white [&_.p-inputtext]:dark:text-white [&_label]:dark:text-white [&_i]:dark:text-white"
                     />
 
                     <Button 
@@ -141,7 +156,7 @@ const Register = () => {
                         icon="pi pi-user-plus"
                         loading={loading}
                         severity="primary"
-                        className="mt-4 py-3 px-4 w-full"
+                        className="mt-4 py-3 px-4 w-full dark:text-white"
                     />
 
                     <div className="text-center mt-6">

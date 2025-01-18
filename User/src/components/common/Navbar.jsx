@@ -11,15 +11,18 @@ import { Avatar } from 'primereact/avatar'
 import { Menu } from 'primereact/menu'
 import { useRef } from 'react'
 import { API_CONFIG } from '../../config/api.config'
+import { Skeleton } from 'primereact/skeleton'
 
 const Navbar = () => {
     const navigate = useNavigate()
     const { t } = useTranslation()
     const [user, setUser] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
     const menuRef = useRef(null)
 
     useEffect(() => {
         const fetchUser = async () => {
+            setIsLoading(true)
             if (authService.isAuthenticated()) {
                 try {
                     const userData = await authService.getCurrentUser()
@@ -28,6 +31,7 @@ const Navbar = () => {
                     console.error('Error fetching user:', error)
                 }
             }
+            setIsLoading(false)
         }
         fetchUser()
 
@@ -68,18 +72,6 @@ const Navbar = () => {
                     className: 'dark:text-white dark:hover:bg-gray-700',
                     command: () => navigate(ROUTES.BOOKS)
                 },
-                {
-                    label: t('common.categories'),
-                    icon: 'pi pi-tags',
-                    className: 'dark:text-white dark:hover:bg-gray-700',
-                    command: () => navigate(ROUTES.CATEGORIES)
-                },
-                {
-                    label: t('common.new_releases'),
-                    icon: 'pi pi-star',
-                    className: 'dark:text-white dark:hover:bg-gray-700',
-                    command: () => navigate(ROUTES.NEW_RELEASES)
-                }
             ]
         },
         {
@@ -147,55 +139,65 @@ const Navbar = () => {
         <div className="flex gap-2 items-center">
             <LanguageSwitcher />
             <ThemeSwitcher />
-            {user ? (
+            {isLoading ? (
                 <div className="relative">
-                    <button 
-                        className="flex items-center gap-2 px-2 py-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
-                        onClick={(e) => menuRef.current.toggle(e)}
-                    >
-                        {user?.image ? (
-                            <div className="w-8 h-8 rounded-full overflow-hidden relative">
-                                <img
-                                    src={`${API_CONFIG.BASE_URL}/user/profile/image/${user.image.split('/').pop()}`}
-                                    alt="Profile"
-                                    className="w-full h-full object-cover absolute inset-0"
-                                />
-                            </div>
-                        ) : (
-                            <Avatar 
-                                label={user.email[0].toUpperCase()} 
-                                size="normal" 
-                                shape="circle"
-                                className="bg-blue-600 dark:bg-blue-500 text-white shadow-sm"
-                            />
-                        )}
-                        <i className="pi pi-angle-down text-gray-600 dark:text-gray-200" />
-                    </button>
-                    <Menu 
-                        model={userMenuItems} 
-                        popup 
-                        ref={menuRef} 
-                        className="dark:bg-gray-800 dark:border-gray-700 shadow-lg border border-gray-200 dark:border-gray-700"
-                        style={{ minWidth: '280px' }}
-                    />
+                    <div className="flex items-center gap-2 px-2 py-1">
+                        <Skeleton shape="circle" size="2rem" className="bg-gray-200 dark:bg-gray-700" />
+                    </div>
                 </div>
             ) : (
-                <div className="flex gap-2">
-                    <Button
-                        label={t('common.login')}
-                        icon="pi pi-sign-in"
-                        severity="primary"
-                        text
-                        onClick={() => navigate(ROUTES.LOGIN)}
-                    />
-                    <Button
-                        label={t('common.register')}
-                        icon="pi pi-user-plus"
-                        severity="primary"
-                        outlined
-                        onClick={() => navigate(ROUTES.REGISTER)}
-                    />
-                </div>
+                <>
+                    {user ? (
+                        <div className="relative">
+                            <button 
+                                className="flex items-center gap-2 px-2 py-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
+                                onClick={(e) => menuRef.current.toggle(e)}
+                            >
+                                {user?.image ? (
+                                    <div className="w-8 h-8 rounded-full overflow-hidden relative">
+                                        <img
+                                            src={`${API_CONFIG.BASE_URL}/user/profile/image/${user.image.split('/').pop()}`}
+                                            alt="Profile"
+                                            className="w-full h-full object-cover absolute inset-0"
+                                        />
+                                    </div>
+                                ) : (
+                                    <Avatar 
+                                        label={user.email[0].toUpperCase()} 
+                                        size="normal" 
+                                        shape="circle"
+                                        className="bg-blue-600 dark:bg-blue-500 text-white shadow-sm"
+                                    />
+                                )}
+                                <i className="pi pi-angle-down text-gray-600 dark:text-gray-200" />
+                            </button>
+                            <Menu 
+                                model={userMenuItems} 
+                                popup 
+                                ref={menuRef} 
+                                className="dark:bg-gray-800 dark:border-gray-700 shadow-lg border border-gray-200 dark:border-gray-700"
+                                style={{ minWidth: '280px' }}
+                            />
+                        </div>
+                    ) : (
+                        <div className="flex gap-2 dark:text-white">
+                            <Button
+                                label={t('common.login')}
+                                icon="pi pi-sign-in"
+                                severity="primary"
+                                text
+                                onClick={() => navigate(ROUTES.LOGIN)}
+                            />
+                            <Button
+                                label={t('common.register')}
+                                icon="pi pi-user-plus"
+                                severity="primary"
+                                outlined
+                                onClick={() => navigate(ROUTES.REGISTER)}
+                            />
+                        </div>
+                    )}
+                </>
             )}
         </div>
     )
@@ -207,7 +209,47 @@ const Navbar = () => {
                     model={items}
                     start={start}
                     end={end}
-                    className="border-none !p-0 dark:bg-gray-800 [&_.p-menuitem-link:hover]:dark:bg-gray-700 [&_.p-submenu-list]:dark:bg-gray-800 [&_.p-submenu-list]:dark:border-gray-700 [&_.p-menuitem-text]:dark:text-white [&_.p-menuitem-icon]:dark:text-white [&_.p-menuitem-link.p-menuitem-link-active]:dark:bg-gray-700 [&_.p-menuitem-link.p-menuitem-link-active]:dark:text-white [&_.p-overlay]:dark:bg-gray-800 [&_.p-dropdown-panel]:dark:bg-gray-800 [&_.p-dropdown-item]:dark:text-white [&_.p-dropdown-item:hover]:dark:bg-gray-700 [&_.p-dropdown-item.p-highlight]:dark:bg-gray-700"
+                    className="border-none !p-0 dark:bg-gray-800 
+                        [&_.p-menuitem-link]:dark:bg-gray-800
+                        [&_.p-menuitem-link:hover]:dark:bg-gray-700 
+                        [&_.p-menuitem-link:focus]:dark:bg-gray-700
+                        [&_.p-menuitem-link.p-menuitem-link-active]:dark:bg-gray-700
+                        [&_.p-menuitem.p-highlight>.p-menuitem-link]:dark:bg-gray-700
+                        [&_.p-menuitem.p-highlight]:dark:bg-gray-700
+                        
+                        [&_.p-submenu-list]:dark:bg-gray-800 
+                        [&_.p-submenu-list]:dark:border-gray-700 
+                        [&_.p-submenu-list_.p-menuitem]:dark:bg-gray-800
+                        [&_.p-submenu-list_.p-menuitem-link]:dark:bg-gray-800
+                        [&_.p-submenu-list_.p-menuitem-link:hover]:dark:bg-gray-700
+                        
+                        [&_.p-menuitem-text]:dark:text-white 
+                        [&_.p-menuitem-icon]:dark:text-white 
+                        
+                        [&_.p-overlay]:dark:bg-gray-800 
+                        [&_.p-dropdown-panel]:dark:bg-gray-800 
+                        [&_.p-dropdown-item]:dark:text-white 
+                        [&_.p-dropdown-item]:dark:bg-gray-800
+                        [&_.p-dropdown-item:hover]:dark:bg-gray-700 
+                        [&_.p-dropdown-item.p-highlight]:dark:bg-gray-700
+                        
+                        [&_.p-menubar-root-list]:dark:bg-gray-800
+                        [&_.p-menubar-button]:dark:text-white
+                        [&_.p-menubar-root-list>.p-menuitem]:dark:bg-gray-800
+                        [&_.p-menubar-root-list>.p-menuitem>.p-menuitem-link]:dark:bg-gray-800
+                        [&_.p-menubar-root-list>.p-menuitem>.p-menuitem-link:not(.p-disabled)]:dark:bg-gray-800
+                        [&_.p-menubar-root-list>.p-menuitem>.p-menuitem-link:not(.p-disabled):hover]:dark:bg-gray-700
+                        [&_.p-menubar-root-list>.p-menuitem>.p-menuitem-link:not(.p-disabled):focus]:dark:bg-gray-700
+                        [&_.p-menubar-root-list>.p-menuitem.p-menuitem-active>.p-menuitem-link]:dark:bg-gray-700
+                        
+                        [&_.p-menuitem.p-menuitem-active]:dark:bg-gray-700
+                        [&_.p-menuitem.p-menuitem-active>.p-menuitem-link]:dark:bg-gray-700
+                        [&_.p-menuitem.p-menuitem-active>.p-menuitem-link_.p-menuitem-text]:dark:text-white
+                        [&_.p-menuitem.p-menuitem-active>.p-menuitem-link_.p-menuitem-icon]:dark:text-white
+                        
+                        [&_.p-menu-overlay]:dark:bg-gray-800
+                        [&_.p-menu-list]:dark:bg-gray-800
+                        [&_.p-menuitem]:dark:bg-gray-800"
                     style={{ background: 'transparent' }}
                 />
             </div>

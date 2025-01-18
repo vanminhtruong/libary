@@ -4,10 +4,12 @@ import { Card } from 'primereact/card'
 import { Button } from 'primereact/button'
 import { Toast } from 'primereact/toast'
 import { useRef } from 'react'
-import authService from '../services/auth.service'
-import { ROUTES } from '../constants/routes'
-import FormInput from '../components/common/FormInput'
+import authService from '../../services/auth.service'
+import { ROUTES } from '../../constants/routes'
+import FormInput from '../../components/common/FormInput'
 import { useTranslation } from 'react-i18next'
+import ThemeSwitcher from '../../components/common/ThemeSwitcher'
+import LanguageSwitcher from '../../components/common/LanguageSwitcher'
 
 const Login = () => {
     const navigate = useNavigate()
@@ -70,6 +72,10 @@ const Login = () => {
         try {
             const response = await authService.login(formData)
             
+            // Dispatch auth change event
+            window.dispatchEvent(new Event('auth-change'))
+            
+            // Show success toast
             toast.current.show({
                 severity: 'success',
                 summary: t('common.success'),
@@ -77,7 +83,11 @@ const Login = () => {
                 life: 3000
             })
 
-            navigate(ROUTES.HOME)
+            // Chuyển trang sau khi toast hiển thị
+            setTimeout(() => {
+                navigate(ROUTES.HOME)
+            }, 2000)
+
         } catch (error) {
             if (error.response?.status === 401) {
                 toast.current.show({
@@ -95,6 +105,13 @@ const Login = () => {
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-50 dark:bg-gray-900">
             <Toast ref={toast} />
+            
+            {/* Theme and Language Switchers */}
+            <div className="fixed top-4 right-4 flex items-center gap-2">
+                <ThemeSwitcher />
+                <LanguageSwitcher />
+            </div>
+
             <Card className="w-full max-w-md shadow-lg border-0 bg-white dark:bg-gray-800 dark:text-white">
                 <div className="text-center mb-6">
                     <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">

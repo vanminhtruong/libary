@@ -11,8 +11,13 @@ const createAuthService = () => {
                 throw new Error('Invalid response format')
             }
             
-            localStorage.setItem('token', response.data.access_token)
-            localStorage.setItem('user', JSON.stringify(response.data.user))
+            await new Promise(resolve => setTimeout(resolve, 1000))
+            
+            if (response.data.access_token) {
+                localStorage.setItem('token', response.data.access_token)
+                localStorage.setItem('user', JSON.stringify(response.data.user))
+            }
+
             window.dispatchEvent(new Event('auth-change'))
             
             return response.data
@@ -23,7 +28,16 @@ const createAuthService = () => {
 
     // Register
     const register = async (userData) => {
-        return baseService.post('/register', userData)
+        try {
+            const response = await baseService.post('/register', userData)
+            
+            // Đợi toast hiển thị
+            await new Promise(resolve => setTimeout(resolve, 1000))
+            
+            return response.data
+        } catch (error) {
+            throw error
+        }
     }
 
     // Get current user profile

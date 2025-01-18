@@ -13,7 +13,7 @@ const ThemeSwitcher = () => {
             severity="secondary"
             aria-label="Theme Switcher"
             onClick={toggleTheme}
-            className="transition-colors duration-200"
+            className="transition-colors duration-200 dark:text-white"
             tooltip={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
             tooltipOptions={{ position: 'bottom' }}
         />

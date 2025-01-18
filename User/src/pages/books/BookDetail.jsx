@@ -9,6 +9,7 @@ import bookService from '../../services/book.service'
 import LoadingSpinner from '../../components/common/LoadingSpinner'
 import FormInput from '../../components/common/FormInput'
 import { API_CONFIG } from '../../config/api.config'
+import { formatCurrency } from '../../utils/currencyUtils'
 
 const BookDetail = () => {
     const { id } = useParams()
@@ -234,7 +235,9 @@ const BookDetail = () => {
                             />
                             <div className="mt-4 bg-gray-50 dark:bg-gray-800/80 p-4 rounded-lg border dark:border-gray-700">
                                 <div className="flex justify-between items-center mb-2">
-                                    <span className="text-2xl font-semibold text-green-500 dark:text-white">${book.price}</span>
+                                    <span className="text-2xl font-semibold text-green-500 dark:text-white">
+                                        {formatCurrency(book.price)}
+                                    </span>
                                     <span className={`px-3 py-1 rounded-full text-sm ${
                                         book.available_copies > 0 
                                         ? 'bg-green-500/10 text-green-500 dark:bg-[#23C552]/20 dark:text-white' 
