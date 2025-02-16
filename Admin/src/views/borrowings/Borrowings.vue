@@ -128,29 +128,31 @@
                 </div>
 
                 <!-- Action Buttons -->
-                <div v-if="selectedBorrowing.status === 'pending'" class="flex justify-end gap-3 pt-4">
-                    <Button
-                        :label="t('borrowing.actions.reject')"
-                        icon="pi pi-times"
-                        severity="danger"
-                        @click="handleReject(selectedBorrowing.id)"
-                        class="p-button-outlined"
-                    />
-                    <Button
-                        :label="t('borrowing.actions.approve')"
-                        icon="pi pi-check"
-                        severity="success"
-                        @click="handleApprove(selectedBorrowing.id)"
-                    />
-                </div>
+                <div class="flex justify-end gap-3 pt-4">
+                    <!-- Approve/Reject buttons for pending status -->
+                    <template v-if="selectedBorrowing.status === 'pending'">
+                        <Button
+                            :label="t('borrowing.actions.reject')"
+                            icon="pi pi-times"
+                            severity="danger"
+                            @click="handleReject(selectedBorrowing.id)"
+                            class="p-button-outlined"
+                        />
+                        <Button
+                            :label="t('borrowing.actions.approve')"
+                            icon="pi pi-check"
+                            severity="success"
+                            @click="handleApprove(selectedBorrowing.id)"
+                        />
+                    </template>
 
-                <!-- Fine Button -->
-                <div v-if="selectedBorrowing.status === 'overdue'" class="flex justify-end gap-3 pt-4">
+                    <!-- Fine button for all statuses -->
                     <Button
                         :label="t('borrowing.actions.createFine')"
                         icon="pi pi-exclamation-triangle"
                         severity="warning"
                         @click="openFineDialog"
+                        class="p-button-outlined"
                     />
                 </div>
             </div>
@@ -178,6 +180,7 @@
                         currency="VND"
                         locale="vi-VN"
                         class="w-full dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                        :placeholder="t('borrowing.dialog.fine.amountPlaceholder')"
                     />
                 </div>
 
@@ -188,6 +191,7 @@
                         v-model="newFine.fine_date"
                         dateFormat="dd/mm/yy"
                         class="w-full dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                        :placeholder="t('borrowing.dialog.fine.fineDatePlaceholder')"
                     />
                 </div>
 
@@ -196,7 +200,7 @@
                     <InputText
                         id="payment_method"
                         v-model="newFine.payment_method"
-                        placeholder="Nhập phương thức thanh toán"
+                        :placeholder="t('borrowing.dialog.fine.paymentMethodPlaceholder')"
                         class="w-full dark:bg-gray-700 dark:text-white dark:border-gray-600"
                     />
                 </div>
@@ -250,7 +254,7 @@ const newFine = ref({
     amount: 0,
     fine_date: new Date(),
     payment_method: '',
-    status: 'pending'
+    borrowing_id: null
 })
 const imageError = ref(false)
 const bookImage = ref(null)
@@ -369,42 +373,102 @@ const getImageUrl = (filename) => {
 // Handle create fine
 const handleCreateFine = async () => {
     try {
+        loading.value = true
         const fineData = {
-            user_id: selectedBorrowing.value.user.id,
             borrow_id: selectedBorrowing.value.id,
+            user_id: selectedBorrowing.value.user.id,
             amount: newFine.value.amount,
             fine_date: newFine.value.fine_date,
             payment_method: newFine.value.payment_method,
-            status: newFine.value.status
+            status: 'pending'
         }
 
-        const response = await FineService.createFine(fineData)
+        await BorrowingsService.createFine(fineData)
+        
         toast.add({
             severity: 'success',
-            summary: 'Thành công',
-            detail: 'Đã tạo khoản phạt thành công',
+            summary: t('borrowing.toast.fine.success'),
+            detail: t('borrowing.toast.fine.created'),
             life: 3000
         })
+        
         showFineDialog.value = false
         // Reset form
         newFine.value = {
             amount: 0,
             fine_date: new Date(),
             payment_method: '',
-            status: 'pending'
+            borrowing_id: null
         }
+        await loadBorrowings() // Refresh the list
     } catch (error) {
         toast.add({
             severity: 'error',
-            summary: 'Lỗi',
-            detail: error.message || 'Không thể tạo khoản phạt',
+            summary: t('borrowing.toast.fine.error'),
+            detail: error.message || t('borrowing.toast.fine.createError'),
             life: 3000
         })
+    } finally {
+        loading.value = false
     }
 }
 
 const openFineDialog = () => {
+    newFine.value = {
+        amount: 0,
+        fine_date: new Date(),
+        payment_method: '',
+        borrowing_id: selectedBorrowing.value.id
+    }
     showFineDialog.value = true
+}
+
+// Handle mark fine as paid
+const handleMarkFineAsPaid = async (id) => {
+    try {
+        loading.value = true
+        await BorrowingsService.markFineAsPaid(id)
+        toast.add({
+            severity: 'success',
+            summary: t('borrowing.toast.fine.success'),
+            detail: t('borrowing.toast.fine.paid'),
+            life: 3000
+        })
+        await loadBorrowings()
+    } catch (error) {
+        toast.add({
+            severity: 'error',
+            summary: t('borrowing.toast.fine.error'),
+            detail: error.message || t('borrowing.toast.fine.payError'),
+            life: 3000
+        })
+    } finally {
+        loading.value = false
+    }
+}
+
+// Handle cancel fine
+const handleCancelFine = async (id) => {
+    try {
+        loading.value = true
+        await BorrowingsService.cancelFine(id)
+        toast.add({
+            severity: 'success',
+            summary: t('borrowing.toast.fine.success'),
+            detail: t('borrowing.toast.fine.cancelled'),
+            life: 3000
+        })
+        await loadBorrowings()
+    } catch (error) {
+        toast.add({
+            severity: 'error',
+            summary: t('borrowing.toast.fine.error'),
+            detail: error.message || t('borrowing.toast.fine.cancelError'),
+            life: 3000
+        })
+    } finally {
+        loading.value = false
+    }
 }
 
 const handleImageError = () => {

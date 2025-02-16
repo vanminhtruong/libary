@@ -9,6 +9,25 @@ export const BorrowingsService = {
     },
     rejectBorrowing(id) {
         return POST(`/admin/borrowings/reject/${id}`)
+    },
+    // Fine management methods
+    getFines() {
+        return GET('/admin/fines')
+    },
+    createFine(data) {
+        return POST('/admin/fines', data)
+    },
+    getFineDetails(id) {
+        return GET(`/admin/fines/${id}`)
+    },
+    markFineAsPaid(id) {
+        return POST(`/admin/fines/${id}/pay`)
+    },
+    cancelFine(id) {
+        return POST(`/admin/fines/${id}/cancel`)
+    },
+    deleteFine(id) {
+        return DELETE(`/admin/fines/${id}`)
     }
 }
 

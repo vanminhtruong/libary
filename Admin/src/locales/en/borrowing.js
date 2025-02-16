@@ -21,19 +21,38 @@ export default {
         viewDetails: 'View Details',
         approve: 'Approve',
         reject: 'Reject',
-        createFine: 'Create Fine'
+        createFine: 'Process Fine',
+        markAsPaid: 'Mark as Paid',
+        cancelFine: 'Cancel Fine'
     },
     dialog: {
         fine: {
-            title: 'Create Fine',
+            title: 'Process Fine',
             amount: 'Fine Amount',
-            reason: 'Fine Reason',
+            amountPlaceholder: 'Enter fine amount',
+            fineDate: 'Fine Date',
+            fineDatePlaceholder: 'Select fine date',
+            paymentMethod: 'Payment Method',
+            paymentMethodPlaceholder: 'Enter payment method',
+            reason: 'Reason',
             submit: 'Submit',
             cancel: 'Cancel'
         }
     },
+    toast: {
+        fine: {
+            success: 'Success',
+            error: 'Error',
+            created: 'Fine processed successfully',
+            createError: 'Unable to process fine',
+            paid: 'Fine marked as paid successfully',
+            payError: 'Unable to mark fine as paid',
+            cancelled: 'Fine cancelled successfully',
+            cancelError: 'Unable to cancel fine'
+        }
+    },
     messages: {
-        fineCreated: 'Fine created successfully',
+        fineCreated: 'Fine processed successfully',
         approveSuccess: 'Borrowing request approved',
         rejectSuccess: 'Borrowing request rejected'
     }

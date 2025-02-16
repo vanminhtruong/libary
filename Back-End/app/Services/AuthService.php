@@ -30,14 +30,11 @@ class AuthService
 
     public function login(array $credentials)
     {
-        $user = $this->userRepository->findByEmail($credentials['email']);
-        
-        if (!$user || !Hash::check($credentials['password'], $user->password)) {
+        if (!$token = auth()->guard('api')->attempt($credentials)) {
             return null;
         }
 
-        $customClaims = ['role' => 1];
-        $token = auth()->guard('api')->claims($customClaims)->login($user);
+        $user = auth()->guard('api')->user();
 
         return [
             'user' => $user,
