@@ -12,6 +12,22 @@ const createBaseService = (resourcePath) => {
         timeout: API_CONFIG.TIMEOUT
     })
 
+    // Add custom error handling for authentication errors
+    const customResponseInterceptor = (response) => {
+        // Vẫn xử lý response bằng middleware mặc định
+        return apiMiddleware.responseMiddleware(response);
+    };
+
+    const customErrorInterceptor = (error) => {
+        // Xử lý đặc biệt cho lỗi 401 từ endpoint login
+        if (error.response?.status === 401 && error.config?.url?.includes('/login')) {
+            // Chuyển lỗi 401 từ login endpoint thành lỗi đăng nhập cụ thể
+            return Promise.reject(new Error("Email hoặc mật khẩu không đúng"));
+        }
+        // Các lỗi khác vẫn sử dụng middleware mặc định
+        return apiMiddleware.errorMiddleware(error);
+    };
+
     // Add request interceptor
     axiosInstance.interceptors.request.use(
         apiMiddleware.requestMiddleware,
@@ -20,8 +36,8 @@ const createBaseService = (resourcePath) => {
 
     // Add response interceptor
     axiosInstance.interceptors.response.use(
-        apiMiddleware.responseMiddleware,
-        apiMiddleware.errorMiddleware
+        customResponseInterceptor,
+        customErrorInterceptor
     )
 
     // Get auth token
@@ -52,13 +68,19 @@ const createBaseService = (resourcePath) => {
 
     // Handle API Error
     const handleError = (error) => {
+        // Check if this is a login error with status: false
+        if (error.config?.url?.includes('/login') && error.response?.data?.status === false) {
+            const errorMessage = error.response.data.message || "Email hoặc mật khẩu không đúng";
+            return Promise.reject(new Error(errorMessage));
+        }
+        
         // Chỉ xử lý lỗi 401 khi không phải đang trong quá trình login
         if (error.response?.status === 401 && !error.config?.url?.includes('/login')) {
             if (error.response?.data?.message === 'Email hoặc mật khẩu không đúng') {
-                throw new Error('Tài khoản hoặc mật khẩu không đúng');
+                return Promise.reject(new Error('Tài khoản hoặc mật khẩu không đúng'));
             }
         }
-        throw error
+        return Promise.reject(error);
     }
 
     // GET request
@@ -90,7 +112,13 @@ const createBaseService = (resourcePath) => {
             })
             return handleResponse(response)
         } catch (error) {
-            handleError(error)
+            // If this is a login endpoint, ensure error is properly returned to caller
+            if (endpoint.includes('/login')) {
+                const errorMessage = error.response?.data?.message || "Email hoặc mật khẩu không đúng";
+                hideLoading();
+                return Promise.reject(new Error(errorMessage));
+            }
+            return handleError(error)
         } finally {
             hideLoading()
         }

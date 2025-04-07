@@ -7,8 +7,22 @@ const createAuthService = () => {
     const login = async (credentials, toast) => {
         try {
             const response = await baseService.post('/login', credentials)
-            if (!response?.status || !response?.data?.access_token) {
-                throw new Error('Invalid response format')
+            
+            // Make sure response exists before checking properties
+            if (!response) {
+                // Return rejected promise instead of throwing error
+                return Promise.reject(new Error("Email hoặc mật khẩu không đúng"));
+            }
+            
+            // Handle failed login with status: false
+            if (response.status === false) {
+                return Promise.reject(new Error(response.message || "Email hoặc mật khẩu không đúng"));
+            }
+            
+            // Validate successful response format
+            if (!response?.data?.access_token) {
+                // Return rejected promise instead of throwing error
+                return Promise.reject(new Error("Email hoặc mật khẩu không đúng"));
             }
             
             await new Promise(resolve => setTimeout(resolve, 1000))
@@ -22,7 +36,12 @@ const createAuthService = () => {
             
             return response.data
         } catch (error) {
-            throw error;
+            // If error has response with status: false, return rejected promise
+            if (error.response?.data?.status === false) {
+                return Promise.reject(new Error(error.response.data.message || "Email hoặc mật khẩu không đúng"));
+            }
+            // Always return a rejected promise so the catch in Login.jsx can handle it
+            return Promise.reject(error);
         }
     }
 

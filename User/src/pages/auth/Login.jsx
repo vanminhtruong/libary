@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { Card } from 'primereact/card'
 import { Button } from 'primereact/button'
@@ -17,14 +17,20 @@ const Login = () => {
     const { t } = useTranslation()
     const [loading, setLoading] = useState(false)
     const [touched, setTouched] = useState(false)
+    const [loginError, setLoginError] = useState(null)
     const [formData, setFormData] = useState({
         email: '',
         password: ''
     })
 
+    const [isSubmit, setIsSubmit] = useState(false);
+
+    console.log("loginError: ", loginError)
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         setTouched(true)
+        // setLoginError(null)
         
         // Validate form
         let hasError = false;
@@ -33,7 +39,7 @@ const Login = () => {
                 severity: 'error',
                 summary: t('common.error'),
                 detail: t('auth.emailRequired'),
-                life: 3000
+                life: 6000,
             });
             hasError = true;
         } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) {
@@ -41,7 +47,7 @@ const Login = () => {
                 severity: 'error',
                 summary: t('common.error'),
                 detail: t('auth.emailInvalid'),
-                life: 3000
+                life: 6000,
             });
             hasError = true;
         }
@@ -51,7 +57,7 @@ const Login = () => {
                 severity: 'error',
                 summary: t('common.error'),
                 detail: t('auth.passwordRequired'),
-                life: 3000
+                life: 6000,
             });
             hasError = true;
         } else if (formData.password.length < 6) {
@@ -59,7 +65,7 @@ const Login = () => {
                 severity: 'error',
                 summary: t('common.error'),
                 detail: t('auth.passwordMinLength'),
-                life: 3000
+                life: 6000,
             });
             hasError = true;
         }
@@ -71,31 +77,43 @@ const Login = () => {
         setLoading(true)
         try {
             const response = await authService.login(formData)
-            
-            // Dispatch auth change event
             window.dispatchEvent(new Event('auth-change'))
             
-            // Show success toast
             toast.current.show({
                 severity: 'success',
                 summary: t('common.success'),
-                detail: response.message || t('auth.loginSuccess'),
-                life: 3000
+                detail: response?.message || t('auth.loginSuccess'),
+                life: 6000,
             })
 
-            // Chuyển trang sau khi toast hiển thị
             setTimeout(() => {
                 navigate(ROUTES.HOME)
             }, 2000)
 
         } catch (error) {
-            if (error.response?.status === 401) {
+            console.error("Login error:", error)
+            
+            // Đảm bảo luôn có message để hiển thị
+            let errorMessage;
+            if (error?.response?.data?.message) {
+                errorMessage = error.response.data.message;
+            } else if (error?.message) {
+                errorMessage = error.message;
+            } else {
+                errorMessage = t('auth.invalidCredentials');
+            }
+            
+            setLoginError(errorMessage);
+            
+            // Hiển thị toast lỗi
+            if (toast.current) {
                 toast.current.show({
                     severity: 'error',
                     summary: t('common.error'),
-                    detail: error.response.data.message,
-                    life: 3000
-                })
+                    detail: errorMessage,
+                    life: 6000,
+                    sticky: true
+                });
             }
         } finally {
             setLoading(false)
@@ -104,9 +122,8 @@ const Login = () => {
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-50 dark:bg-gray-900">
-            <Toast ref={toast} />
+            <Toast ref={toast} baseZIndex={1000} position="top-right" />
             
-            {/* Theme and Language Switchers */}
             <div className="fixed top-4 right-4 flex items-center gap-2">
                 <ThemeSwitcher />
                 <LanguageSwitcher />

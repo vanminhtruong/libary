@@ -43,7 +43,8 @@
     "unknown_book": "Sách không xác định",
     "no_reason": "Không có lý do",
     "info": "Thông tin",
-    "no_results": "Không tìm thấy kết quả"
+    "no_results": "Không tìm thấy kết quả",
+    "error": "Email hoặc mật khẩu không đúng"
   },
   "books": {
     "title": "Tiêu đề",

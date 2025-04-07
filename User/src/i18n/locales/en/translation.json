@@ -38,7 +38,8 @@
     "edit": "Edit",
     "save": "Save",
     "info": "Not result book",
-    "no_results": "Book not found"
+    "no_results": "Book not found",
+    "error": "Email or password is incorrect"
   },
   "status": {
     "available": "Available",

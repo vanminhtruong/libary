@@ -42,7 +42,8 @@
     "unknown_book": "알 수 없는 도서",
     "no_reason": "사유 없음",
     "info": "검색 결과 없음",
-    "no_results": "검색 결과 없음"
+    "no_results": "검색 결과 없음",
+    "error": "이메일 또는 비밀번호가 올바르지 않습니다"
   },
   "status": {
     "available": "대출 가능",
