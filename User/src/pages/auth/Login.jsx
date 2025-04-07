@@ -1,124 +1,25 @@
-import { useState, useEffect } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
 import { Card } from 'primereact/card'
 import { Button } from 'primereact/button'
 import { Toast } from 'primereact/toast'
-import { useRef } from 'react'
-import authService from '../../services/auth.service'
+import { Link } from 'react-router-dom'
 import { ROUTES } from '../../constants/routes'
 import FormInput from '../../components/common/FormInput'
 import { useTranslation } from 'react-i18next'
 import ThemeSwitcher from '../../components/common/ThemeSwitcher'
 import LanguageSwitcher from '../../components/common/LanguageSwitcher'
+import useLogin from './hooks/useLogin'
 
 const Login = () => {
-    const navigate = useNavigate()
-    const toast = useRef(null)
     const { t } = useTranslation()
-    const [loading, setLoading] = useState(false)
-    const [touched, setTouched] = useState(false)
-    const [loginError, setLoginError] = useState(null)
-    const [formData, setFormData] = useState({
-        email: '',
-        password: ''
-    })
-
-    const [isSubmit, setIsSubmit] = useState(false);
-
-    console.log("loginError: ", loginError)
-
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        setTouched(true)
-        // setLoginError(null)
-        
-        // Validate form
-        let hasError = false;
-        if (!formData.email) {
-            toast.current.show({
-                severity: 'error',
-                summary: t('common.error'),
-                detail: t('auth.emailRequired'),
-                life: 6000,
-            });
-            hasError = true;
-        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) {
-            toast.current.show({
-                severity: 'error',
-                summary: t('common.error'),
-                detail: t('auth.emailInvalid'),
-                life: 6000,
-            });
-            hasError = true;
-        }
-
-        if (!formData.password) {
-            toast.current.show({
-                severity: 'error',
-                summary: t('common.error'),
-                detail: t('auth.passwordRequired'),
-                life: 6000,
-            });
-            hasError = true;
-        } else if (formData.password.length < 6) {
-            toast.current.show({
-                severity: 'error',
-                summary: t('common.error'),
-                detail: t('auth.passwordMinLength'),
-                life: 6000,
-            });
-            hasError = true;
-        }
-
-        if (hasError) {
-            return;
-        }
-        
-        setLoading(true)
-        try {
-            const response = await authService.login(formData)
-            window.dispatchEvent(new Event('auth-change'))
-            
-            toast.current.show({
-                severity: 'success',
-                summary: t('common.success'),
-                detail: response?.message || t('auth.loginSuccess'),
-                life: 6000,
-            })
-
-            setTimeout(() => {
-                navigate(ROUTES.HOME)
-            }, 2000)
-
-        } catch (error) {
-            console.error("Login error:", error)
-            
-            // Đảm bảo luôn có message để hiển thị
-            let errorMessage;
-            if (error?.response?.data?.message) {
-                errorMessage = error.response.data.message;
-            } else if (error?.message) {
-                errorMessage = error.message;
-            } else {
-                errorMessage = t('auth.invalidCredentials');
-            }
-            
-            setLoginError(errorMessage);
-            
-            // Hiển thị toast lỗi
-            if (toast.current) {
-                toast.current.show({
-                    severity: 'error',
-                    summary: t('common.error'),
-                    detail: errorMessage,
-                    life: 6000,
-                    sticky: true
-                });
-            }
-        } finally {
-            setLoading(false)
-        }
-    }
+    const { 
+        formData, 
+        loading, 
+        touched, 
+        loginError, 
+        toast, 
+        updateFormData, 
+        handleSubmit 
+    } = useLogin()
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -145,7 +46,7 @@ const Login = () => {
                         name="email"
                         label={t('auth.email')}
                         value={formData.email}
-                        onChange={(value) => setFormData(prev => ({ ...prev, email: value }))}
+                        onChange={(value) => updateFormData('email', value)}
                         required
                         disabled={loading}
                         icon="pi pi-envelope"
@@ -159,7 +60,7 @@ const Login = () => {
                         name="password"
                         label={t('auth.password')}
                         value={formData.password}
-                        onChange={(value) => setFormData(prev => ({ ...prev, password: value }))}
+                        onChange={(value) => updateFormData('password', value)}
                         required
                         disabled={loading}
                         icon="pi pi-lock"

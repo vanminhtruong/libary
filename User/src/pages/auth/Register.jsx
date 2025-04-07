@@ -1,78 +1,24 @@
-import { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Card } from 'primereact/card'
 import { Button } from 'primereact/button'
 import { Toast } from 'primereact/toast'
-import { useRef } from 'react'
-import authService from '../../services/auth.service'
 import { ROUTES } from '../../constants/routes'
 import FormInput from '../../components/common/FormInput'
 import { useTranslation } from 'react-i18next'
 import ThemeSwitcher from '../../components/common/ThemeSwitcher'
 import LanguageSwitcher from '../../components/common/LanguageSwitcher'
+import useRegister from './hooks/useRegister'
 
 const Register = () => {
-    const navigate = useNavigate()
-    const toast = useRef(null)
     const { t } = useTranslation()
-    const [loading, setLoading] = useState(false)
-    const [touched, setTouched] = useState(false)
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: ''
-    })
-
-    const validateForm = () => {
-        if (formData.password !== formData.password_confirmation) {
-            toast.current.show({
-                severity: 'error',
-                summary: 'Error',
-                detail: t('validation.passwordsDoNotMatch'),
-                life: 3000
-            })
-            return false
-        }
-        return true
-    }
-
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        setTouched(true)
-
-        if (!formData.name || !formData.email || !formData.password || !formData.password_confirmation) {
-            return
-        }
-
-        if (!validateForm()) return
-
-        setLoading(true)
-        try {
-            await authService.register(formData)
-            
-            toast.current.show({
-                severity: 'success',
-                summary: 'Success',
-                detail: t('auth.registrationSuccessful'),
-                life: 3000
-            })
-
-            setTimeout(() => {
-                navigate(ROUTES.LOGIN)
-            }, 2000)
-
-        } catch (error) {
-            toast.current.show({
-                severity: 'error',
-                summary: 'Error',
-                detail: error.message || t('auth.registrationFailed'),
-                life: 3000
-            })
-        } finally {
-            setLoading(false)
-        }
-    }
+    const { 
+        formData, 
+        loading, 
+        touched, 
+        toast, 
+        updateFormData, 
+        handleSubmit 
+    } = useRegister()
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -99,7 +45,7 @@ const Register = () => {
                         name="name"
                         label={t('auth.fullName')}
                         value={formData.name}
-                        onChange={(value) => setFormData(prev => ({ ...prev, name: value }))}
+                        onChange={(value) => updateFormData('name', value)}
                         required
                         disabled={loading}
                         icon="pi pi-user"
@@ -113,7 +59,7 @@ const Register = () => {
                         name="email"
                         label={t('auth.email')}
                         value={formData.email}
-                        onChange={(value) => setFormData(prev => ({ ...prev, email: value }))}
+                        onChange={(value) => updateFormData('email', value)}
                         required
                         disabled={loading}
                         icon="pi pi-envelope"
@@ -127,7 +73,7 @@ const Register = () => {
                         name="password"
                         label={t('auth.password')}
                         value={formData.password}
-                        onChange={(value) => setFormData(prev => ({ ...prev, password: value }))}
+                        onChange={(value) => updateFormData('password', value)}
                         required
                         disabled={loading}
                         icon="pi pi-lock"
@@ -141,7 +87,7 @@ const Register = () => {
                         name="password_confirmation"
                         label={t('auth.confirmPassword')}
                         value={formData.password_confirmation}
-                        onChange={(value) => setFormData(prev => ({ ...prev, password_confirmation: value }))}
+                        onChange={(value) => updateFormData('password_confirmation', value)}
                         required
                         disabled={loading}
                         icon="pi pi-lock"

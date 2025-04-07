@@ -58,18 +58,18 @@ const Navbar = () => {
         {
             label: t('common.home'),
             icon: 'pi pi-home',
-            className: 'dark:text-white dark:hover:bg-gray-700',
+            className: 'dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700',
             command: () => navigate(ROUTES.HOME)
         },
         {
             label: t('common.books'),
             icon: 'pi pi-book',
-            className: 'dark:text-white dark:hover:bg-gray-700',
+            className: 'dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700',
             items: [
                 {
                     label: t('common.all_books'),
                     icon: 'pi pi-list',
-                    className: 'dark:text-white dark:hover:bg-gray-700',
+                    className: 'dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700',
                     command: () => navigate(ROUTES.BOOKS)
                 },
             ]
@@ -77,7 +77,7 @@ const Navbar = () => {
         {
             label: t('borrowings.current_borrowings'),
             icon: 'pi pi-bookmark',
-            className: 'dark:text-white dark:hover:bg-gray-700',
+            className: 'dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700',
             command: () => navigate(ROUTES.CURRENT_BORROWINGS)
         }
     ]
@@ -124,13 +124,13 @@ const Navbar = () => {
         {
             label: t('common.profile'),
             icon: 'pi pi-user',
-            className: 'dark:text-gray-200',
+            className: 'text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200',
             command: () => navigate(ROUTES.PROFILE)
         },
         {
             label: t('common.logout'),
             icon: 'pi pi-power-off',
-            className: 'text-red-600 dark:text-red-400',
+            className: 'text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200',
             command: handleLogout
         }
     ]
@@ -176,6 +176,17 @@ const Navbar = () => {
                                 popup 
                                 ref={menuRef} 
                                 className="dark:bg-gray-800 dark:border-gray-700 shadow-lg border border-gray-200 dark:border-gray-700"
+                                pt={{
+                                    root: { className: 'dark:bg-gray-800' },
+                                    menu: { className: 'dark:bg-gray-800' },
+                                    menuitem: { className: 'dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700' },
+                                    content: { className: 'dark:bg-gray-800' },
+                                    submenu: { className: 'dark:bg-gray-800' },
+                                    separator: { className: 'dark:border-gray-700' },
+                                    label: { className: 'text-gray-700 dark:text-white' },
+                                    action: { className: 'text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700' },
+                                    icon: { className: 'text-gray-700 dark:text-white' }
+                                }}
                                 style={{ minWidth: '280px' }}
                             />
                         </div>
@@ -211,8 +222,10 @@ const Navbar = () => {
                     end={end}
                     className="border-none !p-0 dark:bg-gray-800 
                         [&_.p-menuitem-link]:dark:bg-gray-800
-                        [&_.p-menuitem-link:hover]:dark:bg-gray-700 
-                        [&_.p-menuitem-link:focus]:dark:bg-gray-700
+                        [&_.p-menuitem-link]:hover:bg-gray-100
+                        [&_.p-menuitem-link]:hover:dark:bg-gray-700
+                        [&_.p-menuitem-link]:focus:bg-transparent
+                        [&_.p-menuitem-link]:focus:dark:bg-gray-800
                         [&_.p-menuitem-link.p-menuitem-link-active]:dark:bg-gray-700
                         [&_.p-menuitem.p-highlight>.p-menuitem-link]:dark:bg-gray-700
                         [&_.p-menuitem.p-highlight]:dark:bg-gray-700
@@ -221,7 +234,10 @@ const Navbar = () => {
                         [&_.p-submenu-list]:dark:border-gray-700 
                         [&_.p-submenu-list_.p-menuitem]:dark:bg-gray-800
                         [&_.p-submenu-list_.p-menuitem-link]:dark:bg-gray-800
-                        [&_.p-submenu-list_.p-menuitem-link:hover]:dark:bg-gray-700
+                        [&_.p-submenu-list_.p-menuitem-link]:hover:bg-gray-100
+                        [&_.p-submenu-list_.p-menuitem-link]:hover:dark:bg-gray-700
+                        [&_.p-submenu-list_.p-menuitem-link]:focus:bg-transparent
+                        [&_.p-submenu-list_.p-menuitem-link]:focus:dark:bg-gray-800
                         
                         [&_.p-menuitem-text]:dark:text-white 
                         [&_.p-menuitem-icon]:dark:text-white 
@@ -230,7 +246,10 @@ const Navbar = () => {
                         [&_.p-dropdown-panel]:dark:bg-gray-800 
                         [&_.p-dropdown-item]:dark:text-white 
                         [&_.p-dropdown-item]:dark:bg-gray-800
-                        [&_.p-dropdown-item:hover]:dark:bg-gray-700 
+                        [&_.p-dropdown-item]:hover:bg-gray-100
+                        [&_.p-dropdown-item]:hover:dark:bg-gray-700
+                        [&_.p-dropdown-item]:focus:bg-transparent
+                        [&_.p-dropdown-item]:focus:dark:bg-gray-800
                         [&_.p-dropdown-item.p-highlight]:dark:bg-gray-700
                         
                         [&_.p-menubar-root-list]:dark:bg-gray-800
@@ -238,8 +257,10 @@ const Navbar = () => {
                         [&_.p-menubar-root-list>.p-menuitem]:dark:bg-gray-800
                         [&_.p-menubar-root-list>.p-menuitem>.p-menuitem-link]:dark:bg-gray-800
                         [&_.p-menubar-root-list>.p-menuitem>.p-menuitem-link:not(.p-disabled)]:dark:bg-gray-800
-                        [&_.p-menubar-root-list>.p-menuitem>.p-menuitem-link:not(.p-disabled):hover]:dark:bg-gray-700
-                        [&_.p-menubar-root-list>.p-menuitem>.p-menuitem-link:not(.p-disabled):focus]:dark:bg-gray-700
+                        [&_.p-menubar-root-list>.p-menuitem>.p-menuitem-link:not(.p-disabled)]:hover:bg-gray-100
+                        [&_.p-menubar-root-list>.p-menuitem>.p-menuitem-link:not(.p-disabled)]:hover:dark:bg-gray-700
+                        [&_.p-menubar-root-list>.p-menuitem>.p-menuitem-link:not(.p-disabled)]:focus:bg-transparent
+                        [&_.p-menubar-root-list>.p-menuitem>.p-menuitem-link:not(.p-disabled)]:focus:dark:bg-gray-800
                         [&_.p-menubar-root-list>.p-menuitem.p-menuitem-active>.p-menuitem-link]:dark:bg-gray-700
                         
                         [&_.p-menuitem.p-menuitem-active]:dark:bg-gray-700
@@ -249,7 +270,20 @@ const Navbar = () => {
                         
                         [&_.p-menu-overlay]:dark:bg-gray-800
                         [&_.p-menu-list]:dark:bg-gray-800
-                        [&_.p-menuitem]:dark:bg-gray-800"
+                        [&_.p-menu-list_.p-menuitem]:hover:bg-gray-100
+                        [&_.p-menu-list_.p-menuitem]:hover:dark:bg-gray-700
+                        [&_.p-menu-list_.p-menuitem]:focus:bg-transparent
+                        [&_.p-menu-list_.p-menuitem]:focus:dark:bg-gray-800
+                        [&_.p-menuitem]:dark:bg-gray-800
+                        
+                        [&_.p-menuitem_.p-menuitem-link:hover]:bg-gray-100
+                        [&_.p-menuitem_.p-menuitem-link:hover]:dark:bg-gray-700
+                        
+                        [&_.p-menu-list]:hover:bg-transparent
+                        [&_.p-menu-list]:hover:dark:bg-gray-800
+                        
+                        [&_.p-menu_.p-menuitem]:hover:bg-gray-100
+                        [&_.p-menu_.p-menuitem]:hover:dark:bg-gray-700"
                     style={{ background: 'transparent' }}
                 />
             </div>

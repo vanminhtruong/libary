@@ -1,37 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'primereact/button';
-import { useNavigate } from 'react-router-dom';
+import useHome from './hooks/useHome';
 
 const Home = () => {
     const { t } = useTranslation();
-    const navigate = useNavigate();
-
-    const features = [
-        {
-            icon: 'pi pi-search',
-            title: t('home.features.digital_catalog.title'),
-            description: t('home.features.digital_catalog.description')
-        },
-        {
-            icon: 'pi pi-book',
-            title: t('home.features.easy_borrowing.title'),
-            description: t('home.features.easy_borrowing.description')
-        },
-        {
-            icon: 'pi pi-user',
-            title: t('home.features.personalized.title'),
-            description: t('home.features.personalized.description')
-        }
-    ];
-
-    const benefits = [
-        t('home.benefits.list.0'),
-        t('home.benefits.list.1'),
-        t('home.benefits.list.2'),
-        t('home.benefits.list.3'),
-        t('home.benefits.list.4')
-    ];
+    const { features, benefits, handleNavigate } = useHome();
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-800">
@@ -53,13 +27,13 @@ const Home = () => {
                                 label={t('home.cta.register')}
                                 icon="pi pi-user-plus" 
                                 className="p-button-lg"
-                                onClick={() => navigate('/register')}
+                                onClick={() => handleNavigate('/register')}
                             />
                             <Button
                                 label={t('home.cta.browse')}
                                 icon="pi pi-search"
                                 className="p-button-lg p-button-outlined dark:text-white dark:border-white dark:hover:bg-gray-800"
-                                onClick={() => navigate('/books')}
+                                onClick={() => handleNavigate('/books')}
                             />
                         </div>
                     </div>
@@ -133,7 +107,7 @@ const Home = () => {
                             label={t('home.cta.register')}
                             icon="pi pi-user-plus" 
                             className="p-button-lg"
-                            onClick={() => navigate('/register')}
+                            onClick={() => handleNavigate('/register')}
                             severity="secondary"
                         />
                     </div>

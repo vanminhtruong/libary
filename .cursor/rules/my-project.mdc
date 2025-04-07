@@ -1,0 +1,12 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+# Your rule content
+
+- You can @ files here
+- You can use markdown but dont have to
+- mỗi khi tôi bảo bạn xử lý những vấn đề liên quan đến phần giao diện của dự án User thì bạn phải luôn đảm bảo các giao diện của các pages luôn luôn đồng bộ
+- Trong dự án User đang có những công nghệ gì thì bạn phải tuân thủ công nghệ đó chứ không được dùng trái công nghệ
