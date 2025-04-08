@@ -17,9 +17,6 @@ export const BorrowingsService = {
     createFine(data) {
         return POST('/admin/fines', data)
     },
-    getFineDetails(id) {
-        return GET(`/admin/fines/${id}`)
-    },
     markFineAsPaid(id) {
         return POST(`/admin/fines/${id}/pay`)
     },

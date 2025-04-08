@@ -4,9 +4,6 @@ export const FineService = {
     getFines() {
         return GET('/admin/fines')
     },
-    getFine(id) {
-        return GET(`/admin/fines/${id}`)
-    },
     createFine(data) {
         return POST('/admin/fines', data)
     },

@@ -98,6 +98,5 @@ Route::middleware('auth:api')->group(function () {
 
     Route::prefix('fines')->group(function () {
         Route::get('/', [FineController::class, 'getUserFines']);
-        Route::get('/{id}', [FineController::class, 'getUserFineDetail']);
     });
 });
