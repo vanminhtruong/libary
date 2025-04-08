@@ -10,7 +10,7 @@
 
         <DataTable :value="users" :paginator="true" :rows="10" 
                   :rowsPerPageOptions="[5,10,20]" responsiveLayout="scroll"
-                  class="user-table" @rowClick="showUserDetail($event.data)"
+                  class="user-table"
                   selectionMode="single"
                   :loading="loading">
             <Column :header="t('user.table.stt')">
@@ -51,6 +51,8 @@
             </Column>
             <Column :header="t('user.table.actions')">
                 <template #body="slotProps">
+                    <Button icon="pi pi-eye" class="p-button-rounded p-button-success mr-2" 
+                            @click.stop="showUserDetail(slotProps.data)" />
                     <Button icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2" 
                             @click.stop="editUser(slotProps.data)" />
                     <Button icon="pi pi-trash" class="p-button-rounded p-button-danger" 

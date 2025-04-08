@@ -2,6 +2,7 @@ export default {
     title: 'Book Management',
     addBook: 'Add New Book',
     editBook: 'Edit Book',
+    viewBook: 'Book Details',
     table: {
         stt: 'No.',
         name: 'Book Name',
@@ -70,7 +71,8 @@ export default {
         save: 'Save',
         cancel: 'Cancel',
         edit: 'Edit',
-        delete: 'Delete'
+        delete: 'Delete',
+        close: 'Close'
     },
     message: {
         confirmDelete: 'Are you sure you want to delete this book?',
@@ -81,7 +83,8 @@ export default {
             delete: 'Book deleted successfully'
         },
         error: {
-            load: 'Could not load book list'
+            load: 'Could not load book list',
+            fetch: 'Could not fetch book details'
         }
     }
 } 

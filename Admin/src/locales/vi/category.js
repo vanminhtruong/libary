@@ -1,6 +1,6 @@
 export default {
     title: 'Quản lý danh mục',
-    addCategory: 'Thêm danh mục',
+    addCategory: 'Thêm danh mục mới',
     editCategory: 'Sửa danh mục',
     table: {
         stt: 'STT',
@@ -24,6 +24,12 @@ export default {
         edit: 'Sửa',
         delete: 'Xóa'
     },
+    details: {
+        description: 'Mô tả',
+        books: 'Sách trong danh mục này',
+        noDescription: 'Không có mô tả',
+        noBooks: 'Không có sách nào trong danh mục này'
+    },
     message: {
         confirmDelete: 'Bạn có chắc chắn muốn xóa danh mục này?',
         confirmTitle: 'Xác nhận xóa',
@@ -33,7 +39,8 @@ export default {
             delete: 'Xóa danh mục thành công'
         },
         error: {
-            load: 'Không thể tải danh sách danh mục'
+            load: 'Không thể tải danh sách danh mục',
+            loadBooks: 'Không thể tải sách cho danh mục này'
         }
     }
 } 

@@ -2,6 +2,7 @@ export default {
     title: '도서 관리',
     addBook: '새 도서 추가',
     editBook: '도서 수정',
+    viewBook: '도서 상세 정보',
     table: {
         stt: '번호',
         name: '도서명',
@@ -70,7 +71,8 @@ export default {
         save: '저장',
         cancel: '취소',
         edit: '수정',
-        delete: '삭제'
+        delete: '삭제',
+        close: '닫기'
     },
     message: {
         confirmDelete: '이 도서를 삭제하시겠습니까?',
@@ -81,7 +83,8 @@ export default {
             delete: '도서가 성공적으로 삭제되었습니다'
         },
         error: {
-            load: '도서 목록을 불러올 수 없습니다'
+            load: '도서 목록을 불러올 수 없습니다',
+            fetch: '도서 상세 정보를 불러올 수 없습니다'
         }
     }
 } 

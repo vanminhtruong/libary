@@ -1,6 +1,6 @@
 export default {
     title: 'Category Management',
-    addCategory: 'Add Category',
+    addCategory: 'Add New Category',
     editCategory: 'Edit Category',
     table: {
         stt: 'No.',
@@ -24,6 +24,12 @@ export default {
         edit: 'Edit',
         delete: 'Delete'
     },
+    details: {
+        description: 'Description',
+        books: 'Books in this category',
+        noDescription: 'No description available',
+        noBooks: 'No books found in this category'
+    },
     message: {
         confirmDelete: 'Are you sure you want to delete this category?',
         confirmTitle: 'Confirm Delete',
@@ -33,7 +39,8 @@ export default {
             delete: 'Category deleted successfully'
         },
         error: {
-            load: 'Could not load category list'
+            load: 'Could not load category list',
+            loadBooks: 'Could not load books for this category'
         }
     }
 } 

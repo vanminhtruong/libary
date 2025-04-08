@@ -2,6 +2,7 @@ export default {
     title: 'Quản lý sách',
     addBook: 'Thêm sách mới',
     editBook: 'Sửa sách',
+    viewBook: 'Chi tiết sách',
     table: {
         stt: 'STT',
         name: 'Tên sách',
@@ -70,7 +71,8 @@ export default {
         save: 'Lưu',
         cancel: 'Hủy',
         edit: 'Sửa',
-        delete: 'Xóa'
+        delete: 'Xóa',
+        close: 'Đóng'
     },
     message: {
         confirmDelete: 'Bạn có chắc chắn muốn xóa sách này?',
@@ -81,7 +83,8 @@ export default {
             delete: 'Xóa sách thành công'
         },
         error: {
-            load: 'Không thể tải danh sách sách'
+            load: 'Không thể tải danh sách sách',
+            fetch: 'Không thể tải chi tiết sách'
         }
     }
 } 

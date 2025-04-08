@@ -11,3 +11,4 @@ alwaysApply: true
 - mỗi khi tôi bảo bạn xử lý những vấn đề liên quan đến phần giao diện của dự án User thì bạn phải luôn đảm bảo các giao diện của các pages luôn luôn đồng bộ
 - Trong dự án User đang có những công nghệ gì thì bạn phải tuân thủ công nghệ đó chứ không được dùng trái công nghệ
 - Mỗi khi bạn xử lý vấn đề gì ở dự án Admin thì bạn cần phải tuân thủ công nghệ trong dự án
+- Mỗi khi bạn xử lý vấn đề gì ở giao diện view trong dự án Admin thì bạn phải luôn đảm bảo rằng view hiện tại cần xử lý phải đồng bộ giao diện với các view khác và ngoại trừ xử lý các api giữa các view khác nhau ra thì các chức năng lặt nhặt phải đồng bộ giống nhau ví dụ như chẳng hạn như: ảnh

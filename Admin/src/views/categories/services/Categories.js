@@ -11,6 +11,11 @@ export const CategoriesService = {
         return GET(`/admin/categories/${id}`)
     },
 
+    // Lấy danh sách sách thuộc category
+    getCategoryBooks(id) {
+        return GET(`/categories/${id}/books`)
+    },
+
     // Thêm category mới
     createCategory(data) {
         return POST('/admin/categories', data)

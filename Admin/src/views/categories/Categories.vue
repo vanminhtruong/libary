@@ -20,6 +20,8 @@
             <Column field="description" :header="$t('category.table.description')"></Column>
             <Column :header="$t('category.table.actions')">
                 <template #body="slotProps">
+                    <Button icon="pi pi-eye" class="p-button-rounded p-button-success mr-2" 
+                            @click="viewCategoryDetails(slotProps.data)" />
                     <Button icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2" 
                             @click="editCategory(slotProps.data)" />
                     <Button icon="pi pi-trash" class="p-button-rounded p-button-danger" 
@@ -27,6 +29,46 @@
                 </template>
             </Column>
         </DataTable>
+
+        <!-- Dialog Chi Tiết Danh Mục -->
+        <!-- eslint-disable-next-line vue/no-v-model-argument -->
+        <Dialog v-model:visible="detailsDialogVisible"
+                :header="selectedCategory?.name"
+                :modal="true"
+                :style="{width: '850px'}"
+                class="p-fluid">
+            <div v-if="selectedCategory" class="grid">
+                <div class="col-12 mb-4">
+                    <h3 class="mt-0 mb-2 text-lg font-semibold">{{ $t('category.details.description') }}</h3>
+                    <p class="m-0">{{ selectedCategory.description || $t('category.details.noDescription') }}</p>
+                </div>
+                <div class="col-12">
+                    <h3 class="mt-0 mb-3 text-lg font-semibold">{{ $t('category.details.books') }}</h3>
+                    <ProgressSpinner v-if="loadingBooks" style="width: 50px; height: 50px; margin: 1rem auto;" />
+                    <div v-else>
+                        <div v-if="categoryBooks.length === 0" class="text-center p-3">
+                            {{ $t('category.details.noBooks') }}
+                        </div>
+                        <DataTable v-else :value="categoryBooks" 
+                                  :paginator="true" 
+                                  :rows="5" 
+                                  :rowsPerPageOptions="[5, 10, 20]"
+                                  responsiveLayout="scroll"
+                                  class="p-datatable-sm">
+                            <Column field="title" :header="$t('book.table.name')"></Column>
+                            <Column field="author" :header="$t('book.table.author')"></Column>
+                            <Column field="available_copies" :header="$t('book.table.status')">
+                                <template #body="slotProps">
+                                    <Tag :severity="slotProps.data.available_copies > 0 ? 'success' : 'danger'">
+                                        {{ slotProps.data.available_copies > 0 ? $t('book.table.available') : $t('book.table.outOfStock') }}
+                                    </Tag>
+                                </template>
+                            </Column>
+                        </DataTable>
+                    </div>
+                </div>
+            </div>
+        </Dialog>
 
         <!-- eslint-disable-next-line vue/no-v-model-argument -->
         <Dialog v-model:visible="dialogVisible" 
@@ -75,6 +117,8 @@ import Textarea from 'primevue/textarea'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import ConfirmDialog from 'primevue/confirmdialog'
+import Tag from 'primevue/tag'
+import ProgressSpinner from 'primevue/progressspinner'
 
 const { t } = useI18n()
 const confirm = useConfirm()
@@ -87,6 +131,10 @@ const isEditing = ref(false)
 const currentCategoryId = ref(null)
 const isHandlingError = ref(false)
 const loading = ref(false)
+const detailsDialogVisible = ref(false)
+const selectedCategory = ref(null)
+const categoryBooks = ref([])
+const loadingBooks = ref(false)
 
 const categoryForm = ref({
     name: '',
@@ -217,6 +265,32 @@ const confirmDelete = (category) => {
             }
         }
     })
+}
+
+const viewCategoryDetails = async (category) => {
+    try {
+        selectedCategory.value = category
+        detailsDialogVisible.value = true
+        loadingBooks.value = true
+        
+        const response = await CategoriesService.getCategoryBooks(category.id)
+        if (response && response.success) {
+            categoryBooks.value = response.data
+        } else {
+            categoryBooks.value = []
+        }
+    } catch (error) {
+        console.error('Error loading category books:', error)
+        toast.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: t('category.message.error.loadBooks'),
+            life: 3000
+        })
+        categoryBooks.value = []
+    } finally {
+        loadingBooks.value = false
+    }
 }
 
 onMounted(() => {
