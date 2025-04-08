@@ -40,6 +40,11 @@ export default {
         }
     },
     toast: {
+        success: 'Success',
+        error: 'Error',
+        loadError: 'Unable to load borrowing list',
+        approveError: 'Unable to approve borrowing request',
+        rejectError: 'Unable to reject borrowing request',
         fine: {
             success: 'Success',
             error: 'Error',

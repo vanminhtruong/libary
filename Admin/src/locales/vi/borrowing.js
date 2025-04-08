@@ -40,6 +40,11 @@ export default {
         }
     },
     toast: {
+        success: 'Thành công',
+        error: 'Lỗi',
+        loadError: 'Không thể tải danh sách mượn sách',
+        approveError: 'Không thể phê duyệt yêu cầu',
+        rejectError: 'Không thể từ chối yêu cầu',
         fine: {
             success: 'Thành công',
             error: 'Lỗi',

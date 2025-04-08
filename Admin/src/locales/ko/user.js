@@ -38,7 +38,9 @@ export default {
         verified: '인증됨',
         notVerified: '미인증',
         createdDate: '계정 생성일',
-        lastUpdate: '최근 업데이트'
+        lastUpdate: '최근 업데이트',
+        imagePreview: '프로필 이미지 보기',
+        clickToZoom: '확대하려면 클릭하세요'
     },
     button: {
         save: '저장',

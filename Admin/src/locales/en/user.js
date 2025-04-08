@@ -38,7 +38,9 @@ export default {
         verified: 'Verified',
         notVerified: 'Not Verified',
         createdDate: 'Created Date',
-        lastUpdate: 'Last Update'
+        lastUpdate: 'Last Update',
+        imagePreview: 'View Profile Image',
+        clickToZoom: 'Click to zoom'
     },
     button: {
         save: 'Save',

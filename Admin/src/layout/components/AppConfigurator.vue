@@ -3,7 +3,7 @@ import { useLayout } from '@/layout/composables/layout';
 import { $t, updatePreset, updateSurfacePalette } from '@primevue/themes';
 import Aura from '@primevue/themes/aura';
 import Lara from '@primevue/themes/lara';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
 const { layoutConfig, setPrimary, setSurface, setPreset, isDarkTheme, setMenuMode } = useLayout();
 
@@ -74,6 +74,11 @@ const surfaces = ref([
         palette: { 0: '#ffffff', 50: '#fbfcfc', 100: '#F7F9F8', 200: '#EFF3F2', 300: '#DADEDD', 400: '#B1B7B6', 500: '#828787', 600: '#5F7274', 700: '#415B61', 800: '#29444E', 900: '#183240', 950: '#0c1920' }
     }
 ]);
+
+// Thiết lập giá trị mặc định dựa trên localStorage
+const selectedPrimary = ref(primaryColors.value.find(c => c.name === layoutConfig.primary) || primaryColors.value[1]); // emerald mặc định
+const selectedSurface = ref(surfaces.value.find(s => s.name === layoutConfig.surface) || 
+                           (isDarkTheme.value ? surfaces.value.find(s => s.name === 'zinc') : surfaces.value.find(s => s.name === 'slate')));
 
 function getPresetExt() {
     const color = primaryColors.value.find((c) => c.name === layoutConfig.primary);
@@ -194,6 +199,27 @@ function onPresetChange() {
 function onMenuModeChange() {
     setMenuMode(menuMode.value);
 }
+
+// Áp dụng theme từ localStorage khi component được tạo
+onMounted(() => {
+    // Áp dụng preset
+    const presetValue = presets[layoutConfig.preset];
+    
+    // Áp dụng surface
+    const surfaceColor = surfaces.value.find(s => s.name === layoutConfig.surface);
+    
+    // Áp dụng primary
+    const primaryColor = primaryColors.value.find(c => c.name === layoutConfig.primary);
+    
+    if (presetValue) {
+        $t().preset(presetValue).preset(getPresetExt());
+    }
+    
+    // Áp dụng surface nếu có
+    if (surfaceColor) {
+        updateSurfacePalette(surfaceColor.palette);
+    }
+});
 </script>
 
 <template>

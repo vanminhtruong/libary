@@ -8,6 +8,7 @@ import Aura from '@primevue/themes/aura';
 import PrimeVue from 'primevue/config';
 import ConfirmationService from 'primevue/confirmationservice';
 import ToastService from 'primevue/toastservice';
+import Tooltip from 'primevue/tooltip';
 
 import '@/assets/styles.scss';
 import '@/assets/tailwind.css';
@@ -28,4 +29,5 @@ app.use(pinia);
 app.use(ToastService);
 app.use(ConfirmationService);
 app.use(i18n);
+app.directive('tooltip', Tooltip);
 app.mount('#app');

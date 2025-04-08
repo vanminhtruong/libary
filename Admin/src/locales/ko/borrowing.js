@@ -40,6 +40,11 @@ export default {
         }
     },
     toast: {
+        success: '성공',
+        error: '오류',
+        loadError: '대출 목록을 불러올 수 없습니다',
+        approveError: '대출 요청을 승인할 수 없습니다',
+        rejectError: '대출 요청을 거절할 수 없습니다',
         fine: {
             success: '성공',
             error: '오류',

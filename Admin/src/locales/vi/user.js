@@ -38,7 +38,9 @@ export default {
         verified: 'Đã xác thực',
         notVerified: 'Chưa xác thực',
         createdDate: 'Ngày tạo tài khoản',
-        lastUpdate: 'Cập nhật lần cuối'
+        lastUpdate: 'Cập nhật lần cuối',
+        imagePreview: 'Xem ảnh đại diện',
+        clickToZoom: 'Nhấp để phóng to'
     },
     button: {
         save: 'Lưu',

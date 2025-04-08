@@ -9,12 +9,36 @@ import { useToast } from 'primevue/usetoast';
 import Toast from 'primevue/toast';
 import ConfirmDialog from 'primevue/confirmdialog';
 import { useI18n } from 'vue-i18n';
+import { onMounted, ref } from 'vue';
 
 const { onMenuToggle, toggleDarkMode, isDarkTheme } = useLayout();
 const router = useRouter();
 const confirm = useConfirm();
 const toast = useToast();
 const { t } = useI18n();
+
+// Đảm bảo trạng thái chế độ sáng/tối được đồng bộ với localStorage
+onMounted(() => {
+    // Kiểm tra lại trạng thái từ localStorage
+    const darkModeEnabled = localStorage.getItem('admin_darkTheme') === 'true';
+    if (darkModeEnabled) {
+        document.documentElement.classList.add('app-dark');
+    } else {
+        document.documentElement.classList.remove('app-dark');
+    }
+});
+
+// Hàm xử lý khi nhấn vào nút chuyển đổi chế độ sáng/tối
+const handleToggleDarkMode = () => {
+    toggleDarkMode();
+    // Hiển thị toast thông báo
+    toast.add({
+        severity: 'info',
+        summary: isDarkTheme.value ? t('auth.theme.darkModeEnabled') : t('auth.theme.lightModeEnabled'),
+        detail: isDarkTheme.value ? t('auth.theme.darkModeEnabledDetail') : t('auth.theme.lightModeEnabledDetail'),
+        life: 3000
+    });
+};
 
 const handleLogout = async () => {
     confirm.require({
@@ -84,7 +108,7 @@ const handleLogout = async () => {
 
         <div class="layout-topbar-actions">
             <div class="layout-config-menu">
-                <button type="button" class="layout-topbar-action" @click="toggleDarkMode">
+                <button type="button" class="layout-topbar-action" @click="handleToggleDarkMode">
                     <i :class="['pi', { 'pi-moon': isDarkTheme, 'pi-sun': !isDarkTheme }]"></i>
                 </button>
                 <div class="relative">

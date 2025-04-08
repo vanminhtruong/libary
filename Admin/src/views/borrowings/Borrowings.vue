@@ -270,16 +270,16 @@ const loadBorrowings = async () => {
         } else {
             toast.add({
                 severity: 'error',
-                summary: 'Lỗi',
-                detail: response.message || 'Không thể tải danh sách mượn sách',
+                summary: t('borrowing.toast.error'),
+                detail: response.message || t('borrowing.toast.loadError'),
                 life: 3000
             })
         }
     } catch (error) {
         toast.add({
             severity: 'error',
-            summary: 'Lỗi',
-            detail: error.message || 'Không thể tải danh sách mượn sách',
+            summary: t('borrowing.toast.error'),
+            detail: error.message || t('borrowing.toast.loadError'),
             life: 3000
         })
     } finally {
@@ -293,8 +293,8 @@ const handleApprove = async (id) => {
         const response = await BorrowingsService.approveBorrowing(id)
         toast.add({
             severity: 'success',
-            summary: 'Thành công',
-            detail: response.message || 'Đã phê duyệt yêu cầu mượn sách',
+            summary: t('borrowing.toast.success'),
+            detail: response.message || t('borrowing.messages.approveSuccess'),
             life: 3000
         })
         await loadBorrowings()
@@ -302,8 +302,8 @@ const handleApprove = async (id) => {
     } catch (error) {
         toast.add({
             severity: 'error',
-            summary: 'Lỗi',
-            detail: error.message || 'Không thể phê duyệt yêu cầu',
+            summary: t('borrowing.toast.error'),
+            detail: error.message || t('borrowing.toast.approveError'),
             life: 3000
         })
     }
@@ -315,8 +315,8 @@ const handleReject = async (id) => {
         const response = await BorrowingsService.rejectBorrowing(id)
         toast.add({
             severity: 'success',
-            summary: 'Thành công',
-            detail: response.message || 'Đã từ chối yêu cầu mượn sách',
+            summary: t('borrowing.toast.success'),
+            detail: response.message || t('borrowing.messages.rejectSuccess'),
             life: 3000
         })
         await loadBorrowings()
@@ -324,8 +324,8 @@ const handleReject = async (id) => {
     } catch (error) {
         toast.add({
             severity: 'error',
-            summary: 'Lỗi',
-            detail: error.message || 'Không thể từ chối yêu cầu',
+            summary: t('borrowing.toast.error'),
+            detail: error.message || t('borrowing.toast.rejectError'),
             life: 3000
         })
     }

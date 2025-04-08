@@ -133,7 +133,9 @@
                         <img v-if="selectedUser.image" 
                              :src="getImageUrl(selectedUser.image)"
                              :alt="selectedUser.name"
-                             class="detail-image shadow-4" />
+                             class="detail-image shadow-4 cursor-pointer"
+                             v-tooltip.top="t('user.detail.clickToZoom')"
+                             @click="openImagePreview(selectedUser.image)" />
                         <i v-else class="pi pi-user detail-icon"></i>
                     </div>
                     <div class="flex-1">
@@ -193,7 +195,26 @@
             </template>
         </Dialog>
 
-        <ConfirmDialog></ConfirmDialog>
+        <!-- Image Preview Dialog -->
+        <!-- eslint-disable-next-line vue/no-v-model-argument -->
+        <Dialog v-model:visible="imagePreviewDialog"
+                :modal="true"
+                :showHeader="false"
+                :dismissableMask="true"
+                :closable="true"
+                :style="{width: '80vw', maxWidth: '800px'}"
+                class="image-preview-dialog">
+            <div class="image-preview-container">
+                <img v-if="previewImageUrl" 
+                    :src="previewImageUrl" 
+                    alt="User profile"
+                    class="preview-image" />
+                
+                <Button icon="pi pi-times"
+                        @click="closeImagePreview"
+                        class="image-close-button p-button-rounded p-button-danger p-button-text" />
+            </div>
+        </Dialog>
     </div>
 </template>
 
@@ -211,6 +232,7 @@ import Column from 'primevue/column'
 import ConfirmDialog from 'primevue/confirmdialog'
 import Tag from 'primevue/tag'
 import FileUpload from 'primevue/fileupload'
+import Tooltip from 'primevue/tooltip'
 
 const confirm = useConfirm()
 const toast = useToast()
@@ -225,6 +247,8 @@ const selectedImage = ref(null)
 const detailDialog = ref(false)
 const selectedUser = ref(null)
 const loading = ref(false)
+const imagePreviewDialog = ref(false)
+const previewImageUrl = ref('')
 
 const userForm = ref({
     name: '',
@@ -396,6 +420,15 @@ const showUserDetail = async (user) => {
     }
 }
 
+const openImagePreview = (image) => {
+    previewImageUrl.value = getImageUrl(image)
+    imagePreviewDialog.value = true
+}
+
+const closeImagePreview = () => {
+    imagePreviewDialog.value = false
+}
+
 onMounted(() => {
     fetchUsers()
 })
@@ -513,5 +546,48 @@ onMounted(() => {
 .user-detail-content .surface-card:hover {
     transform: translateY(-2px);
     box-shadow: var(--card-shadow);
+}
+
+/* CSS cho dialog phóng to ảnh */
+:deep(.image-preview-dialog .p-dialog-content) {
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.image-preview-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    min-height: 300px;
+}
+
+.preview-image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.image-close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+}
+
+.detail-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid white;
+    transition: transform 0.2s ease-in-out;
+}
+
+.detail-image:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 </style>

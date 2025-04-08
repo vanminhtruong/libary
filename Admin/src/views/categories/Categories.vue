@@ -59,8 +59,6 @@
                 </div>
             </template>
         </Dialog>
-
-        <ConfirmDialog></ConfirmDialog>
     </div>
 </template>
 
