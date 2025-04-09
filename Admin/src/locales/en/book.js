@@ -84,7 +84,11 @@ export default {
         },
         error: {
             load: 'Could not load book list',
-            fetch: 'Could not fetch book details'
+            fetch: 'Could not fetch book details',
+            create: 'Could not create new book',
+            update: 'Could not update book',
+            delete: 'Could not delete book',
+            loadCategories: 'Could not load categories'
         }
     }
 } 

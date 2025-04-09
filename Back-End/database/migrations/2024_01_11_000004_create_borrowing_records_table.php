@@ -17,6 +17,7 @@ return new class extends Migration
             $table->date('return_date')->nullable();
             $table->decimal('fine_amount', 10, 2)->default(0);
             $table->string('status'); // borrowed, returned, overdue
+            $table->string('reason')->nullable();
             $table->timestamps();
         });
     }

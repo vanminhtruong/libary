@@ -16,6 +16,7 @@ return new class extends Migration
             $table->date('fine_date');
             $table->string('status'); // pending, paid
             $table->string('payment_method')->nullable();
+            $table->string('reason')->nullable();
             $table->timestamps();
         });
     }

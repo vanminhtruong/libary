@@ -2,11 +2,18 @@ export default {
     title: 'Category Management',
     addCategory: 'Add New Category',
     editCategory: 'Edit Category',
+    viewCategory: 'Category Details',
     table: {
         stt: 'No.',
         name: 'Category Name',
         description: 'Description',
         actions: 'Actions'
+    },
+    field: {
+        name: 'Category Name',
+        description: 'Description',
+        createdAt: 'Created Date',
+        updatedAt: 'Updated Date'
     },
     form: {
         name: {
@@ -18,11 +25,15 @@ export default {
             placeholder: 'Enter category description'
         }
     },
+    actions: {
+        viewDetails: 'View Details'
+    },
     button: {
         save: 'Save',
         cancel: 'Cancel',
         edit: 'Edit',
-        delete: 'Delete'
+        delete: 'Delete',
+        close: 'Close'
     },
     details: {
         description: 'Description',
@@ -42,5 +53,7 @@ export default {
             load: 'Could not load category list',
             loadBooks: 'Could not load books for this category'
         }
-    }
+    },
+    notAvailable: 'Not available',
+    uncategorized: 'Uncategorized'
 } 

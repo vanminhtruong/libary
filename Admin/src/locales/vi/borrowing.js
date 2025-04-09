@@ -7,7 +7,8 @@ export default {
         borrowDate: 'Ngày mượn',
         dueDate: 'Ngày hẹn trả',
         status: 'Trạng thái',
-        actions: 'Thao tác'
+        actions: 'Thao tác',
+        reason: 'Lý do'
     },
     status: {
         pending: 'Chờ duyệt',
@@ -60,5 +61,11 @@ export default {
         fineCreated: 'Đã xử lý phạt thành công',
         approveSuccess: 'Đã duyệt yêu cầu mượn sách',
         rejectSuccess: 'Đã từ chối yêu cầu mượn sách'
+    },
+    placeholder: {
+        reason: 'Nhập lý do từ chối...'
+    },
+    validation: {
+        reasonRequired: 'Lý do không được để trống'
     }
 }

@@ -39,8 +39,9 @@ class BorrowingRepository implements BorrowingRepositoryInterface
     public function getUserCurrentBorrowings($userId)
     {
         return $this->model->where('user_id', $userId)
-            ->where('status', 'borrowed')
+            ->whereIn('status', ['borrowed', 'rejected'])
             ->with('book')
+            ->orderBy('created_at', 'desc')
             ->get();
     }
 

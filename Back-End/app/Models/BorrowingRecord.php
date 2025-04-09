@@ -15,7 +15,8 @@ class BorrowingRecord extends Model
         'due_date',
         'return_date',
         'fine_amount',
-        'status'
+        'status',
+        'reason'
     ];
 
     protected $casts = [

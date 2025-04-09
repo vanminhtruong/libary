@@ -18,6 +18,7 @@
     "password": "Password",
     "cancel": "Cancel",
     "confirm": "Confirm",
+    "close": "Close",
     "error": "Error",
     "success": "Success",
     "books": "Books",
@@ -148,8 +149,12 @@
     "status": "Status",
     "status_active": "Borrowed",
     "status_overdue": "Overdue",
+    "status_rejected": "Rejected",
     "extend": "Extend",
     "return": "Return",
+    "view_reason": "View Reason",
+    "reason_title": "Rejection Reason",
+    "reason_message": "This request has been rejected by the administrator. Here's the reason:",
     "extend_success": "Successfully extended",
     "extend_error": "Unable to extend book",
     "return_success": "Successfully returned book",
@@ -168,7 +173,9 @@
     "no_fines": "No fines",
     "no_fines_data": "No fine data available",
     "fines_load_error": "Unable to load fines information",
-    "no_active_borrowings": "No active borrowings"
+    "no_active_borrowings": "No active borrowings",
+    "reason": "Reason",
+    "no_reason_provided": "No reason provided"
   },
   "home": {
     "welcome_title": "Welcome to Smart Library Management System",

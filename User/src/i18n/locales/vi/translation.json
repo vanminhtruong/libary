@@ -23,6 +23,7 @@
     "delete": "Xóa",
     "save": "Lưu",
     "cancel": "Hủy",
+    "close": "Đóng",
     "back": "Quay lại",
     "library_collection": "Bộ Sưu Tập Thư Viện",
     "discover_books": "Khám phá bộ sưu tập sách phong phú của chúng tôi",
@@ -158,8 +159,12 @@
     "status": "Trạng thái",
     "status_active": "Đang mượn",
     "status_overdue": "Quá hạn",
+    "status_rejected": "Từ chối",
     "extend": "Gia hạn",
     "return": "Trả sách",
+    "view_reason": "Xem lý do",
+    "reason_title": "Lý do từ chối",
+    "reason_message": "Yêu cầu này đã bị quản trị viên từ chối. Đây là lý do:",
     "extend_success": "Gia hạn thành công",
     "extend_error": "Không thể gia hạn sách",
     "return_success": "Trả sách thành công",
@@ -178,7 +183,9 @@
     "no_fines": "Không có khoản phạt nào",
     "no_fines_data": "Không có dữ liệu tiền phạt",
     "fines_load_error": "Không thể tải thông tin tiền phạt",
-    "no_active_borrowings": "Không có sách đang mượn"
+    "no_active_borrowings": "Không có sách đang mượn",
+    "reason": "Lý do",
+    "no_reason_provided": "Không có lý do được cung cấp"
   },
   "home": {
     "welcome_title": "Chào mừng đến với Hệ thống Quản lý Thư viện Thông minh",

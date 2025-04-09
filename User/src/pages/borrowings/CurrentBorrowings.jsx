@@ -21,6 +21,8 @@ const CurrentBorrowings = () => {
     const [finesData, setFinesData] = useState(null);
     const [loadingFines, setLoadingFines] = useState(false);
     const [showReturnDialog, setShowReturnDialog] = useState(false);
+    const [showReasonDialogVisible, setShowReasonDialogVisible] = useState(false);
+    const [rejectedBorrowing, setRejectedBorrowing] = useState(null);
 
     useEffect(() => {
         loadBorrowings();
@@ -31,7 +33,13 @@ const CurrentBorrowings = () => {
             setLoading(true);
             const response = await bookService.getCurrentBorrowings();
             console.log('Borrowings response:', response);
+            
+            // Kiểm tra chi tiết từng borrowing để xác định có reason không
             if (response && Array.isArray(response)) {
+                console.log('Dates of borrowings in order:');
+                response.forEach((borrowing, index) => {
+                    console.log(`${index}: ${borrowing.book.title} - Created: ${borrowing.created_at}, ID: ${borrowing.id}`);
+                });
                 setBorrowings(response);
             } else {
                 setBorrowings([]);
@@ -126,6 +134,13 @@ const CurrentBorrowings = () => {
         setShowReturnDialog(true);
     };
 
+    const showReasonDialog = (borrowing) => {
+        console.log("Rejected borrowing data:", borrowing);
+        console.log("Rejection reason:", borrowing.reason);
+        setRejectedBorrowing(borrowing);
+        setShowReasonDialogVisible(true);
+    };
+
     const getImageUrl = (imagePath) => {
         if (!imagePath) return '/default-book-cover.jpg'
         if (imagePath.startsWith('http')) return imagePath
@@ -187,31 +202,50 @@ const CurrentBorrowings = () => {
                             <span className={`px-3 py-1 rounded-full text-sm ${
                                 borrowing.status === 'borrowed' 
                                     ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' 
-                                    : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
+                                    : borrowing.status === 'rejected'
+                                    ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
+                                    : 'bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400'
                             }`}>
                                 {borrowing.status === 'borrowed'
                                     ? t('borrowings.status_active')
+                                    : borrowing.status === 'rejected'
+                                    ? t('borrowings.status_rejected')
                                     : t('borrowings.status_overdue')
                                 }
                             </span>
                         </div>
                     </div>
 
+                    {borrowing.status === 'rejected' && (
+                        <div className="mt-3 flex justify-end">
+                            <Button
+                                label={t('borrowings.view_reason')}
+                                icon="pi pi-info-circle"
+                                className="p-button-info p-button-sm"
+                                onClick={() => showReasonDialog(borrowing)}
+                            />
+                        </div>
+                    )}
+
                     <div className="mt-4 flex justify-end gap-2">
-                        <Button
-                            label={t('borrowings.return')}
-                            icon="pi pi-reply"
-                            severity="danger"
-                            className="p-button-outlined dark:hover:bg-red-900/30 dark:text-red-400"
-                            onClick={() => confirmReturn(borrowing)}
-                        />
-                        <Button
-                            label={t('borrowings.extend')}
-                            icon="pi pi-calendar-plus"
-                            className="p-button-secondary dark:hover:bg-gray-700 dark:text-white"
-                            onClick={() => confirmExtend(borrowing)}
-                            disabled={borrowing.status !== 'borrowed'}
-                        />
+                        {borrowing.status !== 'rejected' && (
+                            <>
+                                <Button
+                                    label={t('borrowings.return')}
+                                    icon="pi pi-reply"
+                                    severity="danger"
+                                    className="dark:text-red-400 dark:hover:bg-red-900/30"
+                                    onClick={() => confirmReturn(borrowing)}
+                                />
+                                <Button
+                                    label={t('borrowings.extend')}
+                                    icon="pi pi-calendar-plus"
+                                    className="p-button-secondary dark:hover:bg-gray-700 dark:text-white"
+                                    onClick={() => confirmExtend(borrowing)}
+                                    disabled={borrowing.status !== 'borrowed'}
+                                />
+                            </>
+                        )}
                     </div>
 
                     {borrowing.fine_amount > 0 && (
@@ -286,11 +320,11 @@ const CurrentBorrowings = () => {
                                                     ${fine.amount}
                                                 </span>
                                             </div>
-                                            <p className="text-sm text-gray-600 dark:text-gray-300">
-                                                {t('borrowings.fine_reason')}: {fine.reason || t('common.no_reason')}
+                                            <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
+                                                {t('borrowings.fine_date')}: {new Date(fine.fine_date || fine.created_at).toLocaleDateString()}
                                             </p>
-                                            <p className="text-sm text-gray-600 dark:text-gray-300">
-                                                {t('borrowings.fine_date')}: {new Date(fine.created_at).toLocaleDateString()}
+                                            <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
+                                                {t('borrowings.fine_reason')}: {fine.reason || t('borrowings.no_reason_provided')}
                                             </p>
                                             <p className="text-sm text-gray-600 dark:text-gray-300">
                                                 {t('borrowings.status')}: <span className={`px-2 py-1 rounded-full ${
@@ -393,10 +427,43 @@ const CurrentBorrowings = () => {
                     <Button
                         label={t('common.confirm')}
                         icon="pi pi-check"
-                        severity="danger"
-                        className="dark:bg-red-600 dark:hover:bg-red-700 dark:text-white"
+                        className="p-button-primary dark:text-white focus:outline-none focus:ring-0"
                         onClick={handleReturn}
                         autoFocus
+                    />
+                </div>
+            </Dialog>
+
+            {/* Reason Dialog */}
+            <Dialog
+                visible={showReasonDialogVisible}
+                onHide={() => setShowReasonDialogVisible(false)}
+                header={t('borrowings.reason_title')}
+                className="dark:bg-gray-800 border-none"
+                headerClassName="dark:bg-gray-800 dark:text-white border-b dark:border-gray-700"
+                contentClassName="dark:bg-gray-800"
+                style={{ borderRadius: '8px' }}
+                modal
+                dismissableMask
+            >
+                <div className="p-4 bg-white dark:bg-gray-800">
+                    <p className="text-gray-700 dark:text-gray-300 mb-4">{t('borrowings.reason_message')}</p>
+                    {rejectedBorrowing && (
+                        <div className="mt-3 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+                            <p className="font-semibold text-gray-800 dark:text-white mb-2">{rejectedBorrowing.book.title}</p>
+                            <div className="text-sm text-gray-600 dark:text-gray-300">
+                                <span className="font-medium">{t('borrowings.reason')}:</span>{' '}
+                                <span className="italic">{rejectedBorrowing.reason ? rejectedBorrowing.reason : t('borrowings.no_reason_provided')}</span>
+                            </div>
+                        </div>
+                    )}
+                </div>
+                <div className="flex justify-end gap-2 px-4 py-3 bg-gray-50 dark:bg-gray-700/50">
+                    <Button
+                        label={t('common.close')}
+                        icon="pi pi-times"
+                        className="p-button-text dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-600"
+                        onClick={() => setShowReasonDialogVisible(false)}
                     />
                 </div>
             </Dialog>

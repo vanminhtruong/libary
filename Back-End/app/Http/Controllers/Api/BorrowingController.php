@@ -120,7 +120,8 @@ class BorrowingController extends Controller
     public function reject(Request $request, $id)
     {
         try {
-            $borrowingRecord = $this->borrowingService->rejectBorrowing($id);
+            $reason = $request->input('reason');
+            $borrowingRecord = $this->borrowingService->rejectBorrowing($id, $reason);
 
             return response()->json([
                 'message' => 'Borrowing request rejected successfully',

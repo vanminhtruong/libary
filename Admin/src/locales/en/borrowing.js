@@ -7,7 +7,8 @@ export default {
         borrowDate: 'Borrow Date',
         dueDate: 'Due Date',
         status: 'Status',
-        actions: 'Actions'
+        actions: 'Actions',
+        reason: 'Reason'
     },
     status: {
         pending: 'Pending',
@@ -60,5 +61,11 @@ export default {
         fineCreated: 'Fine processed successfully',
         approveSuccess: 'Borrowing request approved',
         rejectSuccess: 'Borrowing request rejected'
+    },
+    placeholder: {
+        reason: 'Enter rejection reason...'
+    },
+    validation: {
+        reasonRequired: 'Reason is required'
     }
 }

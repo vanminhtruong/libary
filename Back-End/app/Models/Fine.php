@@ -13,7 +13,8 @@ class Fine extends Model
         'amount',
         'fine_date',
         'status',
-        'payment_method'
+        'payment_method',
+        'reason'
     ];
 
     protected $casts = [

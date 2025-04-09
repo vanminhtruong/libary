@@ -131,12 +131,13 @@ class BorrowingService
         return $borrowing;
     }
 
-    public function rejectBorrowing($id)
+    public function rejectBorrowing($id, $reason = null)
     {
         $borrowing = $this->borrowingRepository->findById($id);
 
-        // Cập nhật trạng thái thành rejected
+        // Cập nhật trạng thái thành rejected và lưu lý do
         $borrowing->status = 'rejected';
+        $borrowing->reason = $reason;
         $borrowing->save();
 
         return $borrowing;

@@ -8,7 +8,12 @@ alwaysApply: true
 
 - You can @ files here
 - You can use markdown but dont have to
-- mỗi khi tôi bảo bạn xử lý những vấn đề liên quan đến phần giao diện của dự án User thì bạn phải luôn đảm bảo các giao diện của các pages luôn luôn đồng bộ
-- Trong dự án User đang có những công nghệ gì thì bạn phải tuân thủ công nghệ đó chứ không được dùng trái công nghệ
-- Mỗi khi bạn xử lý vấn đề gì ở dự án Admin thì bạn cần phải tuân thủ công nghệ trong dự án
-- Mỗi khi bạn xử lý vấn đề gì ở giao diện view trong dự án Admin thì bạn phải luôn đảm bảo rằng view hiện tại cần xử lý phải đồng bộ giao diện với các view khác và ngoại trừ xử lý các api giữa các view khác nhau ra thì các chức năng lặt nhặt phải đồng bộ giống nhau ví dụ như chẳng hạn như: ảnh
+- mỗi khi tôi bảo bạn xử lý những vấn đề liên quan đến phần giao diện của dự án User thì bạn phải luôn đảm bảo các giao diện của các pages luôn luôn đồng bộ.
+- Trong dự án User đang có những công nghệ gì thì bạn phải tuân thủ công nghệ đó chứ không được dùng trái công nghệ.
+- Mỗi khi bạn xử lý vấn đề gì ở dự án Admin thì bạn cần phải tuân thủ công nghệ trong dự án.
+- Mỗi khi bạn xử lý vấn đề gì ở giao diện view trong dự án Admin thì bạn phải luôn làm theo các yêu cầu sau thứ tự sau: 
+1. các View phải luôn đồng bộ giao diện
+2. Các thư mục của vue phải có cấu trúc template thư mục giống nhau
+- Mỗi khi nói chuyện với tôi bạn phải có câu chào Leon đầu tiên
+- Mỗi khi tôi yêu cầu bạn xử lý vấn đề gì với dự án Back End thì bạn không được phép tạo ra những file migration trùng lặp mà phải kiểm tra xem đã tồn tại chưa
+

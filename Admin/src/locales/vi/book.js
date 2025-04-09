@@ -84,7 +84,11 @@ export default {
         },
         error: {
             load: 'Không thể tải danh sách sách',
-            fetch: 'Không thể tải chi tiết sách'
+            fetch: 'Không thể tải chi tiết sách',
+            create: 'Không thể tạo sách mới',
+            update: 'Không thể cập nhật sách',
+            delete: 'Không thể xóa sách',
+            loadCategories: 'Không thể tải danh mục'
         }
     }
 } 

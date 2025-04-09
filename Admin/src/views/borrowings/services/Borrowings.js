@@ -7,12 +7,23 @@ export const BorrowingsService = {
     approveBorrowing(id) {
         return POST(`/admin/borrowings/approve/${id}`)
     },
-    rejectBorrowing(id) {
-        return POST(`/admin/borrowings/reject/${id}`)
+    rejectBorrowing(id, reason) {
+        const data = { reason }
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        return POST(`/admin/borrowings/reject/${id}`, data, config)
     },
     // Fine management methods
     createFine(data) {
-        return POST('/admin/fines', data)
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        return POST('/admin/fines', data, config)
     },
     markFineAsPaid(id) {
         return POST(`/admin/fines/${id}/pay`)

@@ -7,7 +7,8 @@ export default {
         borrowDate: '대출일',
         dueDate: '반납예정일',
         status: '상태',
-        actions: '작업'
+        actions: '작업',
+        reason: '사유'
     },
     status: {
         pending: '대기 중',
@@ -60,5 +61,11 @@ export default {
         fineCreated: '벌금이 성공적으로 처리되었습니다',
         approveSuccess: '대출 요청이 승인되었습니다',
         rejectSuccess: '대출 요청이 거절되었습니다'
+    },
+    placeholder: {
+        reason: '거절 사유 입력...'
+    },
+    validation: {
+        reasonRequired: '사유가 필요합니다'
     }
 }

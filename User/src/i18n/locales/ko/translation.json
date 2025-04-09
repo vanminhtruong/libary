@@ -18,6 +18,7 @@
     "password": "비밀번호",
     "cancel": "취소",
     "confirm": "확인",
+    "close": "닫기",
     "error": "오류",
     "success": "성공",
     "books": "도서",
@@ -158,8 +159,12 @@
     "status": "상태",
     "status_active": "대출 중",
     "status_overdue": "연체",
+    "status_rejected": "거부됨",
     "extend": "연장",
     "return": "반납",
+    "view_reason": "사유 보기",
+    "reason_title": "거부 사유",
+    "reason_message": "이 요청은 관리자에 의해 거부되었습니다. 사유는 다음과 같습니다:",
     "extend_success": "연장이 완료되었습니다",
     "extend_error": "연장할 수 없습니다",
     "return_success": "반납이 완료되었습니다",
@@ -178,7 +183,9 @@
     "no_fines": "연체료가 없습니다",
     "no_fines_data": "연체료 정보가 없습니다",
     "fines_load_error": "연체료 정보를 불러올 수 없습니다",
-    "no_active_borrowings": "대출 중인 도서가 없습니다"
+    "no_active_borrowings": "대출 중인 도서가 없습니다",
+    "reason": "사유",
+    "no_reason_provided": "제공된 사유 없음"
   },
   "home": {
     "welcome_title": "스마트 도서관 관리 시스템에 오신 것을 환영합니다",

@@ -2,11 +2,18 @@ export default {
     title: 'Quản lý danh mục',
     addCategory: 'Thêm danh mục mới',
     editCategory: 'Sửa danh mục',
+    viewCategory: 'Chi tiết danh mục',
     table: {
         stt: 'STT',
         name: 'Tên danh mục',
         description: 'Mô tả',
         actions: 'Thao tác'
+    },
+    field: {
+        name: 'Tên danh mục',
+        description: 'Mô tả',
+        createdAt: 'Ngày tạo',
+        updatedAt: 'Ngày cập nhật'
     },
     form: {
         name: {
@@ -18,11 +25,15 @@ export default {
             placeholder: 'Nhập mô tả danh mục'
         }
     },
+    actions: {
+        viewDetails: 'Xem chi tiết'
+    },
     button: {
         save: 'Lưu',
         cancel: 'Hủy',
         edit: 'Sửa',
-        delete: 'Xóa'
+        delete: 'Xóa',
+        close: 'Đóng'
     },
     details: {
         description: 'Mô tả',
@@ -42,5 +53,7 @@ export default {
             load: 'Không thể tải danh sách danh mục',
             loadBooks: 'Không thể tải sách cho danh mục này'
         }
-    }
+    },
+    notAvailable: 'Không có thông tin',
+    uncategorized: 'Chưa phân loại'
 } 
