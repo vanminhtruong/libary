@@ -12,4 +12,5 @@ interface BorrowingRepositoryInterface
     public function updateStatus($id, $status);
     public function extendDueDate($id, $days);
     public function addFine($borrowId, $amount);
+    public function delete($id);
 } 

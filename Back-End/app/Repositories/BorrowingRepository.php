@@ -93,4 +93,10 @@ class BorrowingRepository implements BorrowingRepositoryInterface
 
         return $fine;
     }
+
+    public function delete($id)
+    {
+        $borrowing = $this->findById($id);
+        return $borrowing->delete();
+    }
 } 

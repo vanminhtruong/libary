@@ -131,4 +131,20 @@ class BorrowingController extends Controller
             return response()->json(['message' => $e->getMessage()], 400);
         }
     }
+
+    public function destroy(Request $request, $id)
+    {
+        try {
+            $this->borrowingService->deleteBorrowing(
+                $request->user()->id,
+                $id
+            );
+
+            return response()->json([
+                'message' => 'Borrowing record deleted successfully'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
+    }
 }

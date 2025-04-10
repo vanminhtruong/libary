@@ -9,7 +9,6 @@ const Home = () => {
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-800">
-            {/* Hero Section */}
             <div className="bg-gradient-to-r from-blue-600 to-blue-800 dark:from-gray-700 dark:to-gray-900 text-white">
                 <div className="container mx-auto px-6 py-20">
                     <div className="max-w-4xl mx-auto text-center">
@@ -40,7 +39,6 @@ const Home = () => {
                 </div>
             </div>
 
-            {/* Features Section */}
             <div className="py-20 px-6">
                 <div className="container mx-auto">
                     <h2 className="text-3xl font-bold text-center mb-12 dark:text-white">
@@ -58,7 +56,6 @@ const Home = () => {
                 </div>
             </div>
 
-            {/* Collection Section */}
             <div className="bg-gray-100 dark:bg-gray-700 py-20 px-6">
                 <div className="container mx-auto">
                     <div className="max-w-3xl mx-auto text-center">
@@ -72,7 +69,6 @@ const Home = () => {
                 </div>
             </div>
 
-            {/* Benefits Section */}
             <div className="py-20 px-6">
                 <div className="container mx-auto">
                     <h2 className="text-3xl font-bold text-center mb-12 dark:text-white">
@@ -93,7 +89,6 @@ const Home = () => {
                 </div>
             </div>
 
-            {/* CTA Section */}
             <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white py-20 px-6">
                 <div className="container mx-auto text-center">
                     <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">

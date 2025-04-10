@@ -10,6 +10,7 @@ export default {
         actions: '작업',
         reason: '사유'
     },
+    uncategorized: '미분류',
     status: {
         pending: '대기 중',
         borrowed: '대출 중',

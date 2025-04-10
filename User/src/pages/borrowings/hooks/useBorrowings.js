@@ -19,7 +19,6 @@ const useBorrowings = () => {
     const [returnLoading, setReturnLoading] = useState(false);
     const [cancelLoading, setCancelLoading] = useState(false);
     
-    // Pagination
     const [pagination, setPagination] = useState({
         first: 0,
         rows: 10,
@@ -46,7 +45,6 @@ const useBorrowings = () => {
         setLoading(true);
         try {
             if (activeTab === 0) {
-                // Current borrowings
                 const data = await borrowingService.getUserBorrowings({
                     page: pagination.page + 1,
                     limit: pagination.rows
@@ -58,7 +56,6 @@ const useBorrowings = () => {
                     totalRecords: data.total || 0
                 }));
             } else if (activeTab === 1) {
-                // Reservations
                 const data = await borrowingService.getUserReservations({
                     page: pagination.page + 1,
                     limit: pagination.rows
@@ -70,7 +67,6 @@ const useBorrowings = () => {
                     totalRecords: data.total || 0
                 }));
             } else if (activeTab === 2) {
-                // History
                 const data = await borrowingService.getBorrowingHistory({
                     page: pagination.page + 1,
                     limit: pagination.rows

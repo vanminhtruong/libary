@@ -87,6 +87,7 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/extend/{borrowId}', [BorrowingController::class, 'extend']);
         Route::get('/current', [BorrowingController::class, 'currentBorrowings']);
         Route::get('/history', [BorrowingController::class, 'borrowingHistory']);
+        Route::delete('/{id}', [BorrowingController::class, 'destroy']);
     });
 
     Route::prefix('categories')->group(function () {

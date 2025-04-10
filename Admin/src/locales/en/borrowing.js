@@ -10,6 +10,7 @@ export default {
         actions: 'Actions',
         reason: 'Reason'
     },
+    uncategorized: 'Uncategorized',
     status: {
         pending: 'Pending',
         borrowed: 'Borrowed',

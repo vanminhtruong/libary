@@ -93,7 +93,7 @@ const createBaseService = (resourcePath) => {
             })
             return handleResponse(response)
         } catch (error) {
-            handleError(error)
+            return Promise.reject(error)
         } finally {
             hideLoading()
         }

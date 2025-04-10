@@ -82,16 +82,14 @@ class BookRepository implements BookRepositoryInterface
 
     public function checkAvailability($id)
     {
-        $book = $this->getBookWithAuthors($id);
-        $borrowedCount = $this->getBorrowedCopiesCount($id);
-        $availableCount = $book->total_copies - $borrowedCount;
-
+        $book = $this->findById($id);
+        
         return [
             'book_id' => $id,
             'total_copies' => $book->total_copies,
-            'borrowed_copies' => $borrowedCount,
-            'available_copies' => $availableCount,
-            'is_available' => $availableCount > 0
+            'available_copies' => $book->available_copies,
+            'borrowed_copies' => $book->total_copies - $book->available_copies,
+            'is_available' => $book->available_copies > 0
         ];
     }
 

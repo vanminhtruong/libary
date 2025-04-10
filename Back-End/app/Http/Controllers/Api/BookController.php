@@ -145,6 +145,8 @@ class BookController extends Controller
             'publisher' => 'string|max:255',
             'publication_year' => 'integer|min:1800|max:' . date('Y'),
             'category_id' => 'exists:categories,id',
+            'total_copies' => 'integer|min:0',
+            'available_copies' => 'integer|min:0|lte:total_copies',
             'quantity' => 'integer|min:0',
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048'
@@ -160,24 +162,32 @@ class BookController extends Controller
         try {
             $updateData = $request->except(['_method', '_token']);
             
+            // Add custom validation for available_copies and total_copies
+            if (isset($updateData['available_copies'])) {
+                $totalCopies = isset($updateData['total_copies']) 
+                    ? $updateData['total_copies'] 
+                    : Book::find($id)->total_copies;
+                    
+                if ($updateData['available_copies'] > $totalCopies) {
+                    return response()->json([
+                        'errors' => [
+                            'available_copies' => ['Số lượng sách khả dụng không được vượt quá tổng số sách']
+                        ]
+                    ], 422);
+                }
+            }
+            
             if ($request->hasFile('image')) {
                 $updateData['image'] = $request->file('image');
             }
-            
-            \Log::info('Filtered update data:', ['data' => $updateData]);
-            
+                        
             $book = $this->bookService->updateBook($id, $updateData);
-            \Log::info('Book updated successfully:', ['book' => $book]);
             
             return response()->json([
                 'message' => 'Cập nhật sách thành công',
                 'data' => $book
             ]);
         } catch (\Exception $e) {
-            \Log::error('Error updating book:', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
-            ]);
             return response()->json([
                 'message' => 'Có lỗi xảy ra khi cập nhật sách',
                 'error' => $e->getMessage()

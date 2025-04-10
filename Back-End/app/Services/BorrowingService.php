@@ -32,8 +32,8 @@ class BorrowingService
         }
 
         // Check book availability
-        $availability = $this->bookRepository->checkAvailability($bookId);
-        if (!$availability['is_available']) {
+        $book = $this->bookRepository->findById($bookId);
+        if ($book->available_copies <= 0) {
             throw new \Exception('No copies available for borrowing');
         }
 
@@ -60,6 +60,11 @@ class BorrowingService
 
         DB::transaction(function () use ($borrowing) {
             $this->borrowingRepository->updateStatus($borrowing->id, 'returned');
+            
+            // Tăng số lượng sách có sẵn
+            $book = $this->bookRepository->findById($borrowing->book_id);
+            $book->available_copies = $book->available_copies + 1;
+            $book->save();
             
             // Calculate and add fine if overdue
             if ($borrowing->due_date < now()) {
@@ -112,8 +117,8 @@ class BorrowingService
         $borrowing = $this->borrowingRepository->findById($id);
 
         // Kiểm tra xem sách có sẵn để mượn không
-        $availability = $this->bookRepository->checkAvailability($borrowing->book_id);
-        if (!$availability['is_available']) {
+        $book = $this->bookRepository->findById($borrowing->book_id);
+        if ($book->available_copies <= 0) {
             throw new \Exception('No copies available for borrowing');
         }
 
@@ -123,23 +128,45 @@ class BorrowingService
         }
 
         // Cập nhật trạng thái và ngày mượn/hạn trả
-        $borrowing->status = 'borrowed';
-        $borrowing->borrow_date = now();
-        $borrowing->due_date = now()->addDays(14);
-        $borrowing->save();
+        DB::transaction(function () use ($borrowing, $book) {
+            $borrowing->status = 'borrowed';
+            $borrowing->borrow_date = now();
+            $borrowing->due_date = now()->addDays(14);
+            $borrowing->save();
+            
+            // Giảm số lượng sách có sẵn
+            $book->available_copies = $book->available_copies - 1;
+            $book->save();
+        });
 
-        return $borrowing;
+        return $borrowing->fresh();
     }
 
     public function rejectBorrowing($id, $reason = null)
     {
         $borrowing = $this->borrowingRepository->findById($id);
 
-        // Cập nhật trạng thái thành rejected và lưu lý do
         $borrowing->status = 'rejected';
         $borrowing->reason = $reason;
         $borrowing->save();
 
         return $borrowing;
+    }
+
+    public function deleteBorrowing($userId, $borrowId)
+    {
+        $borrowing = $this->borrowingRepository->findById($borrowId);
+        
+        // Kiểm tra quyền xóa (chỉ người dùng đã mượn mới có quyền xóa)
+        if ($borrowing->user_id !== $userId) {
+            throw new \Exception('Unauthorized: You do not have permission to delete this record');
+        }
+        
+        // Chỉ cho phép xóa các bản ghi có trạng thái returned hoặc rejected
+        if (!in_array($borrowing->status, ['returned', 'rejected'])) {
+            throw new \Exception('Cannot delete active borrowing record');
+        }
+        
+        return $this->borrowingRepository->delete($borrowId);
     }
 } 

@@ -1,0 +1,46 @@
+/* Custom dialog styles for dark mode */
+.custom-dialog {
+    border-radius: 8px;
+}
+
+.custom-dialog .p-dialog-header, 
+.custom-dialog .p-dialog-content, 
+.custom-dialog .p-dialog-footer {
+    background-color: #1e293b;
+    color: #f3f4f6;
+}
+
+/* Fix the white space at bottom of dialog in dark mode */
+:root.dark .p-component-overlay, 
+:root.dark .p-dialog-mask,
+.dark-mode .p-component-overlay, 
+.dark-mode .p-dialog-mask,
+:root.dark .dark\:mask-dark, 
+.dark-mode .dark\:mask-dark {
+    background-color: rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Fix dialog borders */
+.custom-dialog .p-dialog-content,
+.custom-dialog .p-dialog-footer {
+    border-color: #374151;
+}
+
+/* Fix button styles in dark mode */
+.custom-dialog .p-button.p-button-text.dark\:text-gray-300:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+.custom-dialog .p-button.p-button-success.dark\:bg-green-700 {
+    background-color: #047857;
+}
+
+.custom-dialog .p-button.p-button-success.dark\:bg-green-700:hover {
+    background-color: #065f46;
+}
+
+/* Fix dialog container in dark mode */
+.p-dialog-mask.dark\:mask-dark .p-dialog {
+    background-color: #1e293b;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+} 

@@ -10,6 +10,7 @@ export default {
         actions: 'Thao tác',
         reason: 'Lý do'
     },
+    uncategorized: 'Chưa phân loại',
     status: {
         pending: 'Chờ duyệt',
         borrowed: 'Đang mượn',
