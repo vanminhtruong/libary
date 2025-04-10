@@ -49,10 +49,10 @@ const Profile = () => {
                             profile={profile}
                             isEditing={isEditing}
                             setIsEditing={setIsEditing}
-                            loading={loading}
+                                                loading={loading}
                             handleChange={handleChange}
                             handleSubmit={handleSubmit}
-                        />
+                                            />
                     </div>
                 </div>
             </div>

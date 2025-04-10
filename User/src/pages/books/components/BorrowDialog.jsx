@@ -2,6 +2,7 @@ import { Dialog } from 'primereact/dialog'
 import { Button } from 'primereact/button'
 import { useTranslation } from 'react-i18next'
 import FormInput from '../../../components/common/FormInput'
+import '../../borrowings/styles/DialogStyles.css'
 
 const BorrowDialog = ({ 
     visible, 
@@ -16,21 +17,20 @@ const BorrowDialog = ({
     const { t } = useTranslation()
 
     const footer = (
-        <div className="flex justify-end items-center gap-6 p-4 dark:bg-gray-800/95 border-t border-gray-200 dark:border-gray-700">
+        <div className="flex justify-end gap-2 bg-blue-50 dark:bg-blue-900/10 p-4 rounded-b-lg border-t border-gray-200 dark:border-gray-700">
             <Button
+                label={t('common.cancel')}
+                icon="pi pi-times"
                 onClick={onHide}
-                className="flex items-center gap-2 text-black-400 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-300 transition-colors"
-            >
-                <i className="pi pi-times text-lg"></i>
-                <span>{t('common.cancel')}</span>
-            </Button>
+                className="p-button-text text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 px-4 py-2"
+            />
             <Button
+                label={t('common.submit')}
+                icon="pi pi-check"
                 onClick={handleBorrow}
-                className="flex items-center gap-2 text-black-400 px-6 py-2 rounded-lg transition-colors"
-            >
-                <i className="pi pi-check text-lg"></i>
-                <span>{t('common.submit')}</span>
-            </Button>
+                severity="primary"
+                className="bg-blue-600 hover:bg-blue-700 border-blue-600 hover:border-blue-700 text-white transition-colors duration-200 px-4 py-2"
+            />
         </div>
     )
 
@@ -40,7 +40,7 @@ const BorrowDialog = ({
             onHide={onHide}
             header={t('common.borrow')}
             modal
-            className="!p-0 dark:bg-gray-800/95"
+            className="!p-0 dark:bg-gray-800/95 custom-dialog"
             style={{ width: '450px', height: 'auto', position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
             blockScroll={true}
             headerClassName="dark:bg-gray-800/95 dark:text-gray-100 !p-4"

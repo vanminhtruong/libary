@@ -49,18 +49,19 @@ const BorrowingDialogs = ({
             headerClassName="dark:bg-gray-900 dark:text-white pb-2 border-b dark:border-gray-700"
             maskClassName="dark:mask-dark"
             footer={
-                <div className="flex justify-end gap-2 dark:bg-gray-900 pt-3 border-t dark:border-gray-700">
+                <div className="flex justify-end gap-2 bg-blue-50 dark:bg-blue-900/10 p-4 rounded-b-lg border-t dark:border-gray-700">
                     <Button
                         label={t('common.cancel')}
                         icon="pi pi-times"
                         onClick={() => setShowExtendDialog(false)}
-                        className="p-button-text dark:text-gray-300 dark:hover:text-white"
+                        className="p-button-text text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 px-4 py-2"
                     />
                     <Button
                         label={t('borrowings.extend')}
                         icon="pi pi-check"
                         onClick={handleExtend}
-                        className="p-button-primary dark:bg-green-700 dark:hover:bg-green-600"
+                        severity="primary"
+                        className="bg-blue-600 hover:bg-blue-700 border-blue-600 hover:border-blue-700 text-white transition-colors duration-200 px-4 py-2"
                     />
                 </div>
             }
@@ -101,18 +102,19 @@ const BorrowingDialogs = ({
             headerClassName="dark:bg-gray-900 dark:text-white pb-2 border-b dark:border-gray-700"
             maskClassName="dark:mask-dark"
             footer={
-                <div className="flex justify-end gap-2 dark:bg-gray-900 pt-3 border-t dark:border-gray-700">
+                <div className="flex justify-end gap-2 bg-blue-50 dark:bg-blue-900/10 p-4 rounded-b-lg border-t dark:border-gray-700">
                     <Button
                         label={t('common.cancel')}
                         icon="pi pi-times"
                         onClick={() => setShowReturnDialog(false)}
-                        className="p-button-text dark:text-gray-300 dark:hover:text-white"
+                        className="p-button-text text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 px-4 py-2"
                     />
                     <Button
                         label={t('borrowings.return')}
                         icon="pi pi-check"
                         onClick={handleReturn}
-                        className="p-button-success dark:bg-green-700 dark:hover:bg-green-600"
+                        severity="primary"
+                        className="bg-blue-600 hover:bg-blue-700 border-blue-600 hover:border-blue-700 text-white transition-colors duration-200 px-4 py-2"
                     />
                 </div>
             }
@@ -153,7 +155,7 @@ const BorrowingDialogs = ({
                         label={t('common.close')}
                         icon="pi pi-times"
                         onClick={() => setShowReasonDialogVisible(false)}
-                        className="p-button-text dark:text-gray-300 dark:hover:text-white"
+                        className="p-button-text dark:text-gray-300 dark:hover:text-white px-4 py-2"
                     />
                 </div>
             }

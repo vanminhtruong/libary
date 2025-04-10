@@ -12,25 +12,13 @@ import EmptyBookState from './components/EmptyBookState'
 const BookListPage = () => {
     const { t } = useTranslation()
     const {
+        ui,
         books,
-        loading,
-        searchQuery,
-        setSearchQuery,
-        selectedCategory,
-        setSelectedCategory,
-        selectedStatus,
-        setSelectedStatus,
-        viewMode,
-        setViewMode,
-        categories,
-        setCategorySearchQuery,
+        filter,
         pagination,
-        statuses,
-        toast,
-        onPageChange,
-        getImageUrl,
-        handleImageError,
-        navigateToBookDetail
+        images,
+        actions,
+        toast
     } = useBookList();
 
     return (
@@ -42,52 +30,53 @@ const BookListPage = () => {
                 <p className="text-gray-600 dark:text-gray-400">{t('common.discover_books')}</p>
                 
                 <BookFilters 
-                    searchQuery={searchQuery}
-                    setSearchQuery={setSearchQuery}
-                    selectedCategory={selectedCategory}
-                    setSelectedCategory={setSelectedCategory}
-                    selectedStatus={selectedStatus}
-                    setSelectedStatus={setSelectedStatus}
-                    categories={categories}
-                    statuses={statuses}
-                    setCategorySearchQuery={setCategorySearchQuery}
+                    searchQuery={filter.searchQuery}
+                    setSearchQuery={filter.setSearchQuery}
+                    selectedCategory={filter.selectedCategory}
+                    setSelectedCategory={filter.setSelectedCategory}
+                    selectedStatus={filter.selectedStatus}
+                    setSelectedStatus={filter.setSelectedStatus}
+                    categories={filter.categories}
+                    statuses={filter.statuses}
+                    setCategorySearchQuery={filter.setCategorySearchQuery}
+                    darkMode={ui.darkMode}
                 />
                 
                 <div className="flex justify-end mt-4 md:mt-0 md:absolute md:right-6 md:top-6">
-                    <ViewToggle viewMode={viewMode} setViewMode={setViewMode} />
+                    <ViewToggle viewMode={ui.viewMode} setViewMode={ui.setViewMode} />
                 </div>
             </div>
             
-            {loading ? (
+            {ui.loading ? (
                 <LoadingSpinner />
             ) : books.length === 0 ? (
                 <EmptyBookState />
             ) : (
                 <>
                     <div className="p-4 md:p-6">
-                        {viewMode === 'grid' ? (
+                        {ui.viewMode === 'grid' ? (
                             <BookGrid 
                                 books={books} 
-                                getImageUrl={getImageUrl} 
-                                handleImageError={handleImageError} 
-                                navigateToBookDetail={navigateToBookDetail} 
+                                getImageUrl={images.getImageUrl} 
+                                handleImageError={images.handleImageError} 
+                                navigateToBookDetail={actions.navigateToDetail} 
                             />
                         ) : (
                             <BookListView 
                                 books={books} 
-                                getImageUrl={getImageUrl} 
-                                handleImageError={handleImageError} 
-                                navigateToBookDetail={navigateToBookDetail} 
+                                getImageUrl={images.getImageUrl} 
+                                handleImageError={images.handleImageError} 
+                                navigateToBookDetail={actions.navigateToDetail} 
                             />
                         )}
                     </div>
                     
                     <div className="my-8 flex justify-center">
                         <Paginator 
-                            first={pagination.first} 
-                            rows={pagination.rows} 
-                            totalRecords={pagination.totalRecords} 
-                            onPageChange={onPageChange}
+                            first={pagination.pagination.first} 
+                            rows={pagination.pagination.rows} 
+                            totalRecords={pagination.pagination.totalRecords} 
+                            onPageChange={pagination.onPageChange}
                             className="bg-white dark:bg-gray-800 text-gray-800 dark:text-white border border-gray-300 dark:border-gray-700"
                         />
                     </div>

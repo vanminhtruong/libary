@@ -10,9 +10,22 @@ const BookFilters = ({
     setSelectedStatus,
     categories,
     statuses,
-    setCategorySearchQuery
+    setCategorySearchQuery,
+    darkMode
 }) => {
     const { t } = useTranslation()
+
+    // Style giống với LanguageSwitcher
+    const styles = {
+        dropdownPanel: {
+            backgroundColor: darkMode ? '#1e293b' : undefined,
+            borderColor: darkMode ? '#334155' : undefined,
+        },
+        dropdownItem: {
+            backgroundColor: darkMode ? '#1e293b' : undefined,
+            color: darkMode ? 'white' : undefined,
+        }
+    }
 
     return (
         <div className="flex flex-col md:flex-row gap-4 mt-6">
@@ -32,9 +45,27 @@ const BookFilters = ({
                 options={categories}
                 onChange={(e) => setSelectedCategory(e.value)}
                 placeholder={t('common.select_category')}
-                className="md:w-64 bg-white dark:bg-gray-800 text-gray-800 dark:text-white border border-gray-300 dark:border-gray-700"
+                className={`md:w-64 bg-white dark:bg-gray-800 text-gray-800 dark:text-white border border-gray-300 dark:border-gray-700 ${darkMode ? 'dark-dropdown' : ''}`}
                 filter
                 onFilter={(e) => setCategorySearchQuery(e.filter)}
+                panelClassName={`${darkMode ? 'bg-gray-800 border-gray-700' : ''} [&_.p-dropdown-item:hover]:${darkMode ? '!bg-gray-700' : 'bg-gray-100'} [&_.p-dropdown-item.p-highlight]:${darkMode ? 'bg-gray-700' : ''}`}
+                pt={{
+                    panel: { style: styles.dropdownPanel, className: 'p-dropdown-panel-dark' },
+                    item: { 
+                        style: styles.dropdownItem,
+                        className: darkMode ? 'hover:!bg-gray-700 transition-colors duration-200' : 'hover:bg-gray-100 transition-colors duration-200'
+                    },
+                    list: { 
+                        className: darkMode ? 'bg-gray-800 text-white [&_.p-dropdown-item:hover]:bg-gray-700' : '' 
+                    },
+                    wrapper: { className: darkMode ? 'bg-gray-800 text-white border-gray-700' : '' },
+                    header: { className: darkMode ? 'bg-gray-800 text-white' : '' },
+                    filterInput: { className: darkMode ? 'bg-gray-800 text-white border-gray-700' : '' },
+                    trigger: { 
+                        className: darkMode ? 'text-white hover:!bg-gray-700 transition-colors duration-200' : 'hover:bg-gray-100 transition-colors duration-200' 
+                    },
+                    label: { className: darkMode ? 'text-white' : '' },
+                }}
             />
             
             <Dropdown
@@ -42,7 +73,25 @@ const BookFilters = ({
                 options={statuses}
                 onChange={(e) => setSelectedStatus(e.value)}
                 placeholder={t('common.select_status')}
-                className="md:w-64 bg-white dark:bg-gray-800 text-gray-800 dark:text-white border border-gray-300 dark:border-gray-700"
+                className={`md:w-64 bg-white dark:bg-gray-800 text-gray-800 dark:text-white border border-gray-300 dark:border-gray-700 ${darkMode ? 'dark-dropdown' : ''}`}
+                panelClassName={`${darkMode ? 'bg-gray-800 border-gray-700' : ''} [&_.p-dropdown-item:hover]:${darkMode ? '!bg-gray-700' : 'bg-gray-100'} [&_.p-dropdown-item.p-highlight]:${darkMode ? 'bg-gray-700' : ''}`}
+                pt={{
+                    panel: { style: styles.dropdownPanel, className: 'p-dropdown-panel-dark' },
+                    item: { 
+                        style: styles.dropdownItem,
+                        className: darkMode ? 'hover:!bg-gray-700 transition-colors duration-200' : 'hover:bg-gray-100 transition-colors duration-200'
+                    },
+                    list: { 
+                        className: darkMode ? 'bg-gray-800 text-white [&_.p-dropdown-item:hover]:bg-gray-700' : '' 
+                    },
+                    wrapper: { className: darkMode ? 'bg-gray-800 text-white border-gray-700' : '' },
+                    header: { className: darkMode ? 'bg-gray-800 text-white' : '' },
+                    filterInput: { className: darkMode ? 'bg-gray-800 text-white border-gray-700' : '' },
+                    trigger: { 
+                        className: darkMode ? 'text-white hover:!bg-gray-700 transition-colors duration-200' : 'hover:bg-gray-100 transition-colors duration-200' 
+                    },
+                    label: { className: darkMode ? 'text-white' : '' },
+                }}
             />
         </div>
     )
