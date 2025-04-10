@@ -72,14 +72,14 @@ const BorrowingCard = ({ borrowing, onExtend, onReturn, onViewFines, onDelete, g
             label: t('borrowings.return'),
             icon: 'pi pi-check-square',
             command: () => onReturn && onReturn(borrowing),
-            disabled: isActive,
+            disabled: borrowing.status === 'rejected',
             className: 'return-option'
         },
         {
             label: t('borrowings.extend'),
             icon: 'pi pi-calendar-plus',
             command: () => onExtend && onExtend(borrowing),
-            disabled: isActive || borrowing.extend_count >= 2,
+            disabled: isActive || borrowing.extend_count >= 2 || borrowing.status === 'rejected',
             className: 'extend-option'
         },
         {
