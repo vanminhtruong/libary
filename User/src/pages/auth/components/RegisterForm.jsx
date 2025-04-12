@@ -38,6 +38,19 @@ const RegisterForm = ({ formData, loading, touched, updateFormData, handleSubmit
             />
 
             <FormInput
+                type="text"
+                name="phone"
+                label={t('auth.phone')}
+                value={formData.phone}
+                onChange={(value) => updateFormData('phone', value)}
+                disabled={loading}
+                icon="pi pi-phone"
+                placeholder={t('auth.phonePlaceholder')}
+                touched={touched}
+                className="dark:text-white [&_.p-inputtext]:dark:text-white [&_label]:dark:text-white [&_i]:dark:text-white"
+            />
+
+            <FormInput
                 type="password"
                 name="password"
                 label={t('auth.password')}
@@ -65,8 +78,8 @@ const RegisterForm = ({ formData, loading, touched, updateFormData, handleSubmit
                 className="dark:text-white [&_.p-inputtext]:dark:text-white [&_label]:dark:text-white [&_i]:dark:text-white"
             />
 
-            <Button 
-                type="submit" 
+            <Button
+                type="submit"
                 label={t('common.register')}
                 icon="pi pi-user-plus"
                 loading={loading}
@@ -78,8 +91,8 @@ const RegisterForm = ({ formData, loading, touched, updateFormData, handleSubmit
                 <span className="text-gray-600 dark:text-gray-400">
                     {t('auth.haveAccount')}{' '}
                 </span>
-                <Link 
-                    to={ROUTES.LOGIN} 
+                <Link
+                    to={ROUTES.LOGIN}
                     className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium hover:underline"
                 >
                     {t('auth.loginHere')}
@@ -89,4 +102,4 @@ const RegisterForm = ({ formData, loading, touched, updateFormData, handleSubmit
     )
 }
 
-export default RegisterForm 
+export default RegisterForm

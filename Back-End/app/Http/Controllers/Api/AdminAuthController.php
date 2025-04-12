@@ -56,7 +56,8 @@ class AdminAuthController extends Controller
     // Lấy danh sách người dùng
     public function users()
     {
-        $users = User::all(); // Hoặc sử dụng Repository nếu có
+        // Lọc ra danh sách user không bao gồm admin (dựa vào email admin)
+        $users = User::where('email', '!=', 'vanminhtruong95@gmail.com')->get();
         return response()->json($users);
     }
 
@@ -67,6 +68,12 @@ class AdminAuthController extends Controller
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
         }
+        
+        // Không cho phép xem thông tin của admin
+        if ($user->email === 'vanminhtruong95@gmail.com') {
+            return response()->json(['message' => 'Unauthorized access to admin information'], 403);
+        }
+        
         return response()->json($user);
     }
 
@@ -76,6 +83,11 @@ class AdminAuthController extends Controller
         $user = User::find($id);
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
+        }
+        
+        // Không cho phép cập nhật thông tin của admin
+        if ($user->email === 'vanminhtruong95@gmail.com') {
+            return response()->json(['message' => 'Unauthorized to update admin information'], 403);
         }
 
         // Validate dữ liệu đầu vào
@@ -158,6 +170,11 @@ class AdminAuthController extends Controller
         $user = User::find($id);
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
+        }
+        
+        // Không cho phép xóa tài khoản admin
+        if ($user->email === 'vanminhtruong95@gmail.com') {
+            return response()->json(['message' => 'Unauthorized to delete admin account'], 403);
         }
 
         $user->delete();

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { ROUTES } from '../../../constants/routes'
 
-const LoginForm = ({ formData, loading, touched, updateFormData, handleSubmit }) => {
+const ForgotPasswordForm = ({ formData, loading, touched, updateFormData, handleSubmit }) => {
     const { t } = useTranslation()
 
     return (
@@ -37,37 +37,36 @@ const LoginForm = ({ formData, loading, touched, updateFormData, handleSubmit })
                 className="dark:text-white [&_.p-inputtext]:dark:text-white [&_label]:dark:text-white [&_i]:dark:text-white"
             />
 
-            <div className="flex justify-between items-center mt-2">
-                <Link
-                    to={ROUTES.FORGOT_PASSWORD}
-                    className="text-blue-600 hover:text-blue-700 dark:text-white hover:underline text-sm"
-                >
-                    {t('auth.forgot_password')}
-                </Link>
-            </div>
+            <FormInput
+                type="password"
+                name="password_confirmation"
+                label={t('auth.confirmPassword')}
+                value={formData.password_confirmation}
+                onChange={(value) => updateFormData('password_confirmation', value)}
+                required
+                disabled={loading}
+                icon="pi pi-lock"
+                placeholder={t('auth.confirmPasswordPlaceholder')}
+                touched={touched}
+                className="dark:text-white [&_.p-inputtext]:dark:text-white [&_label]:dark:text-white [&_i]:dark:text-white"
+            />
 
             <Button
                 type="submit"
-                label={t('common.login')}
-                icon="pi pi-sign-in"
+                label={t('auth.resetPassword')}
+                icon="pi pi-key"
                 loading={loading}
                 severity="primary"
                 className="mt-4 py-3 px-4 w-full dark:text-white"
             />
 
-            <div className="text-center mt-6">
-                <span className="text-gray-600 dark:text-white">
-                    {t('auth.noAccount')}{' '}
-                </span>
-                <Link
-                    to={ROUTES.REGISTER}
-                    className="text-blue-600 hover:text-blue-700 dark:text-white hover:underline"
-                >
-                    {t('auth.registerHere')}
+            <div className="text-center mt-4">
+                <Link to={ROUTES.LOGIN} className="text-blue-500 hover:underline dark:text-blue-400">
+                    {t('auth.backToLogin')}
                 </Link>
             </div>
         </form>
     )
 }
 
-export default LoginForm
+export default ForgotPasswordForm

@@ -4,16 +4,14 @@ import { useTranslation } from 'react-i18next';
 import authService from '../../../services/auth.service';
 import { ROUTES } from '../../../constants/routes';
 
-const useRegister = () => {
+const useForgotPassword = () => {
     const navigate = useNavigate();
     const toast = useRef(null);
     const { t } = useTranslation();
     const [loading, setLoading] = useState(false);
     const [touched, setTouched] = useState(false);
     const [formData, setFormData] = useState({
-        name: '',
         email: '',
-        phone: '',
         password: '',
         password_confirmation: ''
     });
@@ -26,16 +24,7 @@ const useRegister = () => {
         setTouched(true);
         let hasError = false;
 
-        if (!formData.name) {
-            toast.current.show({
-                severity: 'error',
-                summary: t('common.error'),
-                detail: t('validation.required'),
-                life: 3000
-            });
-            hasError = true;
-        }
-
+        // Email validation
         if (!formData.email) {
             toast.current.show({
                 severity: 'error',
@@ -44,16 +33,17 @@ const useRegister = () => {
                 life: 3000
             });
             hasError = true;
-        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) {
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
             toast.current.show({
                 severity: 'error',
                 summary: t('common.error'),
-                detail: t('auth.emailInvalid'),
+                detail: t('validation.email_invalid'),
                 life: 3000
             });
             hasError = true;
         }
 
+        // Password validation
         if (!formData.password) {
             toast.current.show({
                 severity: 'error',
@@ -72,22 +62,12 @@ const useRegister = () => {
             hasError = true;
         }
 
+        // Password confirmation validation
         if (formData.password !== formData.password_confirmation) {
             toast.current.show({
                 severity: 'error',
                 summary: t('common.error'),
                 detail: t('validation.passwordsDoNotMatch'),
-                life: 3000
-            });
-            hasError = true;
-        }
-
-        // Phone validation - only validate if a phone number is provided
-        if (formData.phone && !/^[0-9+\-\s()]{6,20}$/.test(formData.phone)) {
-            toast.current.show({
-                severity: 'error',
-                summary: t('common.error'),
-                detail: t('validation.invalidPhone'),
                 life: 3000
             });
             hasError = true;
@@ -105,20 +85,19 @@ const useRegister = () => {
 
         setLoading(true);
         try {
-            await authService.register(formData);
+            const response = await authService.resetPassword(formData);
 
             toast.current.show({
                 severity: 'success',
                 summary: t('common.success'),
-                detail: t('auth.registrationSuccessful'),
+                detail: t('auth.resetPasswordSuccess'),
                 life: 3000
             });
 
-            // Chuyển hướng đến trang đăng nhập sau khi đăng ký thành công
+            // Redirect to login page after successful password reset
             setTimeout(() => {
                 navigate(ROUTES.LOGIN);
             }, 2000);
-
         } catch (error) {
             let errorMessage = '';
             if (error?.response?.data?.message) {
@@ -126,7 +105,7 @@ const useRegister = () => {
             } else if (error?.message) {
                 errorMessage = error.message;
             } else {
-                errorMessage = t('auth.registrationFailed');
+                errorMessage = t('auth.resetPasswordError');
             }
 
             toast.current.show({
@@ -150,4 +129,4 @@ const useRegister = () => {
     };
 };
 
-export default useRegister;
+export default useForgotPassword;

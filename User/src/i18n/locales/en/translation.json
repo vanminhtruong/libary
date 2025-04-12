@@ -81,13 +81,22 @@
     "passwordMinLength": "Password must be at least 6 characters",
     "loginSuccess": "Login successful",
     "loginError": "Login failed",
-    "invalidCredentials": "Invalid email or password"
+    "invalidCredentials": "Invalid email or password",
+    "forgotPasswordTitle": "Reset Password",
+    "forgotPasswordSubtitle": "Enter your registered email to reset your password",
+    "resetPassword": "Reset Password",
+    "resetPasswordSuccess": "Password reset successful. Please login with your new password.",
+    "resetPasswordError": "Failed to reset password",
+    "emailNotFound": "Email not found",
+    "emailRequired": "Email is required",
+    "backToLogin": "Back to Login"
   },
   "validation": {
     "required": "This field is required",
     "email_invalid": "Invalid email address",
     "password_min": "Password must be at least 6 characters",
     "passwordsDoNotMatch": "Passwords do not match",
+    "invalidPhone": "Invalid phone number format",
     "image_size": "Image size must not exceed 2MB",
     "image_format": "Image must be in JPG, PNG, GIF, SVG, WEBP or BMP format"
   },

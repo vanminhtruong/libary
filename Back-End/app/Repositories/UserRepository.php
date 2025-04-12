@@ -31,6 +31,11 @@ class UserRepository implements UserRepositoryInterface
         return $this->model->where('email', $email)->first();
     }
 
+    public function findByPhone($phone)
+    {
+        return $this->model->where('phone', $phone)->first();
+    }
+
     public function getBorrowingHistory($userId)
     {
         return $this->model->findOrFail($userId)
@@ -57,4 +62,4 @@ class UserRepository implements UserRepositoryInterface
             ->where('status', 'pending')
             ->get();
     }
-} 
+}

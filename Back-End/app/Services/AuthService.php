@@ -58,4 +58,32 @@ class AuthService
     {
         return $user->currentAccessToken()->delete();
     }
-} 
+
+    /**
+     * Reset password using email
+     *
+     * @param string $email
+     * @param string $password
+     * @return array|null
+     */
+    public function resetPasswordByEmail(string $email, string $password)
+    {
+        // Find user by email
+        $user = $this->userRepository->findByEmail($email);
+
+        if (!$user) {
+            return null;
+        }
+
+        // Update user password
+        $this->userRepository->update($user->id, [
+            'password' => Hash::make($password)
+        ]);
+
+        // Return user data
+        return [
+            'user' => $user,
+            'message' => 'Password reset successfully'
+        ];
+    }
+}

@@ -9,6 +9,7 @@ import { apiMiddleware } from './middleware/api.middleware.jsx'
 import Home from './pages/home/Home'
 import Login from './pages/auth/Login'
 import Register from './pages/auth/Register'
+import ForgotPassword from './pages/auth/ForgotPassword'
 import BookList from './pages/books/BookList'
 import BookDetail from './pages/books/BookDetail'
 import CurrentBorrowings from './pages/borrowings/CurrentBorrowings'
@@ -19,10 +20,8 @@ function App() {
   const [authKey, setAuthKey] = useState(0)
 
   useEffect(() => {
-    // Set toast reference for API middleware
     apiMiddleware.setToast(toast)
 
-    // Listen for auth changes
     const handleAuthChange = () => {
       setAuthKey(prev => prev + 1)
     }
@@ -46,6 +45,11 @@ function App() {
           <Route path={ROUTES.REGISTER} element={
             <RequireGuest>
               <Register />
+            </RequireGuest>
+          } />
+          <Route path={ROUTES.FORGOT_PASSWORD} element={
+            <RequireGuest>
+              <ForgotPassword />
             </RequireGuest>
           } />
 

@@ -7,33 +7,33 @@ const createAuthService = () => {
     const login = async (credentials, toast) => {
         try {
             const response = await baseService.post('/login', credentials)
-            
+
             // Make sure response exists before checking properties
             if (!response) {
                 // Return rejected promise instead of throwing error
                 return Promise.reject(new Error("Email hoặc mật khẩu không đúng"));
             }
-            
+
             // Handle failed login with status: false
             if (response.status === false) {
                 return Promise.reject(new Error(response.message || "Email hoặc mật khẩu không đúng"));
             }
-            
+
             // Validate successful response format
             if (!response?.data?.access_token) {
                 // Return rejected promise instead of throwing error
                 return Promise.reject(new Error("Email hoặc mật khẩu không đúng"));
             }
-            
+
             await new Promise(resolve => setTimeout(resolve, 1000))
-            
+
             if (response.data.access_token) {
                 localStorage.setItem('token', response.data.access_token)
                 localStorage.setItem('user', JSON.stringify(response.data.user))
             }
 
             window.dispatchEvent(new Event('auth-change'))
-            
+
             return response.data
         } catch (error) {
             // If error has response with status: false, return rejected promise
@@ -49,10 +49,10 @@ const createAuthService = () => {
     const register = async (userData) => {
         try {
             const response = await baseService.post('/register', userData)
-            
+
             // Đợi toast hiển thị
             await new Promise(resolve => setTimeout(resolve, 1000))
-            
+
             return response.data
         } catch (error) {
             throw error
@@ -92,6 +92,16 @@ const createAuthService = () => {
         return await baseService.get('user/profile');
     };
 
+    // Reset password using phone number
+    const resetPassword = async (resetData) => {
+        try {
+            const response = await baseService.post('/reset-password', resetData)
+            return response.data
+        } catch (error) {
+            throw error
+        }
+    }
+
     return {
         login,
         register,
@@ -99,10 +109,11 @@ const createAuthService = () => {
         updateProfile,
         logout,
         isAuthenticated,
-        getProfile
+        getProfile,
+        resetPassword
     }
 }
 
 // Create a singleton instance
 const authService = createAuthService()
-export default authService 
+export default authService

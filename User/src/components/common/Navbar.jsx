@@ -66,9 +66,9 @@ const Navbar = () => {
     }, [])
 
     const start = (
-        <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate(ROUTES.HOME)}>
+        <div className="flex items-center gap-2 cursor-pointer navbar-logo" onClick={() => navigate(ROUTES.HOME)}>
             <i className="pi pi-book text-2xl text-primary dark:text-blue-400"></i>
-            <span className="text-xl font-bold dark:text-white">BookLib</span>
+            <span className="text-xl font-bold dark:text-white truncate">BookLib</span>
         </div>
     )
 
@@ -119,8 +119,8 @@ const Navbar = () => {
                                 />
                             </div>
                         ) : (
-                            <Avatar 
-                                label={user?.email[0].toUpperCase()} 
+                            <Avatar
+                                label={user?.email[0].toUpperCase()}
                                 size="large"
                                 shape="circle"
                                 className="bg-blue-600 dark:bg-blue-500 text-white shadow-sm"
@@ -154,8 +154,11 @@ const Navbar = () => {
     ]
 
     const end = (
-        <div className="flex gap-2 items-center">
-            <LanguageSwitcher />
+        <div className="flex gap-2 items-center navbar-end">
+            {/* Hide language switcher on very small screens */}
+            <div className="hidden sm:block">
+                <LanguageSwitcher />
+            </div>
             <ThemeSwitcher />
             {isLoading ? (
                 <div className="relative">
@@ -167,7 +170,7 @@ const Navbar = () => {
                 <>
                     {user ? (
                         <div className="relative">
-                            <button 
+                            <button
                                 className="flex items-center gap-2 px-2 py-1 rounded-full hover:bg-gray-100 dark:hover:!bg-gray-700 transition-colors duration-200"
                                 onClick={(e) => menuRef.current.toggle(e)}
                             >
@@ -180,19 +183,19 @@ const Navbar = () => {
                                         />
                                     </div>
                                 ) : (
-                                    <Avatar 
-                                        label={user.email[0].toUpperCase()} 
-                                        size="normal" 
+                                    <Avatar
+                                        label={user.email[0].toUpperCase()}
+                                        size="normal"
                                         shape="circle"
                                         className="bg-blue-600 dark:bg-blue-500 text-white shadow-sm"
                                     />
                                 )}
-                                <i className="pi pi-angle-down text-gray-600 dark:text-gray-200" />
+                                <i className="pi pi-angle-down text-gray-600 dark:text-gray-200 hidden sm:block" />
                             </button>
-                            <Menu 
-                                model={userMenuItems} 
-                                popup 
-                                ref={menuRef} 
+                            <Menu
+                                model={userMenuItems}
+                                popup
+                                ref={menuRef}
                                 className="dark:bg-gray-800 dark:border-gray-700 shadow-lg border border-gray-200 dark:border-gray-700"
                                 pt={{
                                     root: { className: 'dark:bg-gray-800' },
@@ -209,13 +212,14 @@ const Navbar = () => {
                             />
                         </div>
                     ) : (
-                        <div className="flex gap-2 dark:text-white">
+                        <div className="flex gap-1 sm:gap-2 dark:text-white auth-buttons">
                             <Button
                                 label={t('common.login')}
                                 icon="pi pi-sign-in"
                                 severity="primary"
                                 text
                                 onClick={() => navigate(ROUTES.LOGIN)}
+                                className="login-btn"
                             />
                             <Button
                                 label={t('common.register')}
@@ -223,6 +227,7 @@ const Navbar = () => {
                                 severity="primary"
                                 outlined
                                 onClick={() => navigate(ROUTES.REGISTER)}
+                                className="register-btn"
                             />
                         </div>
                     )}
@@ -239,39 +244,40 @@ const Navbar = () => {
                     start={start}
                     end={end}
                     pt={{
-                        root: { className: 'border-none p-0 dark:bg-gray-800' },
+                        root: { className: 'border-none p-0 dark:bg-gray-800 responsive-menubar' },
                         menuitem: { className: 'dark:bg-gray-800' },
                         menu: { className: 'dark:bg-gray-800' },
                         submenu: { className: 'dark:bg-gray-800 dark:border-gray-700' },
-                        button: { className: 'dark:text-white' },
+                        button: { className: 'dark:text-white mobile-menu-button dark:hover:!bg-gray-700' },
                         label: { className: 'dark:text-white' },
                         icon: { className: 'dark:text-white' },
                         action: { className: 'dark:text-white hover:bg-gray-100 dark:hover:!bg-gray-700 transition-colors duration-200' }
                     }}
-                    className="border-none !p-0 dark:bg-gray-800 
+                    className="border-none !p-0 dark:bg-gray-800 responsive-navbar
                         [&_.p-menuitem-link]:dark:bg-gray-800
                         [&_.p-menuitem-link:hover]:dark:!bg-gray-700
                         [&_.p-menuitem-link:focus]:dark:bg-gray-800
                         [&_.p-menuitem-link.p-menuitem-link-active]:dark:bg-gray-700
-                        
-                        [&_.p-submenu-list]:dark:bg-gray-800 
-                        [&_.p-submenu-list]:dark:border-gray-700 
+
+                        [&_.p-submenu-list]:dark:bg-gray-800
+                        [&_.p-submenu-list]:dark:border-gray-700
                         [&_.p-submenu-list_.p-menuitem]:dark:bg-gray-800
                         [&_.p-submenu-list_.p-menuitem-link]:dark:bg-gray-800
                         [&_.p-submenu-list_.p-menuitem-link:hover]:dark:!bg-gray-700
                         [&_.p-submenu-list_.p-menuitem-link:focus]:dark:bg-gray-800
-                        
-                        [&_.p-menuitem-text]:dark:text-white 
-                        [&_.p-menuitem-icon]:dark:text-white 
-                        
+
+                        [&_.p-menuitem-text]:dark:text-white
+                        [&_.p-menuitem-icon]:dark:text-white
+
                         [&_.p-menubar-root-list]:dark:bg-gray-800
                         [&_.p-menubar-button]:dark:text-white
+                        [&_.p-menubar-button:hover]:dark:!bg-gray-700
                         [&_.p-menubar-root-list>.p-menuitem]:dark:bg-gray-800
                         [&_.p-menubar-root-list>.p-menuitem>.p-menuitem-link]:dark:bg-gray-800
                         [&_.p-menubar-root-list>.p-menuitem>.p-menuitem-link:not(.p-disabled)]:dark:bg-gray-800
                         [&_.p-menubar-root-list>.p-menuitem>.p-menuitem-link:not(.p-disabled):hover]:dark:!bg-gray-700
                         [&_.p-menubar-root-list>.p-menuitem.p-menuitem-active>.p-menuitem-link]:dark:bg-gray-700
-                        
+
                         [&_.p-menuitem.p-menuitem-active]:dark:bg-gray-700
                         [&_.p-menuitem.p-menuitem-active>.p-menuitem-link]:dark:bg-gray-700
                         [&_.p-menuitem.p-menuitem-active>.p-menuitem-link_.p-menuitem-text]:dark:text-white

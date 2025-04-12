@@ -54,7 +54,7 @@ class AuthController extends Controller
 
             $credentials = $request->only('email', 'password');
             $result = $this->authService->login($credentials);
-            
+
             if (!$result) {
                 return response()->json([
                     'status' => false,
@@ -67,7 +67,7 @@ class AuthController extends Controller
                 'message' => 'Đăng nhập thành công',
                 'data' => $result
             ], 200);
-            
+
         } catch (\Exception $e) {
             return response()->json([
                 'status' => false,
@@ -112,7 +112,7 @@ class AuthController extends Controller
         }
 
         $updateData = $request->only(['name', 'phone', 'image']);
-        
+
         // Add new password to update data if provided
         if ($request->has('new_password')) {
             $updateData['password'] = Hash::make($request->new_password);
@@ -131,7 +131,7 @@ class AuthController extends Controller
         $path = storage_path('app/public/profile_images/' . $filename);
         \Log::debug('Requested image path: ' . $path);
         \Log::debug('File exists: ' . (file_exists($path) ? 'true' : 'false'));
-        
+
         if (!file_exists($path)) {
             return response()->json(['error' => 'Image not found'], 404);
         }
@@ -147,5 +147,46 @@ class AuthController extends Controller
             'expires_in' => auth()->factory()->getTTL() * 60,
             'user' => auth()->user()
         ]);
+    }
+
+    /**
+     * Reset password using email
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function resetPassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|string|email',
+            'password' => 'required|string|min:6',
+            'password_confirmation' => 'required|same:password',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation Error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $result = $this->authService->resetPasswordByEmail(
+            $request->email,
+            $request->password
+        );
+
+        if (!$result) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Email không tồn tại trong hệ thống'
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Đặt lại mật khẩu thành công',
+            'data' => $result
+        ], 200);
     }
 }

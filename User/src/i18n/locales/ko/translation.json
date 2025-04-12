@@ -85,6 +85,7 @@
     "email_invalid": "유효하지 않은 이메일 주소입니다",
     "password_min": "비밀번호는 최소 6자 이상이어야 합니다",
     "passwordsDoNotMatch": "비밀번호가 일치하지 않습니다",
+    "invalidPhone": "전화번호 형식이 유효하지 않습니다",
     "image_size": "이미지 크기는 2MB를 초과할 수 없습니다",
     "image_format": "이미지는 JPG, PNG, GIF, SVG, WEBP 또는 BMP 형식이어야 합니다"
   },

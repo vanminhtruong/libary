@@ -133,13 +133,22 @@
     "registrationSuccessful": "Đăng ký thành công. Vui lòng đăng nhập.",
     "registrationFailed": "Đăng ký thất bại",
     "phone": "Số điện thoại",
-    "phonePlaceholder": "Nhập số điện thoại của bạn"
+    "phonePlaceholder": "Nhập số điện thoại của bạn",
+    "forgotPasswordTitle": "Đặt lại mật khẩu",
+    "forgotPasswordSubtitle": "Nhập email đã đăng ký để đặt lại mật khẩu",
+    "resetPassword": "Đặt lại mật khẩu",
+    "resetPasswordSuccess": "Đặt lại mật khẩu thành công. Vui lòng đăng nhập với mật khẩu mới.",
+    "resetPasswordError": "Đặt lại mật khẩu thất bại",
+    "emailNotFound": "Email không tồn tại",
+    "emailRequired": "Email không được để trống",
+    "backToLogin": "Quay lại đăng nhập"
   },
   "validation": {
     "required": "Trường này là bắt buộc",
     "email_invalid": "Địa chỉ email không hợp lệ",
     "password_min": "Mật khẩu phải có ít nhất 6 ký tự",
     "passwordsDoNotMatch": "Mật khẩu không khớp",
+    "invalidPhone": "Định dạng số điện thoại không hợp lệ",
     "image_size": "Kích thước ảnh không được vượt quá 2MB",
     "image_format": "Ảnh phải có định dạng: JPG, PNG, GIF, SVG, WEBP hoặc BMP"
   },

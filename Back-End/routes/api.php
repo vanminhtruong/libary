@@ -17,6 +17,7 @@ Route::prefix('admin')->group(function () {
 // Public routes
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 Route::get('/user/profile/image/{filename}', [AuthController::class, 'getProfileImage']);
 
 Route::prefix('books')->group(function () {
@@ -36,7 +37,7 @@ Route::middleware(['auth:api', 'admin'])->prefix('admin')->group(function () {
         Route::match(['put', 'post'], '/{id}', [BookController::class, 'update']);
         Route::delete('/{id}', [BookController::class, 'destroy']);
     });
-    
+
     // Category Management
     Route::prefix('categories')->group(function () {
         Route::get('/', [CategoryController::class, 'index']);
@@ -49,7 +50,7 @@ Route::middleware(['auth:api', 'admin'])->prefix('admin')->group(function () {
     Route::get('/borrowings', [BorrowingController::class, 'index']);
     Route::post('/borrowings/approve/{id}', [BorrowingController::class, 'approve']);
     Route::post('/borrowings/reject/{id}', [BorrowingController::class, 'reject']);
-    
+
     // User Management
     Route::get('/users', [AdminAuthController::class, 'users']);
     Route::post('/users', [AdminAuthController::class, 'createUser']);
@@ -74,7 +75,7 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/profile', [AuthController::class, 'getProfile']);
         Route::post('/profile/update', [AuthController::class, 'updateProfile']);
     });
-    
+
     Route::prefix('books')->group(function () {
         Route::post('/{id}/borrow', [BorrowingController::class, 'borrow']);
         Route::post('/{id}/return', [BorrowingController::class, 'return']);
