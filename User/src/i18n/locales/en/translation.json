@@ -91,7 +91,11 @@
     "resetPasswordError": "Failed to reset password",
     "emailNotFound": "Email not found",
     "emailRequired": "Email is required",
-    "backToLogin": "Back to Login"
+    "backToLogin": "Back to Login",
+    "logout_confirm": "Are you sure you want to log out?",
+    "logout_header": "Confirm Logout",
+    "logout_success": "You have been logged out successfully",
+    "logout_error": "There was an error logging out"
   },
   "validation": {
     "required": "This field is required",

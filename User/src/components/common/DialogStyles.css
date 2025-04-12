@@ -1,0 +1,134 @@
+/* Custom dialog styles for light and dark mode */
+.custom-dialog {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Ensure proper spacing for the dialog content */
+.custom-dialog .p-dialog-content {
+    padding: 1.25rem 1.5rem !important;
+}
+
+/* Light dialog styles - explicitly set regardless of theme */
+.light-dialog .p-dialog-header,
+.light-dialog .p-dialog-content {
+    background-color: #ffffff !important;
+    color: #374151 !important;
+}
+
+.light-dialog .p-dialog-footer {
+    background-color: #f9fafb !important;
+    color: #374151 !important;
+    padding: 1rem 1.5rem !important;
+}
+
+.light-dialog .p-dialog-header *,
+.light-dialog .p-dialog-content * {
+    color: #374151 !important;
+}
+
+.light-dialog .p-dialog-footer * {
+    color: inherit !important;
+}
+
+/* Button styles for light dialog */
+.light-dialog .p-confirm-dialog-accept {
+    background-color: #dbeafe !important;
+    border-color: #dbeafe !important;
+    color: #1e40af !important;
+}
+
+.light-dialog .p-confirm-dialog-accept:hover {
+    background-color: #bfdbfe !important;
+    border-color: #bfdbfe !important;
+    color: #1e3a8a !important;
+}
+
+/* Dark dialog styles - explicitly set regardless of theme */
+.dark-dialog .p-dialog-header,
+.dark-dialog .p-dialog-content {
+    background-color: #1e293b !important;
+    color: #f3f4f6 !important;
+}
+
+.dark-dialog .p-dialog-footer {
+    background-color: #1e293b !important;
+    color: #f3f4f6 !important;
+}
+
+.dark-dialog .p-dialog-header *,
+.dark-dialog .p-dialog-content * {
+    color: #f3f4f6 !important;
+}
+
+.dark-dialog .p-dialog-footer * {
+    color: inherit !important;
+}
+
+.custom-dialog .p-dialog-footer > div {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding: 0.5rem 0;
+}
+
+/* Button styles */
+.custom-dialog .p-button {
+    border-radius: 0.375rem;
+    padding: 0.625rem 1.25rem !important;
+    min-width: 100px;
+    font-weight: 500;
+    margin: 0.25rem;
+}
+
+.custom-dialog .p-button.p-button-primary {
+    background-color: #2563eb;
+    border-color: #2563eb;
+}
+
+.custom-dialog .p-button.p-button-primary:hover {
+    background-color: #1d4ed8;
+    border-color: #1d4ed8;
+}
+
+.custom-dialog .p-button.p-button-text:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+    color: #374151;
+}
+
+/* Fix the white space at bottom of dialog in dark mode */
+:root.dark .p-component-overlay,
+:root.dark .p-dialog-mask,
+.dark-mode .p-component-overlay,
+.dark-mode .p-dialog-mask,
+:root.dark .dark\:mask-dark,
+.dark-mode .dark\:mask-dark {
+    background-color: rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Fix dialog borders */
+.custom-dialog .p-dialog-content,
+.custom-dialog .p-dialog-footer {
+    border-color: #374151;
+}
+
+/* Fix dialog container in dark mode */
+.p-dialog-mask.dark\:mask-dark .p-dialog {
+    background-color: #1e293b;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark mode button styles */
+.dark-mode .custom-dialog .p-button.p-button-primary,
+:root.dark .custom-dialog .p-button.p-button-primary {
+    background-color: #3b82f6;
+    border-color: #3b82f6;
+}
+
+.dark-mode .custom-dialog .p-button.p-button-primary:hover,
+:root.dark .custom-dialog .p-button.p-button-primary:hover {
+    background-color: #2563eb;
+    border-color: #2563eb;
+}

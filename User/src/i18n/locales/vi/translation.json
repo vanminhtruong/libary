@@ -145,7 +145,11 @@
     "resetPasswordError": "Đặt lại mật khẩu thất bại",
     "emailNotFound": "Email không tồn tại",
     "emailRequired": "Email không được để trống",
-    "backToLogin": "Quay lại đăng nhập"
+    "backToLogin": "Quay lại đăng nhập",
+    "logout_confirm": "Bạn có chắc chắn muốn đăng xuất?",
+    "logout_header": "Xác nhận đăng xuất",
+    "logout_success": "Bạn đã đăng xuất thành công",
+    "logout_error": "Có lỗi xảy ra khi đăng xuất"
   },
   "validation": {
     "required": "Trường này là bắt buộc",

@@ -80,7 +80,11 @@
     "registrationSuccessful": "회원가입이 완료되었습니다. 로그인해주세요.",
     "registrationFailed": "회원가입에 실패했습니다",
     "phone": "전화번호",
-    "phonePlaceholder": "전화번호를 입력하세요"
+    "phonePlaceholder": "전화번호를 입력하세요",
+    "logout_confirm": "로그아웃하시겠습니까?",
+    "logout_header": "로그아웃 확인",
+    "logout_success": "성공적으로 로그아웃되었습니다",
+    "logout_error": "로그아웃 중 오류가 발생했습니다"
   },
   "validation": {
     "required": "필수 입력 항목입니다",

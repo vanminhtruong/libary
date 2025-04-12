@@ -5,13 +5,13 @@ import { Button } from 'primereact/button';
 import { Avatar } from 'primereact/avatar';
 import { API_CONFIG } from '../../../config/api.config';
 
-const ProfileCard = ({ 
-    profile, 
-    isEditing, 
-    setIsEditing, 
-    loading, 
-    imagePreview, 
-    handleImageChange 
+const ProfileCard = ({
+    profile,
+    isEditing,
+    setIsEditing,
+    loading,
+    imagePreview,
+    handleImageChange
 }) => {
     const { t } = useTranslation();
 
@@ -32,15 +32,15 @@ const ProfileCard = ({
                                 />
                             </div>
                         ) : (
-                            <Avatar 
-                                label={profile.name[0]?.toUpperCase()} 
-                                size="xlarge" 
+                            <Avatar
+                                label={profile.name[0]?.toUpperCase()}
+                                size="xlarge"
                                 shape="circle"
                                 className="bg-gradient-to-r from-blue-500 to-blue-600 dark:from-blue-600 dark:to-blue-700 text-white text-3xl w-32 h-32 shadow-lg"
                             />
                         )}
                         {isEditing && (
-                            <label 
+                            <label
                                 htmlFor="profile-image"
                                 className="absolute bottom-0 right-0 bg-white dark:bg-gray-700 rounded-full p-2 shadow-lg hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors duration-200 cursor-pointer"
                             >
@@ -67,7 +67,9 @@ const ProfileCard = ({
                         <Button
                             label={t('common.edit')}
                             icon="pi pi-user-edit"
-                            className="w-full p-button-outlined"
+                            severity="primary"
+                            outlined
+                            className="w-full py-2 px-4 font-medium dark:text-white dark:border-white dark:hover:bg-gray-800"
                             onClick={() => setIsEditing(true)}
                             disabled={loading}
                         />
@@ -85,4 +87,4 @@ const ProfileCard = ({
     );
 };
 
-export default ProfileCard; 
+export default ProfileCard;
