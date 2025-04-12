@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import authService from '../../../services/auth.service';
@@ -13,8 +13,24 @@ const useLogin = () => {
     const [loginError, setLoginError] = useState(null);
     const [formData, setFormData] = useState({
         email: '',
-        password: ''
+        password: '',
+        rememberMe: false
     });
+
+    // Check for saved credentials on component mount
+    useEffect(() => {
+        const savedEmail = localStorage.getItem('savedEmail');
+        const savedPassword = localStorage.getItem('savedPassword');
+        
+        if (savedEmail && savedPassword) {
+            setFormData(prev => ({
+                ...prev,
+                email: savedEmail,
+                password: savedPassword,
+                rememberMe: true
+            }));
+        }
+    }, []);
 
     const updateFormData = (field, value) => {
         setFormData(prev => ({ ...prev, [field]: value }));
@@ -75,6 +91,14 @@ const useLogin = () => {
         try {
             const response = await authService.login(formData);
             window.dispatchEvent(new Event('auth-change'));
+            
+            if (formData.rememberMe) {
+                localStorage.setItem('savedEmail', formData.email);
+                localStorage.setItem('savedPassword', formData.password);
+            } else {
+                localStorage.removeItem('savedEmail');
+                localStorage.removeItem('savedPassword');
+            }
             
             toast.current.show({
                 severity: 'success',

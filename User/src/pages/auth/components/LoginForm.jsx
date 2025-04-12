@@ -3,6 +3,7 @@ import FormInput from '../../../components/common/FormInput'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { ROUTES } from '../../../constants/routes'
+import { Checkbox } from 'primereact/checkbox'
 
 const LoginForm = ({ formData, loading, touched, updateFormData, handleSubmit }) => {
     const { t } = useTranslation()
@@ -37,7 +38,20 @@ const LoginForm = ({ formData, loading, touched, updateFormData, handleSubmit })
                 className="dark:text-white [&_.p-inputtext]:dark:text-white [&_label]:dark:text-white [&_i]:dark:text-white"
             />
 
-            <div className="flex justify-between items-center mt-2">
+            <div className="flex items-center mt-2">
+                <Checkbox
+                    inputId="rememberMe"
+                    checked={formData.rememberMe}
+                    onChange={(e) => updateFormData('rememberMe', e.checked)}
+                    disabled={loading}
+                    className="mr-2"
+                />
+                <label htmlFor="rememberMe" className="text-sm text-gray-700 dark:text-white cursor-pointer">
+                    {t('auth.rememberMe')}
+                </label>
+            </div>
+
+            <div className="flex justify-end items-center mt-2">
                 <Link
                     to={ROUTES.FORGOT_PASSWORD}
                     className="text-blue-600 hover:text-blue-700 dark:text-white hover:underline text-sm"

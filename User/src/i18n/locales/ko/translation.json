@@ -57,6 +57,7 @@
     "email": "이메일",
     "password": "비밀번호",
     "remember_me": "로그인 상태 유지",
+    "rememberMe": "로그인 상태 유지",
     "forgot_password": "비밀번호를 잊으셨나요?",
     "noAccount": "계정이 없으신가요?",
     "registerHere": "여기서 가입하세요",
