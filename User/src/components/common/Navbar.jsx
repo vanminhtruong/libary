@@ -146,6 +146,12 @@ const Navbar = () => {
             command: () => navigate(ROUTES.PROFILE)
         },
         {
+            label: t('borrowings.borrowing_history'),
+            icon: 'pi pi-history',
+            className: 'text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:!bg-gray-700 transition-colors duration-200',
+            command: () => navigate(ROUTES.BORROWING_HISTORY)
+        },
+        {
             label: t('common.logout'),
             icon: 'pi pi-power-off',
             className: 'text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:!bg-gray-700 transition-colors duration-200',

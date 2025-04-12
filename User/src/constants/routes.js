@@ -11,5 +11,6 @@ export const ROUTES = {
     CATEGORIES: '/categories',
     NEW_RELEASES: '/books/new-releases',
     CURRENT_BORROWINGS: '/borrowings/current',
+    BORROWING_HISTORY: '/borrowings/history',
     NOT_FOUND: '*'
 }

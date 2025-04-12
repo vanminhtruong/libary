@@ -18,7 +18,7 @@ const createBookService = () => {
             console.log('Service: Fetching book with ID:', id)
             const response = await baseService.get(`/books/${id}`)
             console.log('Service: Raw response:', response)
-            
+
             // Kiểm tra response từ API
             if (!response) {
                 throw new Error('No response from API')
@@ -110,6 +110,14 @@ const createBookService = () => {
         }
     };
 
+    const getBorrowingHistory = async () => {
+        try {
+            return await baseService.get('/borrowing/history')
+        } catch (error) {
+            throw error
+        }
+    };
+
     const extendBorrowing = async (borrowId) => {
         try {
             return await baseService.post(`/borrowing/extend/${borrowId}`)
@@ -123,32 +131,32 @@ const createBookService = () => {
             console.log('Requesting fines data from API');
             const apiResponse = await baseService.get('/fines');
             console.log('Raw fines response:', apiResponse);
-            
+
             // Handle empty response
             if (!apiResponse) {
                 console.warn('Empty response received from fines API');
                 return { total_fine: 0, fine_details: [], message: 'No fine data received' };
             }
-            
+
             // Extract the actual data from the response
             // The API might return data in the "data" property if it follows Laravel API conventions
             const finesData = apiResponse.data || [];
-            
+
             // Transform the data into the expected format
             let totalFine = 0;
             const fineDetails = [];
-            
+
             if (Array.isArray(finesData)) {
                 // Iterate through each fine to calculate the total and format details
                 finesData.forEach(fine => {
                     if (fine.status !== 'paid' && fine.status !== 'cancelled') {
                         const amount = parseFloat(fine.amount || 0);
                         totalFine += amount;
-                        
+
                         // If the fine has associated borrowing data, add it to details
                         if (fine.borrowing) {
                             const dueDate = fine.borrowing.due_date;
-                            
+
                             // Calculate days overdue
                             let daysOverdue = 0;
                             if (dueDate) {
@@ -158,10 +166,10 @@ const createBookService = () => {
                                 daysOverdue = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
                                 daysOverdue = Math.max(0, daysOverdue);
                             }
-                            
+
                             // Assume fine per day is either stored or can be calculated
                             const finePerDay = fine.amount_per_day || (daysOverdue > 0 ? amount / daysOverdue : 0);
-                            
+
                             fineDetails.push({
                                 id: fine.id,
                                 book_title: fine.borrowing.book?.title || 'Unknown Book',
@@ -181,12 +189,12 @@ const createBookService = () => {
                     return checkFines(); // Retry with the new format
                 }
             }
-            
+
             const formattedResponse = {
                 total_fine: totalFine,
                 fine_details: fineDetails
             };
-            
+
             console.log('Formatted fines response:', formattedResponse);
             return formattedResponse;
         } catch (error) {
@@ -229,6 +237,7 @@ const createBookService = () => {
         getBooksByCategory,
         borrowBook,
         getCurrentBorrowings,
+        getBorrowingHistory,
         extendBorrowing,
         checkFines,
         getFineDetails,
@@ -242,4 +251,4 @@ const createBookService = () => {
 // Create a singleton instance
 const bookService = createBookService()
 
-export default bookService 
+export default bookService

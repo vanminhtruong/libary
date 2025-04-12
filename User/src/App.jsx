@@ -13,6 +13,7 @@ import ForgotPassword from './pages/auth/ForgotPassword'
 import BookList from './pages/books/BookList'
 import BookDetail from './pages/books/BookDetail'
 import CurrentBorrowings from './pages/borrowings/CurrentBorrowings'
+import BorrowingHistory from './pages/borrowings/BorrowingHistory'
 import Profile from './pages/profile/Profile'
 
 function App() {
@@ -59,6 +60,7 @@ function App() {
             <Route path={ROUTES.BOOKS} element={<BookList />} />
             <Route path={ROUTES.BOOK_DETAIL} element={<BookDetail />} />
             <Route path={ROUTES.CURRENT_BORROWINGS} element={<CurrentBorrowings />} />
+            <Route path={ROUTES.BORROWING_HISTORY} element={<BorrowingHistory />} />
             <Route path={ROUTES.PROFILE} element={<Profile />} />
           </Route>
 

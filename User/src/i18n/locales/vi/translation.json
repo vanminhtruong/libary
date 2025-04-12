@@ -46,7 +46,9 @@
     "no_reason": "Không có lý do",
     "info": "Thông tin",
     "no_results": "Không tìm thấy kết quả",
-    "error": "Email hoặc mật khẩu không đúng"
+    "error": "Email hoặc mật khẩu không đúng",
+    "book": "Sách",
+    "unknown": "Không xác định"
   },
   "books": {
     "title": "Tiêu đề",
@@ -167,10 +169,23 @@
     "load_error": "Không thể tải danh sách sách đang mượn",
     "borrow_date": "Ngày mượn",
     "due_date": "Ngày hẹn trả",
+    "return_date": "Ngày trả sách",
     "status": "Trạng thái",
+    "borrowing_history": "Lịch sử mượn sách",
+    "history_description": "Xem tất cả sách bạn đã mượn trước đây",
+    "history_load_error": "Không thể tải lịch sử mượn sách",
+    "no_history": "Không có lịch sử mượn sách",
+    "no_history_description": "Bạn chưa từng mượn sách nào trước đây",
     "status_active": "Đang mượn",
     "status_overdue": "Quá hạn",
     "status_rejected": "Từ chối",
+    "status": {
+      "borrowed": "Đang mượn",
+      "returned": "Đã trả",
+      "pending": "Đang chờ duyệt",
+      "rejected": "Bị từ chối",
+      "overdue": "Quá hạn"
+    },
     "extend": "Gia hạn",
     "return": "Trả sách",
     "view_reason": "Xem lý do",
@@ -282,6 +297,6 @@
     "edit_mode_active": "Bạn đang ở chế độ chỉnh sửa",
     "current_password_placeholder": "Nhập mật khẩu hiện tại",
     "new_password_placeholder": "Nhập mật khẩu mới",
-    "confirm_password_placeholder": "Nhập lại mật khẩu mới"
+    "confirm_password_placeholder": "Nhập lại mật khẩu mới"
   }
 }
