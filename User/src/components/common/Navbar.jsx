@@ -68,7 +68,7 @@ const Navbar = () => {
     const start = (
         <div className="flex items-center gap-2 cursor-pointer navbar-logo" onClick={() => navigate(ROUTES.HOME)}>
             <i className="pi pi-book text-2xl text-primary dark:text-blue-400"></i>
-            <span className="text-xl font-bold dark:text-white truncate">BookLib</span>
+            <span className="text-xl font-bold dark:text-white truncate">{t('common.app_name')}</span>
         </div>
     )
 

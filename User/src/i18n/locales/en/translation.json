@@ -1,5 +1,6 @@
 {
   "common": {
+    "app_name": "BookLib",
     "welcome": "Welcome",
     "login": "Login",
     "register": "Register",

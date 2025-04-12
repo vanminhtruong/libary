@@ -1,5 +1,6 @@
 {
   "common": {
+    "app_name": "Thư Viện",
     "welcome": "Xin chào",
     "login": "Đăng nhập",
     "register": "Đăng ký",

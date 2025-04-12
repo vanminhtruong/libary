@@ -81,18 +81,18 @@ const LanguageSwitcher = () => {
       panelClassName={`language-panel ${darkMode ? 'bg-gray-800 border-gray-700' : ''} [&_.p-dropdown-item:hover]:bg-gray-700 [&_.p-dropdown-item.p-highlight]:bg-gray-700`}
       pt={{
         panel: { style: styles.dropdownPanel, className: 'p-dropdown-panel-dark' },
-        item: { 
+        item: {
           style: styles.dropdownItem,
           className: darkMode ? 'hover:!bg-gray-700 transition-colors duration-200' : 'hover:bg-gray-100 transition-colors duration-200'
         },
-        list: { 
-          className: darkMode ? 'bg-gray-800 text-white [&_.p-dropdown-item:hover]:bg-gray-700' : '' 
+        list: {
+          className: darkMode ? 'bg-gray-800 text-white [&_.p-dropdown-item:hover]:bg-gray-700' : ''
         },
         wrapper: { className: darkMode ? 'bg-gray-800 text-white border-gray-700' : '' },
         header: { className: darkMode ? 'bg-gray-800 text-white' : '' },
         filterInput: { className: darkMode ? 'bg-gray-800 text-white border-gray-700' : '' },
-        trigger: { 
-          className: darkMode ? 'text-white hover:!bg-gray-700 transition-colors duration-200' : 'hover:bg-gray-100 transition-colors duration-200' 
+        trigger: {
+          className: darkMode ? 'text-white hover:!bg-gray-700 transition-colors duration-200' : 'hover:bg-gray-100 transition-colors duration-200'
         },
         label: { className: darkMode ? 'text-white' : '' },
       }}

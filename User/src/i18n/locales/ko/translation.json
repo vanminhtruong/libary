@@ -1,5 +1,6 @@
 {
   "common": {
+    "app_name": "책 도서관",
     "welcome": "환영합니다",
     "login": "로그인",
     "register": "회원가입",
