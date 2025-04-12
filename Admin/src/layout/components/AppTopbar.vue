@@ -31,13 +31,7 @@ onMounted(() => {
 // Hàm xử lý khi nhấn vào nút chuyển đổi chế độ sáng/tối
 const handleToggleDarkMode = () => {
     toggleDarkMode();
-    // Hiển thị toast thông báo
-    toast.add({
-        severity: 'info',
-        summary: isDarkTheme.value ? t('auth.theme.darkModeEnabled') : t('auth.theme.lightModeEnabled'),
-        detail: isDarkTheme.value ? t('auth.theme.darkModeEnabledDetail') : t('auth.theme.lightModeEnabledDetail'),
-        life: 3000
-    });
+    // Toast notification removed as requested
 };
 
 const handleLogout = async () => {
