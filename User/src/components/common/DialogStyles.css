@@ -132,3 +132,51 @@
     background-color: #2563eb;
     border-color: #2563eb;
 }
+
+/* Custom styles for logout confirmation toast */
+.logout-confirmation-toast {
+    max-width: 350px !important;
+}
+
+.logout-confirmation-toast .p-toast-message,
+.logout-confirmation-toast .p-toast-message-content {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    color: inherit !important;
+}
+
+.logout-confirmation-toast .p-toast-detail {
+    margin: 0 !important;
+}
+
+.logout-confirmation-toast button {
+    transition: all 0.2s ease;
+    border-radius: 0.375rem !important;
+}
+
+.logout-confirmation-toast button.p-button {
+    padding: 0.5rem 1rem !important;
+    min-width: 5rem;
+}
+
+/* Remove default toast icon and padding */
+.logout-confirmation-toast .p-toast-message-icon,
+.logout-confirmation-toast .p-toast-icon-close {
+    display: none !important;
+}
+
+/* Center the toast position */
+.p-toast[data-pc-position="center"] {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Dark mode toast fixes */
+:root.dark .logout-confirmation-toast button.p-button-text:hover,
+.dark-mode .logout-confirmation-toast button.p-button-text:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}

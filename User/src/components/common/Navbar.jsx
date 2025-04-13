@@ -12,7 +12,6 @@ import { Menu } from 'primereact/menu'
 import { useRef } from 'react'
 import { API_CONFIG } from '../../config/api.config'
 import { Skeleton } from 'primereact/skeleton'
-import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog'
 import { Toast } from 'primereact/toast'
 import './DialogStyles.css'
 
@@ -105,50 +104,66 @@ const Navbar = () => {
     ]
 
     const handleLogout = () => {
-        confirmDialog({
-            message: t('auth.logout_confirm'),
-            header: t('auth.logout_header'),
-            icon: 'pi pi-exclamation-triangle',
-            position: 'top',
-            acceptClassName: darkMode ? 'bg-blue-600 hover:bg-blue-700 border-blue-600 hover:border-blue-700 text-white transition-colors duration-200 px-5 py-2.5 font-medium' : 'bg-blue-100 hover:bg-blue-200 border-blue-100 hover:border-blue-200 text-blue-800 transition-colors duration-200 px-5 py-2.5 font-medium',
-            rejectClassName: 'p-button-text text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 px-5 py-2.5 font-medium',
-            acceptLabel: t('common.confirm'),
-            rejectLabel: t('common.cancel'),
-            className: darkMode ? 'custom-dialog dark-dialog' : 'custom-dialog light-dialog',
-            style: { maxWidth: '400px' },
-            pt: {
-                root: { className: 'bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg' },
-                header: { className: 'bg-white dark:bg-gray-900 text-gray-800 dark:text-white pb-2 border-b border-gray-200 dark:border-gray-700 px-6 py-4' },
-                content: { className: 'bg-white dark:bg-gray-900 text-gray-700 dark:text-white px-6 py-5' },
-                footer: { className: 'flex justify-end gap-4 bg-gray-50 dark:bg-blue-900/10 px-6 py-5 rounded-b-lg border-t border-gray-200 dark:border-gray-700' },
-                icon: { className: 'text-yellow-500 text-2xl mr-3' },
-                message: { className: 'text-base py-2 leading-relaxed' },
-                acceptButton: { className: darkMode ? 'bg-blue-600 hover:bg-blue-700 border-blue-600 hover:border-blue-700 text-white transition-colors duration-200 px-5 py-2.5 font-medium min-w-[100px]' : 'bg-blue-100 hover:bg-blue-200 border-blue-100 hover:border-blue-200 text-blue-800 transition-colors duration-200 px-5 py-2.5 font-medium min-w-[100px]' },
-                rejectButton: { className: 'p-button-text text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 px-5 py-2.5 font-medium min-w-[100px]' }
-            },
-            accept: async () => {
-                try {
-                    await authService.logout()
-                    toast.current.show({
-                        severity: 'success',
-                        summary: t('common.success'),
-                        detail: t('auth.logout_success'),
-                        life: 3000
-                    })
-                    setTimeout(() => {
-                        navigate(ROUTES.LOGIN)
-                    }, 1000)
-                } catch (error) {
-                    console.error('Logout error:', error)
-                    toast.current.show({
-                        severity: 'error',
-                        summary: t('common.error'),
-                        detail: t('auth.logout_error'),
-                        life: 3000
-                    })
-                }
-            }
-        })
+        toast.current.show({
+            severity: 'warn',
+            sticky: true,
+            className: 'logout-confirmation-toast',
+            position: 'center',
+            content: (
+                <div className="rounded-lg overflow-hidden bg-white dark:bg-gray-800 shadow-lg w-80">
+                    <div className="p-4">
+                        <div className="flex items-center gap-3 mb-3">
+                            <div className="bg-amber-600/20 dark:bg-amber-600/20 p-2 rounded-full">
+                                <i className="pi pi-exclamation-triangle text-amber-600 text-xl"></i>
+                            </div>
+                            <h3 className="font-bold text-gray-800 dark:text-white">{t('auth.logout_header')}</h3>
+                        </div>
+                        
+                        <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                            {t('auth.logout_confirm')}
+                        </p>
+                    </div>
+                    
+                    <div className="border-t border-gray-200 dark:border-gray-700 p-3 flex justify-end gap-2">
+                        <Button
+                            label={t('common.cancel')}
+                            size="small"
+                            className="p-button-text text-gray-700 dark:text-gray-300 px-3 py-2"
+                            onClick={() => toast.current.clear()}
+                        />
+                        <Button
+                            label={t('common.confirm')}
+                            size="small"
+                            severity="primary"
+                            className={darkMode ? 'bg-blue-600 hover:bg-blue-700 border-blue-600 hover:border-blue-700 text-white px-3 py-2' : 'bg-blue-500 hover:bg-blue-600 border-blue-500 hover:border-blue-600 text-white px-3 py-2'}
+                            onClick={async () => {
+                                try {
+                                    await authService.logout()
+                                    toast.current.clear();
+                                    toast.current.show({
+                                        severity: 'success',
+                                        summary: t('common.success'),
+                                        detail: t('auth.logout_success'),
+                                        life: 3000
+                                    })
+                                    setTimeout(() => {
+                                        navigate(ROUTES.LOGIN)
+                                    }, 1000)
+                                } catch (error) {
+                                    console.error('Logout error:', error)
+                                    toast.current.show({
+                                        severity: 'error',
+                                        summary: t('common.error'),
+                                        detail: t('auth.logout_error'),
+                                        life: 3000
+                                    })
+                                }
+                            }}
+                        />
+                    </div>
+                </div>
+            )
+        });
     }
 
     const userMenuItems = [
@@ -290,20 +305,17 @@ const Navbar = () => {
 
     return (
         <header className="shadow-md bg-white dark:bg-gray-800 sticky top-0 z-50 transition-colors duration-200">
-            <Toast ref={toast} />
-            <ConfirmDialog
-                pt={{
-                    root: { className: 'bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg' },
-                    header: { className: 'bg-white dark:bg-gray-900 text-gray-800 dark:text-white pb-2 border-b border-gray-200 dark:border-gray-700 px-6 py-4' },
-                    content: { className: 'bg-white dark:bg-gray-900 text-gray-700 dark:text-white px-6 py-5' },
-                    footer: { className: 'flex justify-end gap-4 bg-gray-50 dark:bg-blue-900/10 px-6 py-5 rounded-b-lg border-t border-gray-200 dark:border-gray-700' },
-                    icon: { className: 'text-yellow-500 text-2xl mr-3' },
-                    message: { className: 'text-base py-2 leading-relaxed' },
-                    acceptButton: { className: darkMode ? 'bg-blue-600 hover:bg-blue-700 border-blue-600 hover:border-blue-700 text-white transition-colors duration-200 px-5 py-2.5 font-medium min-w-[100px]' : 'bg-blue-100 hover:bg-blue-200 border-blue-100 hover:border-blue-200 text-blue-800 transition-colors duration-200 px-5 py-2.5 font-medium min-w-[100px]' },
-                    rejectButton: { className: 'p-button-text text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 px-5 py-2.5 font-medium min-w-[100px]' }
-                }}
-                className={darkMode ? 'custom-dialog dark-dialog' : 'custom-dialog light-dialog'}
-            />
+            <Toast ref={toast} pt={{
+                root: { className: 'dark:bg-transparent' },
+                message: { className: 'dark:bg-transparent' },
+                container: { className: 'dark:bg-transparent dark:border-0' },
+                content: { className: 'dark:bg-transparent p-0' },
+                summary: { className: 'dark:text-white' },
+                detail: { className: 'dark:text-gray-300' },
+                icon: { className: 'dark:text-white' },
+                buttonIcon: { className: 'dark:text-gray-400 dark:hover:text-white' },
+                button: { className: 'dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700' }
+            }} />
             <div className="container mx-auto px-4">
                 <Menubar
                     model={items}
