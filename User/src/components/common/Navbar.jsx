@@ -122,7 +122,10 @@ const Navbar = () => {
             label: t('common.home'),
             icon: 'pi pi-home',
             className: darkMode ? 'dark:text-white' : 'hover:bg-gray-100',
-            command: () => handleMenuItemClick(() => navigate(ROUTES.HOME))
+            command: () => {
+                navigate(ROUTES.HOME);
+                setMobileMenuActive(false);
+            }
         },
         {
             label: t('common.books'),
@@ -133,7 +136,10 @@ const Navbar = () => {
                     label: t('common.all_books'),
                     icon: 'pi pi-list',
                     className: darkMode ? 'dark:text-white' : 'hover:bg-gray-100',
-                    command: () => handleMenuItemClick(() => navigate(ROUTES.BOOKS))
+                    command: () => {
+                        navigate(ROUTES.BOOKS);
+                        setMobileMenuActive(false);
+                    }
                 },
             ]
         },
@@ -141,7 +147,10 @@ const Navbar = () => {
             label: t('borrowings.current_borrowings'),
             icon: 'pi pi-bookmark',
             className: darkMode ? 'dark:text-white' : 'hover:bg-gray-100',
-            command: () => handleMenuItemClick(() => navigate(ROUTES.CURRENT_BORROWINGS))
+            command: () => {
+                navigate(ROUTES.CURRENT_BORROWINGS);
+                setMobileMenuActive(false);
+            }
         }
     ]
 
@@ -393,7 +402,7 @@ const Navbar = () => {
                                                 if (item.items) {
                                                     setDesktopActiveSubmenu(desktopActiveSubmenu === idx ? null : idx);
                                                 } else if (item.command) {
-                                                    handleMenuItemClick(() => navigate(item.command()));
+                                                    item.command();
                                                 }
                                             }}
                                         >
@@ -409,8 +418,10 @@ const Navbar = () => {
                                                         key={subIdx}
                                                         className="flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-white"
                                                         onClick={() => {
-                                                            subItem.command && subItem.command();
-                                                            setDesktopActiveSubmenu(null);
+                                                            if (subItem.command) {
+                                                                subItem.command();
+                                                                setDesktopActiveSubmenu(null);
+                                                            }
                                                         }}
                                                     >
                                                         {subItem.icon && <i className={subItem.icon}></i>}

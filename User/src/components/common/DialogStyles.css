@@ -224,7 +224,7 @@
 }
 
 /* Responsive fixes for navbar at specific breakpoints */
-@media (min-width: 961px) and (max-width: 1285px) {
+@media (min-width: 961px) and (max-width: 1020px) {
     /* Force mobile menu behavior - hide horizontal menu and show menu button */
     .responsive-navbar .p-menubar-root-list:not(.p-submenu-list) {
         display: none !important;
