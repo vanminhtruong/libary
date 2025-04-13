@@ -180,3 +180,137 @@
 .dark-mode .logout-confirmation-toast button.p-button-text:hover {
     background-color: rgba(255, 255, 255, 0.1) !important;
 }
+
+/* Ensure the menu button is visible on mobile and medium screens */
+.p-menubar .p-menubar-button {
+    display: none !important; /* Hide the default PrimeReact menu button */
+}
+
+/* Default styles for displaying the menu for different screen sizes */
+.p-menubar-root-list:not(.p-submenu-list) {
+    display: none !important;
+}
+
+@media (min-width: 1286px) {
+    .p-menubar-root-list:not(.p-submenu-list) {
+        display: flex !important;
+    }
+}
+
+/* Make sure mobile menus are properly styled and positioned */
+.p-menubar.p-menubar-mobile-active .p-menubar-root-list {
+    position: absolute !important;
+    left: 0 !important;
+    top: 100% !important;
+    width: 100% !important;
+    z-index: 100 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    background-color: white !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+    padding: 0.5rem !important;
+}
+
+/* Dark mode mobile menu styling */
+.dark .p-menubar.p-menubar-mobile-active .p-menubar-root-list {
+    background-color: #1e293b !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Proper logo and menu button alignment */
+.navbar-logo {
+    display: flex;
+    align-items: center;
+}
+
+/* Responsive fixes for navbar at specific breakpoints */
+@media (min-width: 961px) and (max-width: 1285px) {
+    /* Force mobile menu behavior - hide horizontal menu and show menu button */
+    .responsive-navbar .p-menubar-root-list:not(.p-submenu-list) {
+        display: none !important;
+    }
+    
+    /* Fix submenu display in mobile mode */
+    .p-menubar-mobile-active .p-menuitem.p-menuitem-active > .p-submenu-list {
+        position: static !important;
+        width: 100% !important;
+        box-shadow: none !important;
+        border: none !important;
+        margin-left: 1rem !important;
+        margin-top: 0.25rem !important;
+        margin-bottom: 0.25rem !important;
+    }
+    
+    /* Make sure dropdown buttons are properly sized */
+    .navbar-end .p-button {
+        padding: 0.3rem 0.5rem !important;
+        font-size: 0.85rem !important;
+    }
+    
+    /* Custom avatar size adjustment */
+    .navbar-end .p-avatar {
+        width: 2rem !important;
+        height: 2rem !important;
+    }
+    
+    /* Reduce padding in container */
+    header .container {
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+    }
+}
+
+/* Mobile menu sidebar styling */
+.mobile-menu-active .pi-bars {
+    display: none;
+}
+
+/* Animation for sidebar menu */
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+.fixed.inset-0.z-50 .absolute.left-0 {
+    animation: slideIn 0.3s ease forwards;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Overlay fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fixed.inset-0.z-50 .absolute.inset-0 {
+    animation: fadeIn 0.3s ease forwards;
+}
+
+/* Fix dropdown menu in desktop view */
+.group:hover .absolute {
+    display: block !important;
+}
+
+/* Fix for mobile styles */
+@media (max-width: 960px) {
+    .navbar-logo span {
+        max-width: 150px;
+    }
+}
+
+/* Fix for scrolling on the body when menu is active */
+.mobile-menu-active {
+    overflow: hidden !important;
+}
+
+.mobile-menu-active + body {
+    overflow: hidden !important;
+}
