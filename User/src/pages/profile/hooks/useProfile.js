@@ -1,10 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import authService from '../../../services/auth.service';
 import { API_CONFIG } from '../../../config/api.config';
 
 const useProfile = () => {
     const { t } = useTranslation();
+    const navigate = useNavigate();
     const toast = useRef(null);
     const [loading, setLoading] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
@@ -177,6 +179,58 @@ const useProfile = () => {
         }
     };
 
+    const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+    const [deletePassword, setDeletePassword] = useState('');
+    const [deleteLoading, setDeleteLoading] = useState(false);
+
+    const handleDeleteAccount = async () => {
+        if (!deletePassword) {
+            toast.current.show({
+                severity: 'error',
+                summary: t('common.error'),
+                detail: t('validation.password_required')
+            });
+            return;
+        }
+
+        try {
+            setDeleteLoading(true);
+            await authService.deleteAccount(deletePassword);
+            
+            // Clear form and close dialog
+            setDeletePassword('');
+            setShowDeleteDialog(false);
+            
+            toast.current.show({
+                severity: 'success',
+                summary: t('common.success'),
+                detail: t('profile.account_deleted')
+            });
+            
+            // After a brief delay, redirect to login page
+            setTimeout(() => {
+                navigate('/');
+            }, 2000);
+            
+        } catch (error) {
+            console.error('Error deleting account:', error);
+            let errorMessage = t('profile.delete_error');
+            
+            // Check for specific error message from the server
+            if (error.response?.data?.message) {
+                errorMessage = error.response.data.message;
+            }
+            
+            toast.current.show({
+                severity: 'error',
+                summary: t('common.error'),
+                detail: errorMessage
+            });
+        } finally {
+            setDeleteLoading(false);
+        }
+    };
+
     return {
         toast,
         loading,
@@ -187,8 +241,14 @@ const useProfile = () => {
         loadProfile,
         handleImageChange,
         handleChange,
-        handleSubmit
+        handleSubmit,
+        showDeleteDialog,
+        setShowDeleteDialog,
+        deletePassword,
+        setDeletePassword,
+        deleteLoading,
+        handleDeleteAccount
     };
 };
 
-export default useProfile; 
+export default useProfile;

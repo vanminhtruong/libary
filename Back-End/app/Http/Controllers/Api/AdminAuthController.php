@@ -180,6 +180,41 @@ class AdminAuthController extends Controller
         $user->delete();
         return response()->json(['message' => 'User deleted successfully']);
     }
+    
+    /**
+     * Kích hoạt hoặc vô hiệu hóa tài khoản người dùng
+     *
+     * @param int $id ID của người dùng
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function toggleActive($id)
+    {
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+        
+        // Không cho phép thay đổi trạng thái tài khoản admin
+        if ($user->email === 'vanminhtruong95@gmail.com') {
+            return response()->json(['message' => 'Unauthorized to modify admin account'], 403);
+        }
+        
+        // Đảo ngược trạng thái kích hoạt
+        $user->is_active = !$user->is_active;
+        $user->save();
+        
+        $status = $user->is_active ? 'activated' : 'deactivated';
+        
+        return response()->json([
+            'message' => "User account has been {$status} successfully",
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'is_active' => $user->is_active
+            ]
+        ]);
+    }
 
     // Thêm người dùng mới
     public function createUser(Request $request)

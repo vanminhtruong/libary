@@ -1,0 +1,59 @@
+/* Styles for Delete Account Dialog */
+.delete-account-dialog .p-dialog-mask {
+  background-color: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+/* Prevent body scrolling when dialog is open */
+body:has(.delete-account-dialog .p-dialog-visible) {
+  overflow: hidden !important;
+}
+
+.delete-account-dialog .p-dialog-content {
+  padding: 0;
+  overflow: hidden;
+}
+
+.delete-account-dialog.p-dialog {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.delete-account-dialog .p-dialog-footer {
+  padding: 0;
+  margin: 0;
+  border-top: none;
+}
+
+/* Dark mode specific styles */
+.dark .delete-account-dialog .p-dialog-header,
+.dark .delete-account-dialog .p-dialog-content,
+.dark .delete-account-dialog .p-dialog-footer {
+  background-color: #1f2937; /* dark:bg-gray-800 */
+  color: white;
+}
+
+/* Password input dark mode styles */
+.dark .dark-password-input .p-password-input {
+  background-color: #374151; /* dark:bg-gray-700 */
+  color: white;
+  border-color: #4b5563; /* dark:border-gray-600 */
+}
+
+.dark .dark-password-input .p-password-input:focus {
+  border-color: #60a5fa; /* dark:border-blue-400 */
+  box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.2);
+}
+
+/* Fix for white space at the bottom */
+.delete-account-dialog .p-dialog-footer > div {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}

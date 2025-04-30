@@ -34,13 +34,24 @@ export default {
         }
     },
     detail: {
-        accountStatus: 'Account Status',
+        information: 'User Information',
+        timeInfo: 'Timeline',
+        status: 'Account Status',
+        accountStatus: 'Verification Status',
         verified: 'Verified',
         notVerified: 'Not Verified',
         createdDate: 'Created Date',
         lastUpdate: 'Last Update',
         imagePreview: 'View Profile Image',
         clickToZoom: 'Click to zoom'
+    },
+    status: {
+        active: 'Active',
+        inactive: 'Inactive'
+    },
+    action: {
+        activate: 'Activate Account',
+        deactivate: 'Deactivate Account'
     },
     button: {
         save: 'Save',
@@ -60,7 +71,8 @@ export default {
         error: {
             load: 'Unable to load user list',
             loadDetail: 'Unable to load user details',
-            delete: 'Unable to delete user'
+            delete: 'Unable to delete user',
+            toggleActive: 'Unable to change account status'
         }
     },
     toast: {

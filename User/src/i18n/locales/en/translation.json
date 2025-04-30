@@ -48,7 +48,8 @@
     "unavailable": "Unavailable",
     "book": "Book",
     "unknown": "Unknown",
-    "unknown_category": "Unknown Category"
+    "unknown_category": "Unknown Category",
+    "language": "Language"
   },
   "status": {
     "available": "Available",
@@ -307,6 +308,12 @@
     "history": "History"
   },
   "profile": {
+    "delete_account": "Delete Account",
+    "confirm_delete": "Confirm Delete",
+    "delete_warning": "Warning: This action cannot be undone. All your data will be permanently deleted.",
+    "enter_password_to_confirm": "Enter your current password to confirm deletion",
+    "account_deleted": "Your account has been successfully deleted",
+    "delete_error": "Error deleting account. Please try again.",
     "manage_info": "Manage your personal information",
     "personal_info": "Personal Information",
     "edit_info": "Edit Information",

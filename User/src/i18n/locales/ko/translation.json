@@ -45,7 +45,8 @@
     "no_reason": "사유 없음",
     "info": "검색 결과 없음",
     "no_results": "검색 결과 없음",
-    "error": "이메일 또는 비밀번호가 올바르지 않습니다"
+    "error": "이메일 또는 비밀번호가 올바르지 않습니다",
+    "language": "언어"
   },
   "status": {
     "available": "대출 가능",
@@ -273,6 +274,12 @@
     }
   },
   "profile": {
+    "delete_account": "계정 삭제",
+    "confirm_delete": "삭제 확인",
+    "delete_warning": "경고: 이 작업은 취소할 수 없습니다. 모든 데이터가 영구적으로 삭제됩니다.",
+    "enter_password_to_confirm": "삭제를 확인하려면 현재 비밀번호를 입력하세요",
+    "account_deleted": "계정이 성공적으로 삭제되었습니다",
+    "delete_error": "계정 삭제 중 오류가 발생했습니다. 다시 시도해주세요.",
     "manage_info": "개인정보 관리",
     "personal_info": "개인정보",
     "edit_info": "정보 수정",

@@ -49,12 +49,14 @@
                     {{ new Date(slotProps.data.created_at).toLocaleDateString('vi-VN') }}
                 </template>
             </Column>
+
             <Column :header="t('user.table.actions')">
                 <template #body="slotProps">
                     <Button icon="pi pi-eye" class="p-button-rounded p-button-success mr-2" 
                             @click.stop="showUserDetail(slotProps.data)" />
                     <Button icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2" 
                             @click.stop="editUser(slotProps.data)" />
+
                     <Button icon="pi pi-trash" class="p-button-rounded p-button-danger" 
                             @click.stop="confirmDelete(slotProps.data)" />
                 </template>
@@ -154,45 +156,86 @@
                 </div>
 
                 <div class="grid user-detail-content p-3 border-round-lg surface-ground">
-                    <div class="col-12 mb-3">
-                        <div class="flex align-items-center justify-content-between surface-card p-3 border-round">
-                            <div>
-                                <span class="block font-medium mb-1">{{ t('user.detail.accountStatus') }}</span>
-                                <Tag :severity="selectedUser.email_verified_at ? 'success' : 'warning'" class="text-sm">
-                                    {{ selectedUser.email_verified_at ? t('user.detail.verified') : t('user.detail.notVerified') }}
+                    <!-- Thông tin chi tiết người dùng theo grid layout -->
+                    <div class="col-12 mb-4">
+                        <div class="surface-card p-3 border-round shadow-1">
+                            <div class="flex justify-content-between align-items-center mb-3">
+                                <div class="text-xl font-medium">{{ t('user.detail.information') }}</div>
+                                <Tag :severity="selectedUser.is_active ? 'success' : 'danger'" 
+                                     class="ml-2">
+                                    {{ selectedUser.is_active ? t('user.status.active') : t('user.status.inactive') }}
                                 </Tag>
                             </div>
-                            <i class="pi pi-shield text-2xl text-500"></i>
-                        </div>
-                    </div>
-
-                    <div class="col-6">
-                        <div class="surface-card p-3 border-round h-full">
-                            <span class="block font-medium mb-2">{{ t('user.detail.createdDate') }}</span>
-                            <div class="flex align-items-center gap-2">
-                                <i class="pi pi-calendar text-500"></i>
-                                <span>{{ new Date(selectedUser.created_at).toLocaleDateString('vi-VN') }}</span>
+                            <div class="border-top-1 surface-border pt-3">
+                                <div class="grid">
+                                    <div class="col-12 md:col-6 mb-3">
+                                        <div class="flex align-items-center">
+                                            <i class="pi pi-envelope text-primary mr-2"></i>
+                                            <div>
+                                                <div class="text-sm text-500">Email</div>
+                                                <div>{{ selectedUser.email }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 md:col-6 mb-3">
+                                        <div class="flex align-items-center">
+                                            <i class="pi pi-phone text-primary mr-2"></i>
+                                            <div>
+                                                <div class="text-sm text-500">{{ t('user.table.phone') }}</div>
+                                                <div>{{ selectedUser.phone || t('user.table.notUpdated') }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-6">
-                        <div class="surface-card p-3 border-round h-full">
-                            <span class="block font-medium mb-2">{{ t('user.detail.lastUpdate') }}</span>
-                            <div class="flex align-items-center gap-2">
-                                <i class="pi pi-clock text-500"></i>
-                                <span>{{ new Date(selectedUser.updated_at).toLocaleDateString('vi-VN') }}</span>
+                    
+                    <!-- Thông tin thời gian và trạng thái xác thực -->
+                    <div class="col-12 mb-4">
+                        <div class="surface-card p-3 border-round shadow-1">
+                            <div class="text-xl font-medium mb-3">{{ t('user.detail.timeInfo') }}</div>
+                            <div class="border-top-1 surface-border pt-3">
+                                <div class="grid">
+                                    <div class="col-12 md:col-6 mb-3">
+                                        <div class="flex align-items-center">
+                                            <i class="pi pi-calendar text-primary mr-2"></i>
+                                            <div>
+                                                <div class="text-sm text-500">{{ t('user.detail.createdDate') }}</div>
+                                                <div>{{ new Date(selectedUser.created_at).toLocaleDateString('vi-VN') }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 md:col-6 mb-3">
+                                        <div class="flex align-items-center">
+                                            <i class="pi pi-clock text-primary mr-2"></i>
+                                            <div>
+                                                <div class="text-sm text-500">{{ t('user.detail.lastUpdate') }}</div>
+                                                <div>{{ new Date(selectedUser.updated_at).toLocaleDateString('vi-VN') }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <template #footer>
-                <div class="flex justify-content-end">
-                    <Button :label="t('user.button.close')" 
-                            icon="pi pi-times" 
-                            @click="detailDialog = false" 
-                            class="p-button-text" />
+                <div class="flex justify-content-between">
+                    <div>
+                        <Button 
+                            :label="selectedUser && selectedUser.is_active ? t('user.action.deactivate') : t('user.action.activate')" 
+                            :icon="selectedUser && selectedUser.is_active ? 'pi pi-ban' : 'pi pi-check-circle'" 
+                            :class="selectedUser && selectedUser.is_active ? 'p-button-warning' : 'p-button-success'" 
+                            @click="toggleUserActive(selectedUser)" />
+                    </div>
+                    <div>
+                        <Button :label="t('user.button.close')" 
+                                icon="pi pi-times" 
+                                @click="detailDialog = false" 
+                                class="p-button-text" />
+                    </div>
                 </div>
             </template>
         </Dialog>
@@ -417,6 +460,38 @@ const showUserDetail = async (user) => {
             severity: 'error',
             summary: t('user.toast.error'),
             detail: t('user.message.error.loadDetail'),
+            life: 3000
+        })
+    }
+}
+
+// Xử lý kích hoạt/vô hiệu hóa tài khoản
+const toggleUserActive = async (user) => {
+    if (!user) return
+    
+    try {
+        // Đóng hộp thoại chi tiết để tránh lỗi
+        detailDialog.value = false
+        
+        // Gọi API để chuyển đổi trạng thái
+        const response = await UserService.toggleActive(user.id)
+        
+        // Hiển thị thông báo thành công
+        toast.add({
+            severity: 'success',
+            summary: t('user.toast.success'),
+            detail: response.message,
+            life: 3000
+        })
+        
+        // Cập nhật lại danh sách người dùng
+        fetchUsers()
+    } catch (error) {
+        console.error('Error toggling user status:', error)
+        toast.add({
+            severity: 'error',
+            summary: t('user.toast.error'),
+            detail: error.response?.data?.message || t('user.message.error.toggleActive'),
             life: 3000
         })
     }

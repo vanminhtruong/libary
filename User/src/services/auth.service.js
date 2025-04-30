@@ -102,6 +102,24 @@ const createAuthService = () => {
         }
     }
 
+    // Delete user account
+    const deleteAccount = async (password) => {
+        try {
+            // Sử dụng phương thức post với _method: DELETE thay vì phương thức delete trực tiếp
+            const response = await baseService.post('/user/profile/delete', 
+                { password, _method: 'DELETE' }
+            )
+            
+            // Clear user data on successful deletion
+            localStorage.removeItem('token')
+            localStorage.removeItem('user')
+            window.dispatchEvent(new Event('auth-change'))
+            return response.data
+        } catch (error) {
+            throw error
+        }
+    }
+
     return {
         login,
         register,
@@ -110,7 +128,8 @@ const createAuthService = () => {
         logout,
         isAuthenticated,
         getProfile,
-        resetPassword
+        resetPassword,
+        deleteAccount
     }
 }
 

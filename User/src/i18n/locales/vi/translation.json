@@ -48,7 +48,8 @@
     "no_results": "Không tìm thấy kết quả",
     "error": "Email hoặc mật khẩu không đúng",
     "book": "Sách",
-    "unknown": "Không xác định"
+    "unknown": "Không xác định",
+    "language": "Ngôn ngữ"
   },
   "books": {
     "title": "Tiêu đề",
@@ -287,6 +288,12 @@
     }
   },
   "profile": {
+    "delete_account": "Xóa tài khoản",
+    "confirm_delete": "Xác nhận xóa",
+    "delete_warning": "Cảnh báo: Hành động này không thể hoàn tác. Tất cả dữ liệu của bạn sẽ bị xóa vĩnh viễn.",
+    "enter_password_to_confirm": "Nhập mật khẩu hiện tại để xác nhận xóa",
+    "account_deleted": "Tài khoản của bạn đã được xóa thành công",
+    "delete_error": "Lỗi khi xóa tài khoản. Vui lòng thử lại.",
     "manage_info": "Quản lý thông tin cá nhân của bạn",
     "personal_info": "Thông tin cá nhân",
     "edit_info": "Chỉnh sửa thông tin",

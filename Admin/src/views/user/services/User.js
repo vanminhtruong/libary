@@ -24,6 +24,11 @@ export const UserService = {
     // Xóa một người dùng
     deleteUser(id) {
         return DELETE(`/admin/users/${id}`)
+    },
+    
+    // Kích hoạt hoặc vô hiệu hóa tài khoản người dùng
+    toggleActive(id) {
+        return POST(`/admin/users/${id}/toggle-active`)
     }
 }
 

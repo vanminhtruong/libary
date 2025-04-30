@@ -34,6 +34,9 @@ export default {
         }
     },
     detail: {
+        information: 'Thông tin chi tiết',
+        timeInfo: 'Thời gian',
+        status: 'Trạng thái hoạt động',
         accountStatus: 'Trạng thái tài khoản',
         verified: 'Đã xác thực',
         notVerified: 'Chưa xác thực',
@@ -41,6 +44,14 @@ export default {
         lastUpdate: 'Cập nhật lần cuối',
         imagePreview: 'Xem ảnh đại diện',
         clickToZoom: 'Nhấp để phóng to'
+    },
+    status: {
+        active: 'Đang hoạt động',
+        inactive: 'Bị vô hiệu hóa'
+    },
+    action: {
+        activate: 'Kích hoạt tài khoản',
+        deactivate: 'Vô hiệu hóa tài khoản'
     },
     button: {
         save: 'Lưu',
@@ -60,7 +71,8 @@ export default {
         error: {
             load: 'Không thể tải danh sách người dùng',
             loadDetail: 'Không thể tải thông tin chi tiết người dùng',
-            delete: 'Không thể xóa người dùng'
+            delete: 'Không thể xóa người dùng',
+            toggleActive: 'Không thể thay đổi trạng thái hoạt động của tài khoản này'
         }
     },
     toast: {

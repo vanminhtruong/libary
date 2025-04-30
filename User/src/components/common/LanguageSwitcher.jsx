@@ -4,7 +4,15 @@ import { useEffect, useState } from 'react';
 
 const LanguageSwitcher = () => {
   const { i18n } = useTranslation();
-  const [darkMode, setDarkMode] = useState(false);
+  // Initialize darkMode state by checking if the dark class is present on the document element
+  // This ensures correct styling from the very beginning without flashing
+  const [darkMode, setDarkMode] = useState(() => {
+    // Check if we're in a browser environment
+    if (typeof document !== 'undefined') {
+      return document.documentElement.classList.contains('dark');
+    }
+    return false;
+  });
 
   useEffect(() => {
     const isDarkMode = document.documentElement.classList.contains('dark');
@@ -78,12 +86,12 @@ const LanguageSwitcher = () => {
       valueTemplate={selectedLanguageTemplate}
       itemTemplate={languageOptionTemplate}
       className={`language-switcher w-[170px] ${darkMode ? 'bg-gray-800 text-white border-gray-700 hover:border-gray-600' : ''}`}
-      panelClassName={`language-panel ${darkMode ? 'bg-gray-800 border-gray-700' : ''} [&_.p-dropdown-item:hover]:bg-gray-700 [&_.p-dropdown-item.p-highlight]:bg-gray-700`}
+      panelClassName={`language-panel ${darkMode ? 'bg-gray-800 border-gray-700 [&_.p-dropdown-item:hover]:bg-gray-700 [&_.p-dropdown-item.p-highlight]:bg-gray-700' : '[&_.p-dropdown-item:hover]:bg-gray-100 [&_.p-dropdown-item.p-highlight]:bg-gray-100'}`}
       pt={{
         panel: { style: styles.dropdownPanel, className: 'p-dropdown-panel-dark' },
         item: {
           style: styles.dropdownItem,
-          className: darkMode ? 'hover:!bg-gray-700 transition-colors duration-200' : 'hover:bg-gray-100 transition-colors duration-200'
+          className: darkMode ? 'hover:!bg-gray-700 transition-colors duration-200' : 'hover:!bg-gray-100 transition-colors duration-200'
         },
         list: {
           className: darkMode ? 'bg-gray-800 text-white [&_.p-dropdown-item:hover]:bg-gray-700' : ''

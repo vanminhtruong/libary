@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -21,6 +22,18 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
+        // Check if email was previously used by a deleted account
+        $baseEmail = $request->email;
+        $deletedUser = \App\Models\User::where('email', 'like', $baseEmail . '.deleted.%')->first();
+        
+        if ($deletedUser) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Email này đã được sử dụng trước đó và không thể đăng ký lại.',
+                'errors' => ['email' => ['Email này đã được sử dụng trước đó và không thể đăng ký lại.']]
+            ], 422);
+        }
+        
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -50,6 +63,16 @@ class AuthController extends Controller
                     'message' => 'Validation Error',
                     'errors' => $validator->errors()
                 ], 422);
+            }
+
+            // Check if user exists and is active
+            $user = \App\Models\User::where('email', $request->email)->first();
+            
+            if ($user && $user->is_active === 0) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Tài khoản này đã bị xóa. Vui lòng đăng ký tài khoản mới.'
+                ], 401);
             }
 
             $credentials = $request->only('email', 'password');
@@ -188,5 +211,112 @@ class AuthController extends Controller
             'message' => 'Đặt lại mật khẩu thành công',
             'data' => $result
         ], 200);
+    }
+
+    /**
+     * Delete current user account
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteAccount(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'password' => 'required|string',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Validation Error',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            // Check if password matches
+            if (!Hash::check($request->password, $request->user()->password)) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Mật khẩu không chính xác'
+                ], 422);
+            }
+
+            // Get the user before we invalidate tokens
+            $user = $request->user();
+            $userId = $user->id;
+            $userEmail = $user->email;
+            
+            // Invalidate JWT token
+            try {
+                auth()->logout();
+            } catch (\Exception $e) {
+                \Log::error('Error logging out user: ' . $e->getMessage());
+            }
+            
+            // Start a transaction to ensure all related data is handled properly
+            \DB::beginTransaction();
+            
+            try {
+                // Instead of deleting the user, mark it as inactive
+                $updated = \DB::table('users')
+                    ->where('id', $userId)
+                    ->update([
+                        'is_active' => false,
+                        // Append a timestamp to email to allow reuse of the original email for new accounts
+                        'email' => $userEmail . '.deleted.' . time(),
+                        // Invalidate the password
+                        'password' => Hash::make(\Illuminate\Support\Str::random(32))
+                    ]);
+                
+                if (!$updated) {
+                    throw new \Exception('Failed to deactivate user account');
+                }
+                
+                // Delete all related records
+                
+                // Delete fines
+                \DB::table('fines')->where('user_id', $userId)->delete();
+                
+                // Delete borrowing records
+                \DB::table('borrowing_records')->where('user_id', $userId)->delete();
+                
+                // Delete reservations
+                \DB::table('reservations')->where('user_id', $userId)->delete();
+                
+                // Delete password reset tokens
+                if (\Schema::hasTable('password_reset_tokens')) {
+                    \DB::table('password_reset_tokens')->where('email', $userEmail)->delete();
+                }
+                
+                // Delete personal access tokens
+                if (\Schema::hasTable('personal_access_tokens')) {
+                    \DB::table('personal_access_tokens')
+                        ->where('tokenable_id', $userId)
+                        ->where('tokenable_type', 'App\\Models\\User')
+                        ->delete();
+                }
+                
+                // Commit the transaction
+                \DB::commit();
+                
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Tài khoản đã được xóa thành công'
+                ], 200);
+                
+            } catch (\Exception $e) {
+                // Rollback the transaction if any error occurs
+                \DB::rollBack();
+                \Log::error('Error deactivating user account: ' . $e->getMessage());
+                throw $e;
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Không thể xóa tài khoản',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 }

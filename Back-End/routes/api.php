@@ -57,6 +57,7 @@ Route::middleware(['auth:api', 'admin'])->prefix('admin')->group(function () {
     Route::get('/users/{id}', [AdminAuthController::class, 'user']);
     Route::post('/users/{id}/update', [AdminAuthController::class, 'updateUser']);
     Route::delete('/users/{id}', [AdminAuthController::class, 'deleteUser']);
+    Route::post('/users/{id}/toggle-active', [AdminAuthController::class, 'toggleActive']);
 
     // Fine Management
     Route::prefix('fines')->group(function () {
@@ -74,6 +75,7 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/logout', [AuthController::class, 'logout']);
         Route::get('/profile', [AuthController::class, 'getProfile']);
         Route::post('/profile/update', [AuthController::class, 'updateProfile']);
+        Route::delete('/profile/delete', [AuthController::class, 'deleteAccount']);
     });
 
     Route::prefix('books')->group(function () {

@@ -16,7 +16,13 @@ const Profile = () => {
         imagePreview,
         handleImageChange,
         handleChange,
-        handleSubmit
+        handleSubmit,
+        showDeleteDialog,
+        setShowDeleteDialog,
+        deletePassword,
+        setDeletePassword,
+        deleteLoading,
+        handleDeleteAccount
     } = useProfile();
 
     return (
@@ -41,6 +47,12 @@ const Profile = () => {
                             loading={loading}
                             imagePreview={imagePreview}
                             handleImageChange={handleImageChange}
+                            showDeleteDialog={showDeleteDialog}
+                            setShowDeleteDialog={setShowDeleteDialog}
+                            deletePassword={deletePassword}
+                            setDeletePassword={setDeletePassword}
+                            deleteLoading={deleteLoading}
+                            handleDeleteAccount={handleDeleteAccount}
                         />
                     </div>
 

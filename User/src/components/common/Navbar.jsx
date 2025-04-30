@@ -673,6 +673,19 @@ const Navbar = () => {
                                                     </div>
                                                 </div>
                                             )}
+                                            
+                                            {/* Add language and theme switchers to mobile menu */}
+                                            <div className="border-t border-gray-800 mt-2 pt-2">
+                                                <div className="px-4 py-3">
+                                                    <div className="flex items-center gap-3 mb-2">
+                                                        <i className="pi pi-globe text-gray-400"></i>
+                                                        <span>{t('common.language')}</span>
+                                                    </div>
+                                                    <div className="pl-8">
+                                                        <LanguageSwitcher />
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </>
                                     )}
                                 </nav>
