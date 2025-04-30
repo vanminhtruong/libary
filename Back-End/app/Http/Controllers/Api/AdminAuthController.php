@@ -201,6 +201,19 @@ class AdminAuthController extends Controller
         
         // Đảo ngược trạng thái kích hoạt
         $user->is_active = !$user->is_active;
+        
+        // Nếu đang kích hoạt lại tài khoản và email có định dạng .deleted.
+        if ($user->is_active && strpos($user->email, '.deleted.') !== false) {
+            // Khôi phục email ban đầu
+            $originalEmail = explode('.deleted.', $user->email)[0];
+            
+            // Kiểm tra xem email gốc đã được sử dụng bởi tài khoản khác chưa
+            $existingUser = User::where('email', $originalEmail)->first();
+            if (!$existingUser) {
+                $user->email = $originalEmail;
+            }
+        }
+        
         $user->save();
         
         $status = $user->is_active ? 'activated' : 'deactivated';

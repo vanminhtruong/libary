@@ -34,9 +34,7 @@ export default {
         }
     },
     detail: {
-        information: '상세 정보',
-        timeInfo: '시간 정보',
-        status: '활성 상태',
+        information: '사용자 정보',
         accountStatus: '계정 상태',
         verified: '인증됨',
         notVerified: '미인증',
@@ -46,12 +44,8 @@ export default {
         clickToZoom: '확대하려면 클릭하세요'
     },
     status: {
-        active: '활성화됨',
-        inactive: '비활성화됨'
-    },
-    action: {
-        activate: '계정 활성화',
-        deactivate: '계정 비활성화'
+        active: '활성화',
+        inactive: '비활성화'
     },
     button: {
         save: '저장',
@@ -71,8 +65,7 @@ export default {
         error: {
             load: '사용자 목록을 불러올 수 없습니다',
             loadDetail: '사용자 상세정보를 불러올 수 없습니다',
-            delete: '사용자를 삭제할 수 없습니다',
-            toggleActive: '계정 상태를 변경할 수 없습니다'
+            delete: '사용자를 삭제할 수 없습니다'
         }
     },
     toast: {

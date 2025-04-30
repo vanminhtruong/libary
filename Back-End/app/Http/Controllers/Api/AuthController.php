@@ -22,15 +22,16 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        // Check if email was previously used by a deleted account
-        $baseEmail = $request->email;
-        $deletedUser = \App\Models\User::where('email', 'like', $baseEmail . '.deleted.%')->first();
+        // Kiểm tra xem email đã tồn tại nhưng đã bị vô hiệu hóa chưa
+        $email = $request->email;
+        $existingUser = \App\Models\User::where('email', $email)->first();
         
-        if ($deletedUser) {
+        if ($existingUser && $existingUser->is_active === 0) {
+            // Nếu tài khoản đã tồn tại nhưng đã bị vô hiệu hóa, thông báo lỗi
             return response()->json([
                 'status' => false,
-                'message' => 'Email này đã được sử dụng trước đó và không thể đăng ký lại.',
-                'errors' => ['email' => ['Email này đã được sử dụng trước đó và không thể đăng ký lại.']]
+                'message' => 'Email này đã được sử dụng trước đó. Vui lòng liên hệ quản trị viên để kích hoạt lại tài khoản.',
+                'errors' => ['email' => ['Email này đã được sử dụng trước đó. Vui lòng liên hệ quản trị viên để kích hoạt lại tài khoản.']]
             ], 422);
         }
         
@@ -262,11 +263,7 @@ class AuthController extends Controller
                 $updated = \DB::table('users')
                     ->where('id', $userId)
                     ->update([
-                        'is_active' => false,
-                        // Append a timestamp to email to allow reuse of the original email for new accounts
-                        'email' => $userEmail . '.deleted.' . time(),
-                        // Invalidate the password
-                        'password' => Hash::make(\Illuminate\Support\Str::random(32))
+                        'is_active' => false
                     ]);
                 
                 if (!$updated) {
