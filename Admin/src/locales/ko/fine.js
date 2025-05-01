@@ -1,5 +1,6 @@
 export default {
     title: '벌금 관리',
+    noData: '데이터가 없습니다',
     fields: {
         no: '번호',
         user: '사용자',

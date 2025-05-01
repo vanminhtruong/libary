@@ -17,17 +17,14 @@ class AuthController extends Controller
     public function __construct(AuthService $authService)
     {
         $this->authService = $authService;
-        // $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
     public function register(Request $request)
     {
-        // Kiểm tra xem email đã tồn tại nhưng đã bị vô hiệu hóa chưa
         $email = $request->email;
         $existingUser = \App\Models\User::where('email', $email)->first();
         
         if ($existingUser && $existingUser->is_active === 0) {
-            // Nếu tài khoản đã tồn tại nhưng đã bị vô hiệu hóa, thông báo lỗi
             return response()->json([
                 'status' => false,
                 'message' => 'Email này đã được sử dụng trước đó. Vui lòng liên hệ quản trị viên để kích hoạt lại tài khoản.',

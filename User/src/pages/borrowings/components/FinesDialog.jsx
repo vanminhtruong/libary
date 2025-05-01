@@ -7,7 +7,7 @@ import '../styles/DialogStyles.css'
 const FinesDialog = ({ visible, onHide, finesData }) => {
     const { t } = useTranslation()
     
-    // Display data structure for debugging
+    // Hiển thị cấu trúc dữ liệu để gỡ lỗi
     const debugDataStructure = () => {
         if (!finesData) return 'finesData is null';
         
@@ -23,7 +23,7 @@ const FinesDialog = ({ visible, onHide, finesData }) => {
     
     console.log('Data structure debug:', debugDataStructure());
     
-    // Function to safely format date
+    // Hàm định dạng ngày tháng an toàn
     const formatDate = (dateString) => {
         if (!dateString) return '-'
         try {
@@ -34,13 +34,28 @@ const FinesDialog = ({ visible, onHide, finesData }) => {
         }
     }
     
-    // Check if we have valid fine data
+    // Lấy màu sắc dựa trên trạng thái phạt
+    const getFineStatusColor = (status) => {
+        switch(status) {
+            case 'pending':
+                return 'text-yellow-600 dark:text-yellow-400';
+            case 'paid':
+                return 'text-green-600 dark:text-green-400';
+            case 'cancelled':
+                return 'text-gray-600 dark:text-gray-400';
+            default:
+                return 'dark:text-white';
+        }
+    }
+    
+    // Kiểm tra xem chúng ta có dữ liệu phạt hợp lệ không
     const hasFines = finesData && 
-                   finesData.total_fine !== undefined && 
-                   finesData.total_fine > 0 &&
                    finesData.fine_details && 
                    Array.isArray(finesData.fine_details) && 
                    finesData.fine_details.length > 0;
+    
+    // Kiểm tra xem chúng ta có thông báo lỗi không
+    const hasError = finesData && finesData.message;
 
     return (
         <Dialog
@@ -71,6 +86,16 @@ const FinesDialog = ({ visible, onHide, finesData }) => {
                             {t('common.loading')}
                         </h3>
                     </div>
+                ) : hasError ? (
+                    <div className="text-center py-8">
+                        <i className="pi pi-exclamation-triangle text-5xl text-yellow-500 dark:text-yellow-400 mb-4"></i>
+                        <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
+                            {t('common.error')}
+                        </h3>
+                        <p className="text-gray-600 dark:text-gray-400">
+                            {finesData.message}
+                        </p>
+                    </div>
                 ) : hasFines ? (
                     <>
                         <div className="bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-800 p-4 rounded-lg mb-6">
@@ -93,8 +118,13 @@ const FinesDialog = ({ visible, onHide, finesData }) => {
                         <div className="space-y-4">
                             {finesData.fine_details.map((fine, idx) => (
                                 <div key={idx} className="border dark:border-gray-700 rounded-lg overflow-hidden">
-                                    <div className="bg-gray-50 dark:bg-gray-800 p-3 border-b dark:border-gray-700">
+                                    <div className="bg-gray-50 dark:bg-gray-800 p-3 border-b dark:border-gray-700 flex justify-between items-center">
                                         <h4 className="font-medium text-gray-800 dark:text-white">{fine.book_title || t('books.unknown')}</h4>
+                                        {fine.status && (
+                                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${getFineStatusColor(fine.status)}`}>
+                                                {t(`borrowings.fine_status.${fine.status}`) || fine.status}
+                                            </span>
+                                        )}
                                     </div>
                                     <div className="p-4 bg-white dark:bg-gray-700/60">
                                         <div className="grid grid-cols-2 gap-4">
@@ -122,7 +152,7 @@ const FinesDialog = ({ visible, onHide, finesData }) => {
                                                 <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
                                                     {t('borrowings.fine_amount')}
                                                 </p>
-                                                <p className="font-medium text-red-600 dark:text-red-400">
+                                                <p className={`font-medium ${fine.status === 'paid' ? 'text-green-600 dark:text-green-400' : fine.status === 'cancelled' ? 'text-gray-600 dark:text-gray-400' : 'text-red-600 dark:text-red-400'}`}>
                                                     {formatCurrency(fine.fine_amount || 0)}
                                                 </p>
                                             </div>

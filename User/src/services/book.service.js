@@ -97,7 +97,7 @@ const createBookService = () => {
     const borrowBook = async (data) => {
         try {
             return await baseService.post('/borrowing/borrow', data)
-        } catch (error) {
+        } catch (error) { 
             throw error
         }
     };
@@ -130,65 +130,85 @@ const createBookService = () => {
         try {
             console.log('Requesting fines data from API');
             const apiResponse = await baseService.get('/fines');
-            console.log('Raw fines response:', apiResponse);
+            console.log('Raw fines response:', JSON.stringify(apiResponse, null, 2));
 
-            // Handle empty response
+            // Kiểm tra phản hồi rỗng
             if (!apiResponse) {
                 console.warn('Empty response received from fines API');
                 return { total_fine: 0, fine_details: [], message: 'No fine data received' };
             }
 
-            // Extract the actual data from the response
-            // The API might return data in the "data" property if it follows Laravel API conventions
-            const finesData = apiResponse.data || [];
+            // Dựa vào ảnh, API trả về { success: true, data: [...] }
+            let finesData;
+            
+            if (apiResponse.success === true && Array.isArray(apiResponse.data)) {
+                console.log('Processing API response with success:true and data array');
+                finesData = apiResponse.data;
+            } else if (apiResponse.data && Array.isArray(apiResponse.data)) {
+                console.log('Processing API response with data array');
+                finesData = apiResponse.data;
+            } else if (Array.isArray(apiResponse)) {
+                console.log('Processing API response as direct array');
+                finesData = apiResponse;
+            } else {
+                console.log('Unknown API response format, using empty array');
+                finesData = [];
+            }
 
-            // Transform the data into the expected format
+            // Kiểm tra xem có dữ liệu không
+            if (!Array.isArray(finesData) || finesData.length === 0) {
+                console.log('No fines data found in API response');
+                return { total_fine: 0, fine_details: [] };
+            }
+
+            console.log(`Processing ${finesData.length} fine records`);
+
+            // Chuyển đổi dữ liệu thành định dạng mong muốn
             let totalFine = 0;
             const fineDetails = [];
 
-            if (Array.isArray(finesData)) {
-                // Iterate through each fine to calculate the total and format details
-                finesData.forEach(fine => {
-                    if (fine.status !== 'paid' && fine.status !== 'cancelled') {
-                        const amount = parseFloat(fine.amount || 0);
-                        totalFine += amount;
-
-                        // If the fine has associated borrowing data, add it to details
-                        if (fine.borrowing) {
-                            const dueDate = fine.borrowing.due_date;
-
-                            // Calculate days overdue
-                            let daysOverdue = 0;
-                            if (dueDate) {
-                                const today = new Date();
-                                const dueDateTime = new Date(dueDate);
-                                const timeDiff = today.getTime() - dueDateTime.getTime();
-                                daysOverdue = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-                                daysOverdue = Math.max(0, daysOverdue);
-                            }
-
-                            // Assume fine per day is either stored or can be calculated
-                            const finePerDay = fine.amount_per_day || (daysOverdue > 0 ? amount / daysOverdue : 0);
-
-                            fineDetails.push({
-                                id: fine.id,
-                                book_title: fine.borrowing.book?.title || 'Unknown Book',
-                                due_date: dueDate,
-                                days_overdue: daysOverdue,
-                                fine_per_day: finePerDay,
-                                fine_amount: amount,
-                                status: fine.status
-                            });
-                        }
-                    }
-                });
-            } else if (apiResponse.success && apiResponse.data) {
-                // Handle if the API returns with a different structure
-                console.log('API returned data in an unexpected format, trying to adapt');
-                if (Array.isArray(apiResponse.data)) {
-                    return checkFines(); // Retry with the new format
+            // Xử lý từng khoản phạt
+            finesData.forEach((fine, index) => {
+                console.log(`Processing fine ${index + 1}:`, fine);
+                
+                // Không bỏ qua bất kỳ trạng thái phạt nào
+                // Tính tổng tiền phạt (chỉ tính cho các khoản pending)
+                const amount = parseFloat(fine.amount || 0);
+                if (fine.status === 'pending') {
+                    totalFine += amount;
                 }
-            }
+
+                // Tạo đối tượng chi tiết phạt
+                const fineDetail = {
+                    id: fine.id,
+                    fine_amount: amount,
+                    status: fine.status || 'pending'
+                };
+
+                // Thêm thông tin mượn sách nếu có
+                if (fine.borrowing) {
+                    const dueDate = fine.borrowing.due_date;
+                    fineDetail.book_title = fine.borrowing.book?.title || 'Unknown Book';
+                    fineDetail.due_date = dueDate;
+
+                    // Tính số ngày quá hạn
+                    if (dueDate) {
+                        const today = new Date();
+                        const dueDateTime = new Date(dueDate);
+                        const timeDiff = today.getTime() - dueDateTime.getTime();
+                        const daysOverdue = Math.max(0, Math.ceil(timeDiff / (1000 * 60 * 60 * 24)));
+                        fineDetail.days_overdue = daysOverdue;
+                        
+                        // Tính tiền phạt mỗi ngày
+                        fineDetail.fine_per_day = daysOverdue > 0 ? amount / daysOverdue : 0;
+                    }
+                } else {
+                    console.warn(`Fine ${fine.id} has no borrowing data`);
+                    fineDetail.book_title = 'Unknown Book';
+                }
+
+                fineDetails.push(fineDetail);
+            });
 
             const formattedResponse = {
                 total_fine: totalFine,
@@ -196,6 +216,14 @@ const createBookService = () => {
             };
 
             console.log('Formatted fines response:', formattedResponse);
+            
+            // Kiểm tra xem có dữ liệu chi tiết không
+            if (formattedResponse.fine_details.length === 0) {
+                console.log('No fine details after processing');
+            } else {
+                console.log(`Returning ${formattedResponse.fine_details.length} fine details with total ${formattedResponse.total_fine}`);
+            }
+            
             return formattedResponse;
         } catch (error) {
             console.error('Error fetching fines:', error);

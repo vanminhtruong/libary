@@ -147,4 +147,20 @@ class BorrowingController extends Controller
             return response()->json(['message' => $e->getMessage()], 400);
         }
     }
+    
+    public function pendingCount()
+    {
+        try {
+            $count = $this->borrowingService->getPendingBorrowingsCount();
+            return response()->json([
+                'success' => true,
+                'count' => $count
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
 }

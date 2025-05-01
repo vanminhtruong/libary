@@ -1,10 +1,31 @@
 <!-- eslint-disable prettier/prettier -->
 <script setup>
-import { computed } from 'vue';
+import { computed, ref, onMounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AppMenuItem from './AppMenuItem.vue';
+import { usePendingBorrowings } from '@/composables/usePendingBorrowings';
 
 const { t } = useI18n();
+const { pendingCount, fetchPendingCount } = usePendingBorrowings();
+const showAnimation = ref(false);
+const previousCount = ref(0);
+
+// Lấy số lượng ban đầu
+onMounted(() => {
+    fetchPendingCount();
+});
+
+// Theo dõi sự thay đổi của pendingCount
+watch(pendingCount, (newCount, oldCount) => {
+    // Chỉ kích hoạt hiệu ứng rung khi số lượng tăng lên (có yêu cầu mới)
+    if (newCount > oldCount && oldCount !== 0) {
+        showAnimation.value = true;
+        setTimeout(() => {
+            showAnimation.value = false;
+        }, 3000); // Hiệu ứng rung kéo dài 3 giây
+    }
+    previousCount.value = newCount;
+});
 
 const model = computed(() => [
     {
@@ -27,8 +48,11 @@ const model = computed(() => [
             },
             {
                 label: t('menu.borrowingManagement'),
-                icon: 'pi pi-fw pi-calendar',
-                to: '/borrowings'
+                icon: 'pi pi-fw pi-bell',
+                to: '/borrowings',
+                customIcon: true,
+                pendingCount: pendingCount,
+                showAnimation: showAnimation
             },
             {
                 label: t('menu.fineManagement'),

@@ -1,5 +1,6 @@
 export default {
     title: 'Quản lý phạt',
+    noData: 'Chưa có dữ liệu phạt',
     fields: {
         no: 'STT',
         user: 'Người dùng',

@@ -1,5 +1,6 @@
 export default {
     title: 'Fine Management',
+    noData: 'No fine data available',
     fields: {
         no: 'No.',
         user: 'User',

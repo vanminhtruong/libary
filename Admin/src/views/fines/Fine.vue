@@ -18,6 +18,13 @@
                 </div>
             </template>
             
+            <template #empty>
+                <div class="text-center p-4">
+                    <i class="pi pi-info-circle text-3xl text-blue-500 mb-3"></i>
+                    <p>{{ $t('fine.noData') || 'Chưa có dữ liệu phạt' }}</p>
+                </div>
+            </template>
+            
             <Column :header="$t('fine.fields.no')" alignHeader="center" style="width: 5rem">
                 <template #body="slotProps">
                     {{ slotProps.index + 1 }}

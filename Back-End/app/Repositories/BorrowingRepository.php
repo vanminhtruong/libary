@@ -99,4 +99,15 @@ class BorrowingRepository implements BorrowingRepositoryInterface
         $borrowing = $this->findById($id);
         return $borrowing->delete();
     }
+    
+    /**
+     * Đếm số lượng yêu cầu mượn sách theo trạng thái
+     * 
+     * @param string $status
+     * @return int
+     */
+    public function countByStatus($status)
+    {
+        return $this->model->where('status', $status)->count();
+    }
 } 

@@ -22,6 +22,11 @@ export default {
             label: 'Email',
             placeholder: 'Nhập địa chỉ email'
         },
+        password: {
+            label: 'Mật khẩu',
+            placeholder: 'Nhập mật khẩu',
+            editHint: 'Để trống nếu không muốn thay đổi mật khẩu'
+        },
         phone: {
             label: 'Số điện thoại',
             placeholder: 'Nhập số điện thoại'

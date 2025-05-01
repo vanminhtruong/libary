@@ -22,6 +22,11 @@ export default {
             label: 'Email',
             placeholder: 'Enter email address'
         },
+        password: {
+            label: 'Password',
+            placeholder: 'Enter password',
+            editHint: 'Leave empty if you don\'t want to change the password'
+        },
         phone: {
             label: 'Phone Number',
             placeholder: 'Enter phone number'

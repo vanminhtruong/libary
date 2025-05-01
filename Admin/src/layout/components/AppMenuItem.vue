@@ -2,6 +2,7 @@
 import { useLayout } from '@/layout/composables/layout';
 import { onBeforeMount, ref, watch, computed } from 'vue';
 import { useRoute } from 'vue-router';
+import Badge from 'primevue/badge';
 
 const route = useRoute();
 
@@ -23,6 +24,14 @@ const props = defineProps({
     parentItemKey: {
         type: String,
         default: null
+    },
+    badge: {
+        type: Number,
+        default: 0
+    },
+    badgeClass: {
+        type: Object,
+        default: () => ({})
     }
 });
 
@@ -97,8 +106,21 @@ const isActiveRoute = computed(() => (item) => {
 
         <!-- Router link items without submenu -->
         <router-link v-if="item.to && !item.items && item.visible !== false" @click="itemClick($event, item)" :class="[item.class, { 'active-route': isActiveRoute(item) }]" tabindex="0" :to="item.to">
-            <i :class="item.icon" class="layout-menuitem-icon"></i>
-            <span class="layout-menuitem-text">{{ item.label }}</span>
+            <template v-if="item.customIcon">
+                <div class="menu-icon-container">
+                    <i :class="[item.icon, {'shake-animation': item.showAnimation?.value}]" class="layout-menuitem-icon"></i>
+                    <!-- Hiển thị badge cứng để test -->
+                    <span v-if="item.pendingCount?.value > 0 && $route.path !== '/borrowings'" 
+                        class="custom-badge">
+                        {{ item.pendingCount?.value }}
+                    </span>
+                </div>
+                <span class="layout-menuitem-text">{{ item.label }}</span>
+            </template>
+            <template v-else>
+                <i :class="item.icon" class="layout-menuitem-icon"></i>
+                <span class="layout-menuitem-text">{{ item.label }}</span>
+            </template>
         </router-link>
 
         <!-- Submenu -->
@@ -110,4 +132,43 @@ const isActiveRoute = computed(() => (item) => {
     </li>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.menu-icon-container {
+    position: relative;
+    display: inline-block;
+}
+
+.custom-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #ff0000 !important;
+    color: white !important;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 10px;
+    font-weight: bold;
+    min-width: 16px;
+    text-align: center;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    10% { transform: translateX(-2px) rotate(-1deg); }
+    20% { transform: translateX(2px) rotate(1deg); }
+    30% { transform: translateX(-2px) rotate(-1deg); }
+    40% { transform: translateX(2px) rotate(1deg); }
+    50% { transform: translateX(-2px) rotate(-1deg); }
+    60% { transform: translateX(2px) rotate(1deg); }
+    70% { transform: translateX(-2px) rotate(-1deg); }
+    80% { transform: translateX(2px) rotate(1deg); }
+    90% { transform: translateX(-1px) rotate(0deg); }
+    100% { transform: translateX(0); }
+}
+
+.shake-animation {
+    animation: shake 1s ease-in-out infinite;
+}
+</style>

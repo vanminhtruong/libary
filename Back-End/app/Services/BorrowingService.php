@@ -169,4 +169,14 @@ class BorrowingService
         
         return $this->borrowingRepository->delete($borrowId);
     }
+    
+    /**
+     * Lấy số lượng yêu cầu mượn sách đang chờ duyệt
+     * 
+     * @return int
+     */
+    public function getPendingBorrowingsCount()
+    {
+        return $this->borrowingRepository->countByStatus('pending');
+    }
 } 

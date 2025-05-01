@@ -87,6 +87,18 @@
                 <small class="p-error text-red-500" v-if="errors.email">{{ errors.email[0] }}</small>
             </div>
             <div class="field">
+                <label for="password">{{ t('user.form.password.label') }}</label>
+                <Password id="password" v-model="userForm.password" 
+                         :placeholder="t('user.form.password.placeholder')"
+                         :class="{'p-invalid': errors.password}"
+                         :feedback="!isEditing" 
+                         :toggleMask="true"
+                         :required="!isEditing"
+                         class="w-full" />
+                <small class="p-error text-red-500" v-if="errors.password">{{ errors.password[0] }}</small>
+                <small v-if="isEditing" class="text-gray-500">{{ t('user.form.password.editHint') }}</small>
+            </div>
+            <div class="field">
                 <label for="phone">{{ t('user.form.phone.label') }}</label>
                 <InputText id="phone" v-model="userForm.phone" 
                          type="tel"
@@ -269,6 +281,7 @@ import { useConfirm } from "primevue/useconfirm"
 import { useToast } from "primevue/usetoast"
 import { useI18n } from 'vue-i18n'
 import UserService from './services/User'
+import Password from 'primevue/password'
 import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import InputText from 'primevue/inputtext'
@@ -298,6 +311,7 @@ const previewImageUrl = ref('')
 const userForm = ref({
     name: '',
     email: '',
+    password: '',
     phone: '',
     image: ''
 })
@@ -339,14 +353,15 @@ const openDialog = () => {
 
 const closeDialog = () => {
     dialogVisible.value = false
-    errors.value = {}
     userForm.value = {
         name: '',
         email: '',
+        password: '',
         phone: '',
         image: ''
     }
     selectedImage.value = null
+    errors.value = {}
 }
 
 const editUser = (user) => {
@@ -355,6 +370,7 @@ const editUser = (user) => {
     userForm.value = {
         name: user.name,
         email: user.email,
+        password: '',
         phone: user.phone || '',
         image: user.image || ''
     }
@@ -381,6 +397,9 @@ const handleSubmit = async () => {
         const formData = new FormData()
         formData.append('name', userForm.value.name)
         formData.append('email', userForm.value.email)
+        if (userForm.value.password) {
+            formData.append('password', userForm.value.password)
+        }
         if (userForm.value.phone) {
             formData.append('phone', userForm.value.phone)
         }
@@ -666,5 +685,10 @@ onMounted(() => {
     cursor: pointer;
     transform: scale(1.05);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Thêm CSS để điều chỉnh chiều rộng của trường password */
+:deep(.p-password) {
+    width: 100%;
 }
 </style>

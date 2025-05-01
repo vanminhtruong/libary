@@ -1,5 +1,6 @@
 export default {
     title: 'Borrowing Management',
+    noData: 'No borrowing data available',
     fields: {
         no: 'No.',
         borrower: 'Borrower',

@@ -1,5 +1,6 @@
 export default {
     title: 'Quản lý mượn sách',
+    noData: 'Chưa có dữ liệu mượn trả',
     fields: {
         no: 'STT',
         borrower: 'Người mượn',

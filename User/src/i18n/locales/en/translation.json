@@ -259,7 +259,12 @@
     "max_extensions_reached": "Maximum number of extensions reached",
     "delete": "Delete",
     "delete_success": "Borrowing record deleted successfully",
-    "delete_error": "Unable to delete borrowing record"
+    "delete_error": "Unable to delete borrowing record",
+    "fine_status": {
+      "pending": "Pending",
+      "paid": "Paid",
+      "cancelled": "Cancelled"
+    }
   },
   "home": {
     "welcome_title": "Welcome to Smart Library Management System",

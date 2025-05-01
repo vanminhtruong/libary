@@ -22,6 +22,11 @@ export default {
             label: '이메일',
             placeholder: '이메일 주소를 입력하세요'
         },
+        password: {
+            label: '비밀번호',
+            placeholder: '비밀번호를 입력하세요',
+            editHint: '비밀번호를 변경하지 않으려면 비워 두세요'
+        },
         phone: {
             label: '전화번호',
             placeholder: '전화번호를 입력하세요'

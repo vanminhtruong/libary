@@ -48,6 +48,7 @@ Route::middleware(['auth:api', 'admin'])->prefix('admin')->group(function () {
     });
 
     Route::get('/borrowings', [BorrowingController::class, 'index']);
+    Route::get('/borrowings/pending-count', [BorrowingController::class, 'pendingCount']);
     Route::post('/borrowings/approve/{id}', [BorrowingController::class, 'approve']);
     Route::post('/borrowings/reject/{id}', [BorrowingController::class, 'reject']);
 

@@ -1,5 +1,6 @@
 export default {
     title: '대출 관리',
+    noData: '대출 데이터가 없습니다',
     fields: {
         no: '번호',
         borrower: '대출자',

@@ -107,6 +107,9 @@ class AdminAuthController extends Controller
         if ($request->filled('phone')) {
             $rules['phone'] = 'nullable|string|max:20';
         }
+        if ($request->filled('password')) {
+            $rules['password'] = 'string|min:6';
+        }
         if ($request->hasFile('image')) {
             $rules['image'] = 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048';
         }
@@ -132,6 +135,11 @@ class AdminAuthController extends Controller
             } else if ($request->has('phone') && $request->phone === null) {
                 // Nếu phone được gửi lên là null, set về null
                 $data['phone'] = null;
+            }
+            
+            // Cập nhật mật khẩu nếu được cung cấp
+            if ($request->filled('password')) {
+                $data['password'] = Hash::make($request->password);
             }
             
             // Xử lý upload file nếu có
@@ -235,6 +243,7 @@ class AdminAuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6',
             'phone' => 'nullable|string|max:20',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
         ]);
@@ -258,8 +267,8 @@ class AdminAuthController extends Controller
             
             $data = $this->handleFileUploads($data, $fileFields);
             
-            // Thêm mật khẩu ngẫu nhiên
-            $data['password'] = Hash::make(Str::random(10));
+            // Sử dụng mật khẩu từ request
+            $data['password'] = Hash::make($request->password);
 
             $user = User::create($data);
 
