@@ -5,5 +5,10 @@ export default {
     categoryManagement: 'Category Management',
     userManagement: 'User Management',
     borrowingManagement: 'Borrowing Management',
-    fineManagement: 'Fine Management'
+    fineManagement: 'Fine Management',
+    books: 'Books',
+    categories: 'Categories',
+    users: 'Users',
+    borrowings: 'Borrowings',
+    fines: 'Fines'
 } 

@@ -20,5 +20,7 @@ export default {
     messages: {
         success: 'Operation completed successfully',
         error: 'An error occurred. Please try again.'
-    }
+    },
+    welcome: 'Welcome to Admin',
+    welcomeMessage: 'Manage your library system efficiently with our comprehensive admin dashboard'
 } 

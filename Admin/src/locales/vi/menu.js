@@ -5,5 +5,10 @@ export default {
     categoryManagement: 'Quản lý danh mục',
     userManagement: 'Quản lý người dùng',
     borrowingManagement: 'Quản lý mượn sách',
-    fineManagement: 'Quản lý phạt'
+    fineManagement: 'Quản lý phạt',
+    books: 'Sách',
+    categories: 'Danh mục',
+    users: 'Người dùng',
+    borrowings: 'Mượn sách',
+    fines: 'Phạt'
 } 

@@ -18,6 +18,11 @@ const router = createRouter({
             beforeEnter: auth,
             children: [
                 {
+                    path: '/',
+                    name: '',
+                    component: () => import('@/views/Hello.vue')
+                },
+                {
                     path: '/books',
                     name: 'books',
                     component: () => import('@/views/books/BookList.vue')
