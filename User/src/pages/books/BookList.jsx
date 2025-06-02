@@ -35,10 +35,7 @@ const BookListPage = () => {
                     setSearchQuery={filter.setSearchQuery}
                     selectedCategory={filter.selectedCategory}
                     setSelectedCategory={filter.setSelectedCategory}
-                    selectedStatus={filter.selectedStatus}
-                    setSelectedStatus={filter.setSelectedStatus}
                     categories={filter.categories}
-                    statuses={filter.statuses}
                     setCategorySearchQuery={filter.setCategorySearchQuery}
                     darkMode={ui.darkMode}
                 />

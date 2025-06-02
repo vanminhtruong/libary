@@ -182,7 +182,8 @@ const createBookService = () => {
                 const fineDetail = {
                     id: fine.id,
                     fine_amount: amount,
-                    status: fine.status || 'pending'
+                    status: fine.status || 'pending',
+                    reason: fine.reason || null // Thêm trường reason từ dữ liệu API
                 };
 
                 // Thêm thông tin mượn sách nếu có

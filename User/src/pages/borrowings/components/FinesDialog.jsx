@@ -157,6 +157,14 @@ const FinesDialog = ({ visible, onHide, finesData }) => {
                                                 </p>
                                             </div>
                                         </div>
+                                        {fine.reason && (
+                                            <div className="mt-3 border-t dark:border-gray-600 pt-3">
+                                                <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
+                                                    {t('borrowings.fine_reason')}
+                                                </p>
+                                                <p className="font-medium dark:text-white">{fine.reason}</p>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             ))}

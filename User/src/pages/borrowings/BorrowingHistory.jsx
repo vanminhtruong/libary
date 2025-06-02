@@ -1,179 +1,84 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef } from 'react';
 import { Toast } from 'primereact/toast';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
-import { Tag } from 'primereact/tag';
-import { format as dateFormat } from 'date-fns';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../constants/routes';
-import bookService from '../../services/book.service';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
-import { API_CONFIG } from '../../config/api.config';
+import { useBorrowingHistory } from './hooks';
+import './styles/BorrowingHistory.css';
+import { 
+    StatusTag, 
+    BookInfo, 
+    ActionButtons, 
+    TableHeader, 
+    EmptyState 
+} from './components';
 
 const BorrowingHistory = () => {
-    const toast = useRef(null);
     const { t } = useTranslation();
-    const navigate = useNavigate();
-    const [borrowingHistory, setBorrowingHistory] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [totalRecords, setTotalRecords] = useState(0);
-    const [lazyParams, setLazyParams] = useState({
-        first: 0,
-        rows: 10,
-        page: 0
-    });
+    const {
+        toast,
+        borrowingHistory,
+        loading,
+        totalRecords,
+        lazyParams,
+        visibleColumns,
+        loadBorrowingHistory,
+        onPage,
+        formatDate,
+        getStatusSeverity,
+        getBookImageUrl
+    } = useBorrowingHistory();
 
-    useEffect(() => {
-        loadBorrowingHistory();
-    }, [lazyParams]);
-
-    const loadBorrowingHistory = async () => {
-        try {
-            setLoading(true);
-            const response = await bookService.getBorrowingHistory();
-
-            if (response && Array.isArray(response)) {
-                setBorrowingHistory(response);
-                setTotalRecords(response.length);
-            } else if (response && response.data && Array.isArray(response.data)) {
-                setBorrowingHistory(response.data);
-                setTotalRecords(response.total || response.data.length);
-            } else {
-                setBorrowingHistory([]);
-                setTotalRecords(0);
-                toast.current.show({
-                    severity: 'info',
-                    summary: t('common.info'),
-                    detail: t('borrowings.no_history'),
-                    life: 3000
-                });
-            }
-        } catch (error) {
-            console.error('Error loading borrowing history:', error);
-            setBorrowingHistory([]);
-            setTotalRecords(0);
-            toast.current.show({
-                severity: 'error',
-                summary: t('common.error'),
-                detail: error.message || t('borrowings.history_load_error'),
-                life: 3000
-            });
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const onPage = (event) => {
-        setLazyParams(event);
-    };
-
-    const formatDate = (dateString) => {
-        if (!dateString) return '-';
-        return dateFormat(new Date(dateString), 'dd/MM/yyyy');
-    };
-
-    const getStatusSeverity = (status) => {
-        switch (status) {
-            case 'borrowed':
-                return 'info';
-            case 'returned':
-                return 'success';
-            case 'pending':
-                return 'warning';
-            case 'rejected':
-                return 'danger';
-            default:
-                return 'secondary';
-        }
-    };
-
+    // Hiển thị trạng thái mượn sách
     const statusBodyTemplate = (rowData) => {
         return (
-            <Tag
-                value={t(`borrowings.status.${rowData.status}`)}
-                severity={getStatusSeverity(rowData.status)}
+            <StatusTag 
+                status={rowData.status}
+                returnDate={rowData.return_date}
+                visibleColumns={visibleColumns}
+                formatDate={formatDate}
+                getStatusSeverity={getStatusSeverity}
             />
         );
     };
 
+    // Hiển thị ngày tháng
     const dateBodyTemplate = (rowData, field) => {
         return formatDate(rowData[field]);
     };
 
+    // Hiển thị thông tin sách
     const bookBodyTemplate = (rowData) => {
         return (
-            <div className="flex items-center gap-2">
-                <div className="w-10 h-14 overflow-hidden rounded">
-                    <img
-                        src={getBookImageUrl(rowData.book?.image)}
-                        alt={rowData.book?.title}
-                        className="w-full h-full object-cover"
-                        onError={(e) => e.target.src = '/default-book-cover.jpg'}
-                    />
-                </div>
-                <div>
-                    <div className="font-medium">{rowData.book?.title || t('common.unknown')}</div>
-                    <div className="text-sm text-gray-500">{rowData.book?.author || '-'}</div>
-                </div>
-            </div>
-        );
-    };
-
-    const getBookImageUrl = (imagePath) => {
-        if (!imagePath) return '/default-book-cover.jpg';
-        if (imagePath.startsWith('http')) return imagePath;
-        return `${API_CONFIG.BASE_URL}/books/image/${imagePath.split('/').pop()}`;
-    };
-
-    const actionBodyTemplate = (rowData) => {
-        return (
-            <div className="flex gap-2 justify-center">
-                <Button
-                    icon="pi pi-eye"
-                    rounded
-                    text
-                    severity="info"
-                    onClick={() => navigate(`${ROUTES.BOOKS}/${rowData.book_id}`)}
-                    tooltip={t('common.view_details')}
-                    tooltipOptions={{ position: 'top' }}
-                />
-            </div>
-        );
-    };
-
-    const header = (
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
-            <h2 className="text-xl font-bold m-0">{t('borrowings.borrowing_history')}</h2>
-        </div>
-    );
-
-    const emptyMessage = (
-        <div className="text-center py-6 bg-white dark:bg-gray-800 w-full dark:text-white">
-            <i className="pi pi-history text-5xl text-gray-300 dark:text-gray-500 mb-4"></i>
-            <p className="text-xl font-semibold text-gray-600 dark:text-gray-300">{t('borrowings.no_history')}</p>
-            <p className="text-gray-500 dark:text-gray-400 mb-4">{t('borrowings.no_history_description')}</p>
-            <Button
-                label={t('borrowings.browse_books')}
-                icon="pi pi-book"
-                onClick={() => navigate(ROUTES.BOOKS)}
-                className="p-button-outlined dark:text-white dark:border-gray-600 dark:hover:bg-gray-700"
+            <BookInfo 
+                book={rowData.book}
+                borrowDate={rowData.borrow_date}
+                dueDate={rowData.due_date}
+                visibleColumns={visibleColumns}
+                formatDate={formatDate}
+                getBookImageUrl={getBookImageUrl}
             />
-        </div>
-    );
+        );
+    };
+
+    // Hiển thị nút hành động
+    const actionBodyTemplate = (rowData) => {
+        return <ActionButtons bookId={rowData.book_id} />;
+    };
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+        <div className="borrowing-history-container min-h-screen bg-gray-50 dark:bg-black">
             <Toast ref={toast} />
 
-            <div className="container mx-auto px-4 py-6">
-                <div className="mb-6">
-                    <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-2">
+            <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6">
+                <div className="mb-4 sm:mb-6">
+                    <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-white mb-2">
                         {t('borrowings.borrowing_history')}
                     </h1>
-                    <p className="text-gray-600 dark:text-gray-300">
+                    <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">
                         {t('borrowings.history_description')}
                     </p>
                 </div>
@@ -182,79 +87,89 @@ const BorrowingHistory = () => {
                     {loading ? (
                         <LoadingSpinner />
                     ) : (
-                        <DataTable
-                            value={borrowingHistory}
-                            lazy
-                            paginator
-                            first={lazyParams.first}
-                            rows={lazyParams.rows}
-                            totalRecords={totalRecords}
-                            onPage={onPage}
-                            loading={loading}
-                            header={header}
-                            emptyMessage={emptyMessage}
-                            className="p-datatable-sm"
-                            stripedRows
-                            rowHover
-                            dataKey="id"
-                            pt={{
-                                root: { className: 'dark:bg-gray-800' },
-                                header: { className: 'dark:bg-gray-800 dark:text-white border-none' },
-                                thead: { className: 'dark:bg-gray-800' },
-                                tbody: { className: 'dark:bg-gray-800' },
-                                tfoot: { className: 'dark:bg-gray-800' },
-                                paginator: { className: 'dark:bg-gray-800 dark:text-white border-none dark:border-t dark:border-gray-700' },
-                                paginatorButton: { className: 'dark:text-white dark:hover:bg-gray-700 dark:border-gray-700' },
-                                headerRow: { className: 'dark:bg-gray-800 dark:text-white' },
-                                headerCell: { className: 'dark:bg-gray-800 dark:text-white' },
-                                bodyRow: { className: 'dark:bg-gray-800 dark:text-white border-b dark:border-gray-700' },
-                                bodyCell: { className: 'dark:bg-gray-800 dark:text-white' },
-                                rowExpansion: { className: 'dark:bg-gray-800' },
-                                emptyMessage: { className: 'dark:bg-gray-800 dark:text-white' }
-                            }}
-                        >
-                            <Column
-                                field="book"
-                                header={t('common.book')}
-                                body={bookBodyTemplate}
-                                style={{ minWidth: '250px' }}
-                                className="dark:bg-gray-800"
-                            />
-                            <Column
-                                field="borrow_date"
-                                header={t('borrowings.borrow_date')}
-                                body={(rowData) => dateBodyTemplate(rowData, 'borrow_date')}
-                                style={{ minWidth: '120px' }}
-                                className="dark:bg-gray-800"
-                            />
-                            <Column
-                                field="due_date"
-                                header={t('borrowings.due_date')}
-                                body={(rowData) => dateBodyTemplate(rowData, 'due_date')}
-                                style={{ minWidth: '120px' }}
-                                className="dark:bg-gray-800"
-                            />
-                            <Column
-                                field="return_date"
-                                header={t('borrowings.return_date')}
-                                body={(rowData) => dateBodyTemplate(rowData, 'return_date')}
-                                style={{ minWidth: '120px' }}
-                                className="dark:bg-gray-800"
-                            />
-                            <Column
-                                field="status"
-                                header={t('common.status')}
-                                body={statusBodyTemplate}
-                                style={{ minWidth: '120px' }}
-                                className="dark:bg-gray-800"
-                            />
-                            <Column
-                                body={actionBodyTemplate}
-                                exportable={false}
-                                style={{ minWidth: '100px', textAlign: 'center' }}
-                                className="dark:bg-gray-800"
-                            />
-                        </DataTable>
+                        <div className="overflow-x-auto">
+                            <DataTable
+                                value={borrowingHistory}
+                                lazy
+                                paginator
+                                first={lazyParams.first}
+                                rows={lazyParams.rows}
+                                totalRecords={totalRecords}
+                                onPage={onPage}
+                                loading={loading}
+                                header={<TableHeader onRefresh={loadBorrowingHistory} />}
+                                emptyMessage={<EmptyState />}
+                                className="borrowing-history-table p-datatable-sm"
+                                stripedRows
+                                rowHover
+                                dataKey="id"
+                                responsiveLayout="stack"
+                                breakpoint="768px"
+                                pt={{
+                                    root: { className: 'dark:bg-gray-800' },
+                                    header: { className: 'dark:bg-gray-800 dark:text-white border-none p-4' },
+                                    thead: { className: 'dark:bg-gray-800' },
+                                    tbody: { className: 'dark:bg-gray-800' },
+                                    tfoot: { className: 'dark:bg-gray-800' },
+                                    paginator: { className: 'dark:bg-gray-800 dark:text-white border-none dark:border-t dark:border-gray-700 p-3' },
+                                    paginatorButton: { className: 'dark:text-white dark:hover:bg-gray-700 dark:border-gray-700' },
+                                    headerRow: { className: 'dark:bg-gray-800 dark:text-white' },
+                                    headerCell: { className: 'dark:bg-gray-800 dark:text-white' },
+                                    bodyRow: { className: 'dark:bg-gray-800 dark:text-white border-b dark:border-gray-700' },
+                                    bodyCell: { className: 'dark:bg-gray-800 dark:text-white' },
+                                    rowExpansion: { className: 'dark:bg-gray-800' },
+                                    emptyMessage: { className: 'dark:bg-gray-800 dark:text-white' }
+                                }}
+                            >
+                                <Column
+                                    field="book"
+                                    header={t('common.book')}
+                                    body={bookBodyTemplate}
+                                    style={{ minWidth: '200px' }}
+                                    className="dark:bg-gray-800"
+                                />
+                                {visibleColumns.borrow_date && (
+                                    <Column
+                                        field="borrow_date"
+                                        header={t('borrowings.borrow_date')}
+                                        body={(rowData) => dateBodyTemplate(rowData, 'borrow_date')}
+                                        style={{ minWidth: '120px' }}
+                                        className="column-borrow-date dark:bg-gray-800"
+                                    />
+                                )}
+                                {visibleColumns.due_date && (
+                                    <Column
+                                        field="due_date"
+                                        header={t('borrowings.due_date')}
+                                        body={(rowData) => dateBodyTemplate(rowData, 'due_date')}
+                                        style={{ minWidth: '120px' }}
+                                        className="column-due-date dark:bg-gray-800"
+                                    />
+                                )}
+                                {visibleColumns.return_date && (
+                                    <Column
+                                        field="return_date"
+                                        header={t('borrowings.return_date')}
+                                        body={(rowData) => dateBodyTemplate(rowData, 'return_date')}
+                                        style={{ minWidth: '120px' }}
+                                        className="column-return-date dark:bg-gray-800"
+                                    />
+                                )}
+                                <Column
+                                    field="status"
+                                    header={t('common.status')}
+                                    body={statusBodyTemplate}
+                                    style={{ minWidth: '120px' }}
+                                    className="dark:bg-gray-800"
+                                />
+                                <Column
+                                    body={actionBodyTemplate}
+                                    exportable={false}
+                                    style={{ minWidth: '80px', textAlign: 'center' }}
+                                    className="dark:bg-gray-800"
+                                />
+                            </DataTable>
+                        </div>
                     )}
                 </Card>
             </div>

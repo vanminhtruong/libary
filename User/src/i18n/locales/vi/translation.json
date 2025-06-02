@@ -183,6 +183,7 @@
     "rejected": "Bị từ chối",
     "extend": "Gia hạn",
     "return": "Trả sách",
+    "view_reason": "Xem nguyên nhân từ chối",
     "no_history": "Bạn chưa có lịch sử mượn sách",
     "history_load_error": "Không thể tải lịch sử mượn sách",
     "fines_load_error": "Không thể tải thông tin tiền phạt",
@@ -222,7 +223,11 @@
     "browse_books": "Khám phá sách",
     "delete": "Xóa",
     "delete_success": "Xóa thông tin mượn sách thành công",
-    "delete_error": "Không thể xóa thông tin mượn sách"
+    "delete_error": "Không thể xóa thông tin mượn sách",
+    "view_rejection_reason": "Xem nguyên nhân từ chối",
+    "borrowings.view_rejection_reason": "Xem nguyên nhân từ chối",
+    "borrowings.view_reason": "Xem nguyên nhân từ chối",
+    "borrowings.fine_reason": "Nguyên nhân phạt"
   },
   "home": {
     "welcome_title": "Chào mừng đến với Hệ thống Quản lý Thư viện Thông minh",

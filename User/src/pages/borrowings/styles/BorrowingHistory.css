@@ -1,0 +1,147 @@
+/* BorrowingHistory Responsive Styles */
+.borrowing-history-container {
+    min-height: 100vh;
+}
+
+/* DataTable responsive styles */
+.borrowing-history-table .p-datatable-tbody > tr > td {
+    padding: 0.75rem 1rem;
+}
+
+/* Responsive book title and author */
+.book-info-container {
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.book-info-container .book-title {
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
+}
+
+.book-info-container .book-author {
+    font-size: 0.875rem;
+    color: #6b7280;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
+}
+
+/* Book image container */
+.book-image-container {
+    width: 40px;
+    height: 56px;
+    min-width: 40px;
+    overflow: hidden;
+    border-radius: 4px;
+}
+
+.book-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Mobile info display */
+.mobile-date-info {
+    display: none;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-top: 0.25rem;
+    font-size: 0.75rem;
+}
+
+.mobile-date-info .date-label {
+    font-weight: 500;
+    margin-right: 0.25rem;
+}
+
+/* Status tag styling */
+.status-tag-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.status-tag {
+    font-size: 0.75rem;
+    white-space: nowrap;
+}
+
+.mobile-return-date {
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    display: none;
+}
+
+/* Responsive breakpoints */
+@media screen and (max-width: 1024px) {
+    .column-return-date {
+        display: none;
+    }
+    
+    .status-tag-container .mobile-return-date {
+        display: flex;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .column-due-date {
+        display: none;
+    }
+    
+    .mobile-date-info .due-date-info {
+        display: flex;
+    }
+    
+    .book-info-container .book-title,
+    .book-info-container .book-author {
+        max-width: 250px;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .column-borrow-date {
+        display: none;
+    }
+    
+    .mobile-date-info {
+        display: flex;
+    }
+    
+    .book-info-container .book-title,
+    .book-info-container .book-author {
+        max-width: 180px;
+    }
+    
+    .borrowing-history-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .borrowing-history-header .header-actions {
+        align-self: flex-start;
+    }
+}
+
+/* Dark mode support */
+.dark .book-info-container .book-author {
+    color: #9ca3af;
+}
+
+.dark .mobile-date-info .date-label {
+    color: #e5e7eb;
+}
+
+.dark .mobile-date-info {
+    color: #d1d5db;
+}
+
+.dark .mobile-return-date {
+    color: #d1d5db;
+}

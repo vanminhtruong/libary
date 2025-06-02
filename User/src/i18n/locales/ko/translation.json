@@ -232,6 +232,9 @@
     "no_borrowings_title": "대출 중인 도서 없음",
     "no_borrowings_message": "아직 대출 중인 도서가 없습니다. 흥미로운 도서를 찾아보세요.",
     "browse_books": "도서 찾기",
+    "delete": "삭제",
+    "view_reason": "사유 보기",
+    "borrowings.view_reason": "사유 보기",
     "fine_status": {
       "pending": "미납",
       "paid": "납부 완료",

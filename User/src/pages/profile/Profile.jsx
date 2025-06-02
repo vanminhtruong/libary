@@ -26,7 +26,7 @@ const Profile = () => {
     } = useProfile();
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
+        <div className="min-h-screen bg-gray-50 dark:bg-black py-12">
             <Toast ref={toast} />
             <div className="max-w-5xl mx-auto px-4">
                 <div className="text-center mb-8">
@@ -61,10 +61,10 @@ const Profile = () => {
                             profile={profile}
                             isEditing={isEditing}
                             setIsEditing={setIsEditing}
-                                                loading={loading}
+                            loading={loading}
                             handleChange={handleChange}
                             handleSubmit={handleSubmit}
-                                            />
+                        />
                     </div>
                 </div>
             </div>

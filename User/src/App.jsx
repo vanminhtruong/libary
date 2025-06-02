@@ -35,7 +35,7 @@ function App() {
 
   return (
     <Router>
-      <div key={authKey} className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-200">
+      <div key={authKey} className="min-h-screen bg-white dark:bg-black transition-colors duration-200">
         <Toast ref={toast} />
         <Routes>
           <Route path={ROUTES.LOGIN} element={

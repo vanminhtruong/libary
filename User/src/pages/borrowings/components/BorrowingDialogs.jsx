@@ -192,7 +192,7 @@ const BorrowingDialogs = ({
                         <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
                             <h4 className="font-medium text-gray-800 dark:text-white mb-2">{t('borrowings.rejection_reason')}:</h4>
                             <p className="text-gray-700 dark:text-gray-300 p-3 bg-white dark:bg-gray-700 rounded border border-gray-200 dark:border-gray-600">
-                                {rejectedBorrowing.rejection_reason || t('borrowings.no_reason_provided')}
+                                {rejectedBorrowing.rejection_reason || rejectedBorrowing.reason || t('borrowings.no_reason_provided')}
                             </p>
                         </div>
                     </div>

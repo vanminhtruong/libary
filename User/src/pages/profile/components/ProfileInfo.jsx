@@ -22,7 +22,7 @@ const ProfileInfo = ({
     };
 
     return (
-        <Card className="shadow-lg border-0 dark:bg-gray-800/80 backdrop-blur-sm h-full">
+        <Card className="shadow-lg border-0 dark:bg-gray-800 backdrop-blur-sm h-full">
             <div className="flex flex-col h-full">
                 <div className="p-6 flex-1">
                     {isEditing ? (
@@ -41,7 +41,7 @@ const ProfileInfo = ({
                         {isEditing && (
                             <Card className="shadow-lg border-0 overflow-hidden dark:bg-gray-700/90 rounded-xl mb-8">
                                 <div className="p-6 relative">
-                                    <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-500 to-indigo-600"></div>
+                                    <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-gray-800 to-black"></div>
                                     <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
                                         {t('profile.personal_info')}
                                     </h4>
@@ -52,7 +52,7 @@ const ProfileInfo = ({
                                             value={profile.name}
                                             onChange={(value) => handleChange('name', value)}
                                             required
-                                            className="dark:bg-gray-600/60 dark:border-gray-500/50 focus:dark:border-blue-500"
+                                            className="dark:bg-gray-600/60 dark:border-gray-500/50 focus:dark:border-gray-900"
                                         />
                                         
                                         <FormInput
@@ -68,7 +68,7 @@ const ProfileInfo = ({
                                             value={profile.phone}
                                             onChange={(value) => handleChange('phone', value)}
                                             placeholder={t('auth.phonePlaceholder')}
-                                            className="dark:bg-gray-600/60 dark:border-gray-500/50 focus:dark:border-blue-500"
+                                            className="dark:bg-gray-600/60 dark:border-gray-500/50 focus:dark:border-gray-900"
                                         />
                                     </div>
                                 </div>
@@ -106,9 +106,9 @@ const ProfileInfo = ({
                             <div className="mt-6">
                                 <Card className="shadow-xl border-0 overflow-hidden dark:bg-gray-700/90 rounded-xl p-0">
                                     <div className="p-6 relative">
-                                        <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-500 to-indigo-600"></div>
+                                        <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-gray-800 to-black"></div>
                                         <div className="flex flex-col items-center justify-center mb-6">
-                                            <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-lg mb-4">
+                                            <div className="w-20 h-20 bg-gradient-to-br from-gray-800 to-black rounded-full flex items-center justify-center shadow-lg mb-4">
                                                 <i className="pi pi-lock text-white text-2xl" />
                                             </div>
                                             <h4 className="text-xl font-semibold text-center text-gray-900 dark:text-white">
@@ -123,7 +123,7 @@ const ProfileInfo = ({
                                                 onChange={(value) => handleChange('password', value)}
                                                 type="password"
                                                 placeholder={t('profile.current_password_placeholder')}
-                                                className="dark:bg-gray-600/60 dark:border-gray-500/50 focus:dark:border-blue-500"
+                                                className="dark:bg-gray-600/60 dark:border-gray-500/50 focus:dark:border-gray-900"
                                             />
 
                                             <FormInput
@@ -132,7 +132,7 @@ const ProfileInfo = ({
                                                 onChange={(value) => handleChange('newPassword', value)}
                                                 type="password"
                                                 placeholder={t('profile.new_password_placeholder')}
-                                                className="dark:bg-gray-600/60 dark:border-gray-500/50 focus:dark:border-blue-500"
+                                                className="dark:bg-gray-600/60 dark:border-gray-500/50 focus:dark:border-gray-900"
                                             />
 
                                             <FormInput
@@ -141,7 +141,7 @@ const ProfileInfo = ({
                                                 onChange={(value) => handleChange('confirmPassword', value)}
                                                 type="password"
                                                 placeholder={t('profile.confirm_password_placeholder')}
-                                                className="dark:bg-gray-600/60 dark:border-gray-500/50 focus:dark:border-blue-500"
+                                                className="dark:bg-gray-600/60 dark:border-gray-500/50 focus:dark:border-gray-900"
                                             />
                                         </div>
                                     </div>
@@ -161,7 +161,9 @@ const ProfileInfo = ({
                                             icon="pi pi-check"
                                             onClick={handleSubmit}
                                             loading={loading}
-                                            className="px-4 py-2 border-none shadow-md bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white"
+                                            className="bg-blue-600 hover:bg-blue-700 border-blue-600 hover:border-blue-700 text-white py-2 px-4
+                                                      shadow-md rounded-md transition-colors duration-200 flex items-center gap-2
+                                                      dark:bg-blue-700 dark:border-blue-700 dark:hover:bg-blue-800 dark:hover:border-blue-800"
                                         />
                                     </div>
                                 </Card>

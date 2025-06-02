@@ -66,9 +66,20 @@ export const useBorrowingActions = (toast, onActionSuccess) => {
     };
 
     const showReasonDialog = (borrowing) => {
-        console.log("Rejected borrowing data:", borrowing);
-        console.log("Rejection reason:", borrowing.reason);
-        setRejectedBorrowing(borrowing);
+        console.log("Rejected borrowing data:", JSON.stringify(borrowing, null, 2));
+        console.log("Rejection reason:", borrowing.rejection_reason);
+        console.log("All borrowing keys:", Object.keys(borrowing));
+        
+        // Kiểm tra xem dữ liệu có đúng không trước khi truyền vào state
+        const borrowingData = {
+            ...borrowing,
+            // Đảm bảo rejection_reason được truyền đúng
+            rejection_reason: borrowing.rejection_reason || borrowing.reason
+        };
+        
+        console.log("Modified borrowing data:", borrowingData.rejection_reason);
+        
+        setRejectedBorrowing(borrowingData);
         setShowReasonDialogVisible(true);
     };
 

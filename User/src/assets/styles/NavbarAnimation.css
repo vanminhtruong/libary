@@ -1,0 +1,119 @@
+/* Navbar animation styles */
+.navbar-container {
+  position: relative;
+  width: 100%;
+  z-index: 49;
+}
+
+.navbar-animated {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  padding: 0.5rem 0;
+  width: 100%;
+}
+
+/* Navbar hidden (slide up out of view) */
+.navbar-animated.hidden {
+  transform: translateY(-100%);
+}
+
+/* Navbar visible (slide down into view) */
+.navbar-animated.visible {
+  transform: translateY(0);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Shadow effect when scrolling */
+.navbar-animated:not(.hidden) {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Dark mode specific styles */
+.dark .navbar-animated {
+  background-color: #1F2937;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+}
+
+/* Light mode specific styles */
+.navbar-animated:not(.dark) {
+  background-color: #FFFFFF;
+}
+
+/* Logo animations */
+.navbar-logo {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.navbar-logo i, 
+.navbar-logo span {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Menu item animations */
+.desktop-menu-item {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.desktop-menu-item::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: var(--primary-color, #3B82F6);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.desktop-menu-item:hover::after {
+  width: 80%;
+}
+
+.desktop-menu-item.active::after {
+  width: 80%;
+}
+
+/* Mobile menu animations */
+.mobile-menu-container {
+  transition: transform 0.3s ease-in-out;
+}
+
+.menu-backdrop {
+  transition: opacity 0.3s ease;
+}
+
+/* Button animations */
+.nav-button {
+  transition: all 0.2s ease;
+}
+
+.nav-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Dropdown animations */
+.nav-dropdown {
+  transition: all 0.3s ease;
+  transform-origin: top center;
+}
+
+.nav-dropdown.show {
+  animation: dropdownFadeIn 0.3s ease forwards;
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

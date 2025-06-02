@@ -2,7 +2,6 @@ import { Dialog } from 'primereact/dialog'
 import { Button } from 'primereact/button'
 import { useTranslation } from 'react-i18next'
 import FormInput from '../../../components/common/FormInput'
-import '../../borrowings/styles/DialogStyles.css'
 
 const BorrowDialog = ({ 
     visible, 
@@ -37,16 +36,23 @@ const BorrowDialog = ({
     return (
         <Dialog
             visible={visible}
-            onHide={onHide}
+            onHide={() => {
+                onHide();
+                document.body.style.overflow = 'auto';
+                document.body.style.paddingRight = '0';
+            }}
             header={t('common.borrow')}
-            modal
-            className="!p-0 dark:bg-gray-800/95 custom-dialog"
-            style={{ width: '450px', height: 'auto', position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
-            blockScroll={true}
-            headerClassName="dark:bg-gray-800/95 dark:text-gray-100 !p-4"
-            contentClassName="dark:bg-gray-800/95 !p-0"
-            footerClassName="dark:bg-gray-800/95 !p-0"
+            modal={true}
+            className="w-[450px] max-h-[90vh] fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 m-0 p-0 dark:bg-gray-800/95 rounded-lg shadow-xl overflow-hidden"
+            style={{ maxWidth: 'calc(100vw - 2rem)' }}
+            headerClassName="dark:bg-gray-800/95 dark:text-gray-100 p-4 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-10"
+            contentClassName="dark:bg-gray-800/95 p-0 overflow-y-auto"
+            footerClassName="dark:bg-gray-800/95 p-0 border-t border-gray-200 dark:border-gray-700"
             footer={footer}
+            onShow={() => {
+                document.body.style.overflow = 'hidden';
+                document.body.style.paddingRight = '0';
+            }}
         >
             <div className="p-4 pb-6">
                 <div className="flex items-center gap-4 mb-6 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl">

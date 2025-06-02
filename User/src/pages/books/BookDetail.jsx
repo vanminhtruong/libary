@@ -136,7 +136,7 @@ const BookDetail = () => {
 
     if (loading) {
         return (
-            <div className="p-6 bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center">
+            <div className="p-6 bg-gray-50 dark:bg-black min-h-screen flex items-center justify-center">
                 <LoadingSpinner />
             </div>
         )
@@ -144,7 +144,7 @@ const BookDetail = () => {
 
     if (!book) {
         return (
-            <div className="p-6 bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center">
+            <div className="p-6 bg-gray-50 dark:bg-black min-h-screen flex items-center justify-center">
                 <div className="text-center bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md max-w-md w-full">
                     <i className="pi pi-exclamation-circle text-5xl text-yellow-500 mb-4"></i>
                     <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">{t('books.not_found')}</h2>
@@ -161,7 +161,7 @@ const BookDetail = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+        <div className="min-h-screen bg-gray-50 dark:bg-black">
             {toast && <Toast ref={toast} />}
 
             <div className="container mx-auto px-4 py-6">

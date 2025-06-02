@@ -10,7 +10,7 @@ const AuthLayout = ({ children, title, subtitle, toastRef }) => {
     const { t } = useTranslation()
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-50 dark:bg-gray-900">
+        <div className="flex justify-center items-center min-h-screen bg-gray-50 dark:bg-black">
             <Toast ref={toastRef} baseZIndex={1000} position="top-right" />
 
             <div className="fixed top-4 right-4 flex items-center gap-2">

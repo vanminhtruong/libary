@@ -7,13 +7,26 @@ import { format as dateFormat, isAfter } from 'date-fns'
 import { Badge } from 'primereact/badge'
 import { Tag } from 'primereact/tag'
 import { Menu } from 'primereact/menu'
-import { useRef } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { API_CONFIG } from '../../../config/api.config'
 
-const BorrowingCard = ({ borrowing, onExtend, onReturn, onViewFines, onDelete, getImageUrl }) => {
+const BorrowingCard = ({ borrowing, onExtend, onReturn, onViewFines, onDelete, getImageUrl, onViewRejectionReason }) => {
     const { t } = useTranslation()
     const navigate = useNavigate()
     const menuRef = useRef(null)
+    const menuButtonRef = useRef(null)
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768)
+        }
+        
+        window.addEventListener('resize', handleResize)
+        return () => {
+            window.removeEventListener('resize', handleResize)
+        }
+    }, [])
 
     const getStatusInfo = (borrowing) => {
         if (borrowing.status === 'rejected') {
@@ -83,6 +96,12 @@ const BorrowingCard = ({ borrowing, onExtend, onReturn, onViewFines, onDelete, g
             className: 'extend-option'
         },
         {
+            label: t('borrowings.view_reason'),
+            icon: 'pi pi-info-circle',
+            command: () => onViewRejectionReason && onViewRejectionReason(borrowing),
+            visible: borrowing.status === 'rejected' && borrowing.rejection_reason
+        },
+        {
             label: t('borrowings.delete'),
             icon: 'pi pi-trash',
             command: () => onDelete && onDelete(borrowing),
@@ -91,12 +110,57 @@ const BorrowingCard = ({ borrowing, onExtend, onReturn, onViewFines, onDelete, g
     ]
 
     const toggleMenu = (event) => {
-        menuRef.current.toggle(event)
+        if (menuRef.current) {
+            menuRef.current.toggle(event)
+        }
     }
 
     return (
-        <div className="mb-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden">
+        <div className="mb-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden relative">
             <Tooltip target=".extend-option" content={borrowing.extend_count >= 2 ? t('borrowings.max_extensions_reached') : ''} position="left" />
+            <div className={`${isMobile ? 'absolute top-2 right-2 z-20' : 'absolute top-2 right-2 z-10'}`}>
+                <Button
+                    ref={menuButtonRef}
+                    icon="pi pi-ellipsis-v"
+                    className="p-button-sm p-button-text p-button-rounded hover:bg-gray-100 dark:hover:bg-gray-700/30 transition-colors duration-200 dark:text-white"
+                    style={{
+                        backgroundColor: 'transparent',
+                        border: 'none',
+                    }}
+                    onClick={toggleMenu}
+                    aria-label="Options"
+                />
+                <Menu 
+                    model={menuItems} 
+                    popup 
+                    ref={menuRef} 
+                    className="dark:bg-gray-800 dark:border-gray-700 shadow-lg border border-gray-200 dark:border-gray-700"
+                    appendTo={document.body}
+                    autoZIndex
+                    baseZIndex={2000}
+                    scrollHeight={250}
+                    breakpoint="767px"
+                    pt={{
+                        root: { className: 'dark:bg-gray-800 mobile-menu-dropdown' },
+                        menu: { className: 'dark:bg-gray-800' },
+                        menuitem: { className: 'dark:bg-gray-800' },
+                        content: { className: 'dark:bg-gray-800' },
+                        submenu: { className: 'dark:bg-gray-800' },
+                        separator: { className: 'dark:border-gray-700' },
+                        label: { className: 'dark:text-white' },
+                        action: { className: 'dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200' },
+                        icon: { className: 'dark:text-white' }
+                    }}
+                    style={{ 
+                        maxWidth: isMobile ? 'calc(100vw - 30px)' : 'auto',
+                        width: isMobile ? 'auto' : 'auto',
+                        right: isMobile ? '0' : 'auto',
+                        position: isMobile ? 'fixed' : 'absolute',
+                        top: isMobile ? 'auto' : 'auto'
+                    }}
+                    popupAlignment="right"
+                />
+            </div>
             <div className="flex flex-col md:flex-row gap-4 p-4">
                 <div className="relative flex-shrink-0 w-full md:w-32 h-40 md:h-auto cursor-pointer" onClick={() => navigate(`/books/${borrowing.book.id}`)}>
                     <div className="absolute inset-0 overflow-hidden rounded-lg">
@@ -179,30 +243,7 @@ const BorrowingCard = ({ borrowing, onExtend, onReturn, onViewFines, onDelete, g
                                 onClick={() => onViewFines && onViewFines(borrowing)}
                             />
                         )}
-                        
-                        <Button
-                            icon="pi pi-ellipsis-v"
-                            className="p-button-sm p-button-text p-button-rounded ml-auto hover:bg-gray-100 dark:hover:!bg-gray-700 transition-colors duration-200"
-                            onClick={toggleMenu}
-                            aria-label="Options"
-                        />
-                        <Menu 
-                            model={menuItems} 
-                            popup 
-                            ref={menuRef} 
-                            className="dark:bg-gray-800 dark:border-gray-700 shadow-lg border border-gray-200 dark:border-gray-700"
-                            pt={{
-                                root: { className: 'dark:bg-gray-800' },
-                                menu: { className: 'dark:bg-gray-800' },
-                                menuitem: { className: 'dark:bg-gray-800' },
-                                content: { className: 'dark:bg-gray-800' },
-                                submenu: { className: 'dark:bg-gray-800' },
-                                separator: { className: 'dark:border-gray-700' },
-                                label: { className: 'dark:text-white' },
-                                action: { className: 'dark:text-white hover:bg-gray-100 dark:hover:!bg-gray-700 transition-colors duration-200' },
-                                icon: { className: 'dark:text-white' }
-                            }}
-                        />
+
                     </div>
                 </div>
             </div>
@@ -210,4 +251,4 @@ const BorrowingCard = ({ borrowing, onExtend, onReturn, onViewFines, onDelete, g
     )
 }
 
-export default BorrowingCard 
+export default BorrowingCard

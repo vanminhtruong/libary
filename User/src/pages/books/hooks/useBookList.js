@@ -18,7 +18,6 @@ const useBookList = () => {
     const bookData = useBookData(
         filterData.searchQuery, 
         filterData.selectedCategory, 
-        filterData.selectedStatus, 
         paginationData.pagination
     );
     
@@ -41,8 +40,7 @@ const useBookList = () => {
         paginationData.pagination.page, 
         paginationData.pagination.rows, 
         filterData.searchQuery, 
-        filterData.selectedCategory, 
-        filterData.selectedStatus
+        filterData.selectedCategory
     ]);
 
     return {

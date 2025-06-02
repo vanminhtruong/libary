@@ -4,10 +4,7 @@ import { useEffect, useState } from 'react';
 
 const LanguageSwitcher = () => {
   const { i18n } = useTranslation();
-  // Initialize darkMode state by checking if the dark class is present on the document element
-  // This ensures correct styling from the very beginning without flashing
   const [darkMode, setDarkMode] = useState(() => {
-    // Check if we're in a browser environment
     if (typeof document !== 'undefined') {
       return document.documentElement.classList.contains('dark');
     }
@@ -46,7 +43,7 @@ const LanguageSwitcher = () => {
 
   const languageOptionTemplate = (option) => {
     return (
-      <div className={`flex items-center gap-2 language-option ${darkMode ? 'dark-mode' : ''}`}>
+      <div className={`flex items-center gap-2 language-option ${darkMode ? 'text-white' : ''}`}>
         <span className={`text-lg ${darkMode ? 'text-white' : ''}`}>{option.flag}</span>
         <span className={`${darkMode ? 'text-white' : ''}`}>{option.name}</span>
       </div>
@@ -60,23 +57,6 @@ const LanguageSwitcher = () => {
     return props.placeholder;
   };
 
-  // Inline styles để giải quyết vấn đề hover màu trắng trong chế độ tối
-  const styles = {
-    dropdownPanel: {
-      backgroundColor: darkMode ? '#1e293b' : undefined,
-      borderColor: darkMode ? '#334155' : undefined,
-    },
-    dropdownItem: {
-      backgroundColor: darkMode ? '#1e293b' : undefined,
-      color: darkMode ? 'white' : undefined,
-    },
-    hoverItem: {
-      ':hover': {
-        backgroundColor: darkMode ? '#334155' : '#f3f4f6',
-      }
-    }
-  };
-
   return (
     <Dropdown
       value={selectedLanguage}
@@ -85,29 +65,41 @@ const LanguageSwitcher = () => {
       optionLabel="name"
       valueTemplate={selectedLanguageTemplate}
       itemTemplate={languageOptionTemplate}
-      className={`language-switcher w-[170px] ${darkMode ? 'bg-gray-800 text-white border-gray-700 hover:border-gray-600' : ''}`}
-      panelClassName={`language-panel ${darkMode ? 'bg-gray-800 border-gray-700 [&_.p-dropdown-item:hover]:bg-gray-700 [&_.p-dropdown-item.p-highlight]:bg-gray-700' : '[&_.p-dropdown-item:hover]:bg-gray-100 [&_.p-dropdown-item.p-highlight]:bg-gray-100'}`}
+      className={`language-switcher w-[170px] ${darkMode ? 'bg-gray-800 text-white border-gray-700 hover:border-gray-600' : 'bg-white text-gray-800 border-gray-300 hover:border-blue-500'}`}
+      panelClassName={`language-panel ${darkMode ? 'bg-gray-800 border-gray-700 text-white [&_.p-dropdown-item]:text-white [&_.p-dropdown-item:hover]:bg-gray-700 [&_.p-dropdown-item.p-highlight]:bg-gray-700' : 'bg-white border-gray-300 [&_.p-dropdown-item:hover]:bg-gray-100 [&_.p-dropdown-item.p-highlight]:bg-gray-100'}`}
       pt={{
-        panel: { style: styles.dropdownPanel, className: 'p-dropdown-panel-dark' },
+        panel: { 
+          className: 'shadow-lg rounded-md overflow-hidden mt-2',
+          style: darkMode ? { backgroundColor: '#1a1a1a', borderColor: '#2a2a2a', color: 'white', marginTop: '8px' } : { marginTop: '8px' }
+        },
         item: {
-          style: styles.dropdownItem,
-          className: darkMode ? 'hover:!bg-gray-700 transition-colors duration-200' : 'hover:!bg-gray-100 transition-colors duration-200'
+          className: darkMode ? 'text-white hover:!bg-gray-700 transition-colors duration-200' : 'hover:!bg-gray-100 transition-colors duration-200',
+          style: darkMode ? { color: 'white', backgroundColor: '#1a1a1a' } : {}
         },
         list: {
-          className: darkMode ? 'bg-gray-800 text-white [&_.p-dropdown-item:hover]:bg-gray-700' : ''
+          className: darkMode ? 'bg-gray-800 text-white' : 'bg-white',
+          style: darkMode ? { backgroundColor: '#1a1a1a', color: 'white' } : {}
         },
-        wrapper: { className: darkMode ? 'bg-gray-800 text-white border-gray-700' : '' },
-        header: { className: darkMode ? 'bg-gray-800 text-white' : '' },
-        filterInput: { className: darkMode ? 'bg-gray-800 text-white border-gray-700' : '' },
+        wrapper: { 
+          className: darkMode ? 'bg-gray-800 text-white border-gray-700' : 'bg-white border-gray-300',
+          style: darkMode ? { backgroundColor: '#1a1a1a', color: 'white' } : {}
+        },
+        header: { 
+          className: darkMode ? 'bg-gray-800 text-white' : '',
+          style: darkMode ? { backgroundColor: '#1a1a1a', color: 'white' } : {}
+        },
+        filterInput: { 
+          className: darkMode ? 'bg-gray-800 text-white border-gray-700' : '',
+          style: darkMode ? { backgroundColor: '#1a1a1a', color: 'white' } : {}
+        },
         trigger: {
-          className: darkMode ? 'text-white hover:!bg-gray-700 transition-colors duration-200' : 'hover:bg-gray-100 transition-colors duration-200'
+          className: darkMode ? 'text-white hover:!bg-gray-700 transition-colors duration-200' : 'hover:bg-gray-100 transition-colors duration-200',
+          style: darkMode ? { color: 'white' } : {}
         },
-        label: { className: darkMode ? 'text-white' : '' },
-      }}
-      style={{
-        ...(darkMode && {
-          '--hover-bg': 'rgb(55, 65, 81)',
-        })
+        label: { 
+          className: darkMode ? 'text-white' : '',
+          style: darkMode ? { color: 'white' } : {}
+        },
       }}
     />
   );

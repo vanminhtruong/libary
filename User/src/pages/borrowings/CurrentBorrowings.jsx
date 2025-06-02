@@ -55,14 +55,14 @@ const CurrentBorrowings = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-50 dark:bg-black flex items-center justify-center">
                 <LoadingSpinner />
             </div>
         )
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+        <div className="min-h-screen bg-gray-50 dark:bg-black">
             <Toast ref={toastRef} />
             
             <div className="container mx-auto px-4 py-6">
@@ -83,6 +83,7 @@ const CurrentBorrowings = () => {
                                 onReturn={confirmReturn}
                                 onViewFines={handleViewFines}
                                 onDelete={handleDelete}
+                                onViewRejectionReason={showReasonDialog}
                                 getImageUrl={getImageUrlFromAPI}
                             />
                         ))}

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import bookService from '../../../services/book.service';
 
-const useBookData = (searchQuery, selectedCategory, selectedStatus, pagination) => {
+const useBookData = (searchQuery, selectedCategory, pagination) => {
     const navigate = useNavigate();
     const { t } = useTranslation();
     const [books, setBooks] = useState([]);
@@ -54,8 +54,7 @@ const useBookData = (searchQuery, selectedCategory, selectedStatus, pagination) 
                 // Khi chọn "All Categories" hoặc chưa chọn category
                 data = await bookService.getAllBooks({
                     page: pagination.page + 1,
-                    limit: pagination.rows,
-                    status: selectedStatus
+                    limit: pagination.rows
                 });
                 console.log('GetAllBooks API response:', data);
                 

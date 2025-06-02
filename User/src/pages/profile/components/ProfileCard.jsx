@@ -54,7 +54,7 @@ const ProfileCard = ({
                     label={profile.name[0]?.toUpperCase()}
                     size="xlarge"
                     shape="circle"
-                    className="bg-gradient-to-r from-blue-500 to-blue-600 dark:from-blue-600 dark:to-blue-700 text-white text-3xl w-32 h-32 shadow-lg"
+                    className="bg-gradient-to-r from-gray-800 to-gray-900 dark:from-gray-900 dark:to-black text-white text-3xl w-32 h-32 shadow-lg"
                 />
             );
         }
@@ -68,7 +68,7 @@ const ProfileCard = ({
                 htmlFor="profile-image"
                 className="absolute bottom-0 right-0 bg-white dark:bg-gray-700 rounded-full p-2 shadow-lg hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors duration-200 cursor-pointer"
             >
-                <i className="pi pi-camera text-blue-500 dark:text-blue-400" />
+                <i className="pi pi-camera text-gray-900 dark:text-gray-300" />
                 <input
                     id="profile-image"
                     type="file"
@@ -137,8 +137,8 @@ const ProfileCard = ({
                                     disabled={loading}
                                 />
                             ) : (
-                                <div className="bg-blue-50 dark:bg-blue-900/30 rounded-lg p-4">
-                                    <p className="text-sm text-blue-600 dark:text-blue-400">
+                                <div className="bg-gray-100 dark:bg-gray-900/30 rounded-lg p-4">
+                                    <p className="text-sm text-gray-900 dark:text-gray-300">
                                         <i className="pi pi-info-circle mr-2" />
                                         {t('profile.edit_mode_active')}
                                     </p>
